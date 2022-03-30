@@ -42,7 +42,8 @@ function createFile({ fileName, content, info }) {
         .replace("<!-- TITLE -->", title)
         .replace("<!-- DATE -->", new Date(date).toISOString())
         .replace("<!-- AUTHOR -->", author)
-        .replace("<!-- NAVIGATION -->", NAVIGATION);
+        .replace("<!-- NAVIGATION -->", NAVIGATION)
+        .replace(/(src|href)="\//g, `$1="${config.baseURL}`);
 
     fs.writeFileSync(path.resolve(OUTPUT_DIR, fileName), templated);
 }
