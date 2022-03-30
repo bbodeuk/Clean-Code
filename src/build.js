@@ -5,6 +5,7 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import remarkGfm from "remark-gfm";
 import rehypeStringify from "rehype-stringify";
+import config from "./config.js";
 
 const DOCS_DIR = path.resolve("./docs");
 const OUTPUT_DIR = path.resolve("./dist");
@@ -20,6 +21,10 @@ const NAVIGATION = `<ul>${fs
     .map((file) => {
         const extension = path.extname(file);
         const name = path.basename(file, extension);
+
+        if (name === "index") {
+            return `<li><a href="/">${config.defaultTitle}</a></li>`;
+        }
 
         return `<li><a href="/${encodeURIComponent(
             name
