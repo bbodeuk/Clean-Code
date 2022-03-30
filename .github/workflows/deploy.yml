@@ -19,6 +19,8 @@ jobs:
               run: npm ci
             - name: Build
               run: npm run build
+            - name: Move public dir
+              run: cp -r src/public/* dist
             - name: Deploy with gh-pages
               run: |
                   git config --global user.name github-actions
