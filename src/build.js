@@ -52,7 +52,7 @@ function parseInfo(regexMatchGroup, fileName) {
     const defaultValue = {
         title: fileName,
         author: "Anonymous",
-        date: `${new Date().toISOString()}`,
+        date: new Date().toISOString(),
     };
 
     if (!regexMatchGroup) {
