@@ -31,16 +31,46 @@ const TEMPLATE = fs.readFileSync(
     "utf-8"
 );
 
-async function createFile({ fileName, content }) {
-    const templated = TEMPLATE.replace("<!-- CONTENT -->", content).replace(
-        "<!-- NAVIGATION -->",
-        NAVIGATION
-    );
+function createFile({ fileName, content, info }) {
+    const { title, author, date } = info;
+    const templated = TEMPLATE.replace("<!-- CONTENT -->", content)
+        .replace("<!-- TITLE -->", title)
+        .replace("<!-- DATE -->", new Date(date).toISOString())
+        .replace("<!-- AUTHOR -->", author)
+        .replace("<!-- NAVIGATION -->", NAVIGATION);
 
     fs.writeFileSync(path.resolve(OUTPUT_DIR, fileName), templated);
 }
 
+function parseInfo(regexMatchGroup, fileName) {
+    const defaultValue = {
+        title: fileName,
+        author: "Anonymous",
+        date: `${new Date().toISOString()}`,
+    };
+
+    if (!regexMatchGroup) {
+        return defaultValue;
+    }
+
+    const [matchString] = regexMatchGroup;
+
+    return {
+        ...defaultValue,
+        ...Object.fromEntries(
+            matchString
+                .replace(/(<!)?-->?/gm, "")
+                .replace(/\r?\n/gm, "\n")
+                .split("\n")
+                .filter((x) => x !== "")
+                .map((x) => x.split(":"))
+                .map(([key, value]) => [key.trim(), value.trim()])
+        ),
+    };
+}
+
 async function parseFile(fileName) {
+    const commentsRegex = /^<!--((.|\r?\n)*)-->$/gm;
     const data = fs.readFileSync(path.resolve(DOCS_DIR, fileName), "utf-8");
     const parsed = await unified()
         .use(remarkParse)
@@ -51,7 +81,8 @@ async function parseFile(fileName) {
 
     createFile({
         fileName: `${path.basename(fileName, path.extname(fileName))}.html`,
-        content: parsed,
+        content: `${parsed}`,
+        info: parseInfo(data.match(commentsRegex), fileName),
     });
 }
 
