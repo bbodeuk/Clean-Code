@@ -4,6 +4,8 @@ import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import remarkGfm from "remark-gfm";
+import remarkToc from "remark-toc";
+import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
 import config from "./config.js";
 
@@ -36,12 +38,13 @@ const TEMPLATE = fs.readFileSync(
     "utf-8"
 );
 
-function createFile({ fileName, content, info }) {
+function createFile({ fileName, content, toc, info }) {
     const { title, author, date } = info;
     const templated = TEMPLATE.replace("<!-- CONTENT -->", content)
         .replace("<!-- TITLE -->", title)
         .replace("<!-- DATE -->", new Date(date).toISOString())
         .replace("<!-- AUTHOR -->", author)
+        .replace("<!-- TOC -->", toc)
         .replace("<!-- NAVIGATION -->", NAVIGATION)
         .replace(/(src|href)="\//g, `$1="${config.baseURL}`);
 
@@ -75,20 +78,38 @@ function parseInfo(regexMatchGroup, fileName) {
     };
 }
 
+function addTocTitleToData(data) {
+    const h1Regex = /^# .+/gm;
+    const [matchHeading] = data.match(h1Regex) || [];
+
+    if (matchHeading) {
+        return data.replace(h1Regex, `${matchHeading}\n## Table of contents\n`);
+    }
+
+    return `## Table of contents\n${data}`;
+}
+
 async function parseFile(fileName) {
     const commentsRegex = /^<!--((.|\r?\n)*)-->$/gm;
+    const tocRegex =
+        /<h2 id="table-of-contents">Table of contents<\/h2>\r?\n<ul>((.|\r?\n)*)<\/ul>/gm;
     const data = fs.readFileSync(path.resolve(DOCS_DIR, fileName), "utf-8");
-    const parsed = await unified()
+    const parsed = `${await unified()
         .use(remarkParse)
+        .use(remarkToc)
         .use(remarkRehype)
+        .use(rehypeSlug)
         .use(remarkGfm)
         .use(rehypeStringify)
-        .process(data);
+        .process(addTocTitleToData(data))}`;
+    const [, matchesToc] = tocRegex.exec(parsed) || [""];
+    const toc = matchesToc ? `<ul class="toc">${matchesToc}</ul>` : "";
 
     createFile({
         fileName: `${path.basename(fileName, path.extname(fileName))}.html`,
-        content: `${parsed}`,
+        content: parsed.replace(tocRegex, ""),
         info: parseInfo(data.match(commentsRegex), fileName),
+        toc,
     });
 }
 
