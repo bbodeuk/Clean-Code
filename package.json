@@ -1,0 +1,30 @@
+{
+    "name": "clean-code",
+    "type": "module",
+    "version": "1.0.0",
+    "description": "클린 코드 스터디 저장용",
+    "main": "src/build.js",
+    "directories": {
+        "doc": "docs"
+    },
+    "scripts": {
+        "build": "node src/build.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/bbodeuk/Clean-Code.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/bbodeuk/Clean-Code/issues"
+    },
+    "homepage": "https://github.com/bbodeuk/Clean-Code#readme",
+    "dependencies": {
+        "rehype-stringify": "^9.0.3",
+        "remark-gfm": "^3.0.1",
+        "remark-parse": "^10.0.1",
+        "remark-rehype": "^10.1.0"
+    }
+}
