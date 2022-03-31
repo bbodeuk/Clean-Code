@@ -1,8 +1,10 @@
 :root {
     --side-width: max(300px, ((100% - 960px) / 2));
     --background: #ffffff;
-    --background-elevated: #efefef;
+    --background-elevated: #e0e0e0;
+    --background-contents: #f1f1f1;
     --border: #d0d0d0;
+    --highlight: #7a0fbd;
 }
 
 html,
@@ -182,8 +184,94 @@ html:is(.toc-revealed, .drawer-revealed) .closer {
     overflow: hidden;
 }
 
-.article :is(p, blockquote, ul, ol, dl, table, pre, details) {
+.article :is(h1, h2, h3, h4, h5, h6) {
+    font-weight: 700;
+}
+
+.article
+    :is(p, blockquote, ul, ol, dl, table, pre, details, h1, h2, h3, h4, h5, h6) {
     margin-bottom: 1rem;
+}
+
+.article h1 {
+    font-size: 2.3rem;
+}
+
+.article h2 {
+    font-size: 1.7rem;
+}
+
+.article h3 {
+    font-size: 1.4rem;
+}
+
+.article h4 {
+    font-size: 1.25rem;
+}
+
+.article h5 {
+    font-size: 1.1rem;
+}
+
+.article h6 {
+    font-size: 0.9rem;
+}
+
+.article a {
+    color: var(--highlight);
+}
+
+.article :is(ol, ul) {
+    padding-left: 1.5rem;
+}
+
+.article ol li {
+    list-style: decimal;
+}
+
+.article ul li {
+    list-style: disc;
+}
+
+.article ul ul li {
+    list-style: circle;
+}
+
+.article strong {
+    font-weight: 700;
+}
+
+.article em {
+    font-style: italic;
+}
+
+.article code:not(.hljs) {
+    display: inline-block;
+    padding: 0 0.2rem;
+    background-color: var(--background-elevated);
+}
+
+.article blockquote {
+    padding: 0 1rem;
+    border-left: 0.25rem solid var(--border);
+}
+
+.article table {
+    width: max-content;
+    max-width: 100%;
+}
+
+.article table :is(th, td) {
+    padding: 0.5rem 0.8rem;
+    border: 1px solid var(--border);
+}
+
+.article table thead {
+    background-color: var(--background-elevated);
+}
+
+.article table tr:nth-child(2n) {
+    background-color: var(--background-contents);
 }
 
 @media screen and (min-width: 1180px) {
