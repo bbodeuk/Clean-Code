@@ -182,6 +182,10 @@ html:is(.toc-revealed, .drawer-revealed) .closer {
     overflow: hidden;
 }
 
+.article :is(p, blockquote, ul, ol, dl, table, pre, details) {
+    margin-bottom: 1rem;
+}
+
 @media screen and (min-width: 1180px) {
     body,
     main {
