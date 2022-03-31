@@ -110,8 +110,8 @@ function parseTocFromContent(content) {
     const lineBreakFormatted = content.replace(/\r?\n/gm, "\n");
     const contentArray = lineBreakFormatted.split("\n");
     const { length } = contentArray;
-    let ulOpened = 0;
-    let ulClosed = 0;
+    let ulOpenedCnt = 0;
+    let ulClosedCnt = 0;
     const startIndex = contentArray.indexOf(
         '<h2 id="table-of-contents">Table of contents</h2>'
     );
@@ -121,14 +121,14 @@ function parseTocFromContent(content) {
         const currentLine = contentArray[i];
 
         if (currentLine === "<ul>") {
-            ulOpened++;
+            ulOpenedCnt++;
         }
 
         if (currentLine === "</ul>") {
-            ulClosed++;
+            ulClosedCnt++;
         }
 
-        if (0 < ulClosed && ulOpened === ulClosed) {
+        if (0 < ulClosedCnt && ulOpenedCnt === ulClosedCnt) {
             endIndex = i + 1;
             break;
         }
