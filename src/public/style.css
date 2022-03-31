@@ -1,0 +1,47 @@
+body {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+img,
+video {
+    max-width: 100%;
+}
+
+.global-navigation {
+    background-color: #efefef;
+    border-right: 1px solid #d0d0d0;
+}
+
+@media screen and (min-width: 1580px) {
+    body,
+    main {
+        display: flex;
+        width: 100%;
+    }
+
+    .global-navigation,
+    .toc-container {
+        width: max(300px, ((100% - 960px) / 2));
+        flex-shrink: 0;
+    }
+
+    .global-navigation {
+        position: relative;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .global-navigation > ul,
+    .toc {
+        position: fixed;
+        width: clamp(0px, 100%, 300px);
+        height: 100%;
+        padding: 10px;
+    }
+
+    .article {
+        max-width: 960px;
+        padding: 20px 50px;
+        line-height: 1.5;
+    }
+}
