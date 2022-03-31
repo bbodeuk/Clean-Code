@@ -1,0 +1,378 @@
+:root {
+    --side-width: max(300px, ((100% - 960px) / 2));
+    --background: #ffffff;
+    --background-elevated: #e0e0e0;
+    --background-contents: #f1f1f1;
+    --text: #000000;
+    --border: #d0d0d0;
+    --highlight: #7a0fbd;
+}
+
+html.dark {
+    --background: #121212;
+    --background-elevated: #2f2f2f;
+    --background-contents: #202020;
+    --text: #ddd;
+    --border: #d0d0d0;
+    --highlight: #cd7dff;
+}
+
+html,
+body {
+    min-height: 100vh;
+}
+
+html {
+    background-color: var(--background);
+    color: var(--text);
+}
+
+a {
+    color: var(--text);
+}
+
+body {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+main {
+    padding-top: 80px;
+}
+
+img,
+video {
+    max-width: 100%;
+}
+
+.global-navigation {
+    background-color: var(--background-elevated);
+    border-right: 1px solid var(--border);
+}
+
+.article {
+    width: clamp(0px, 100%, 960px);
+    padding: 20px 10px;
+    line-height: 1.5;
+}
+
+.masthead {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+    z-index: 50;
+}
+
+.masthead__inner {
+    display: flex;
+    width: 100%;
+    padding: 0 10px;
+    background-color: var(--background);
+    border-bottom: 1px solid var(--border);
+}
+
+.masthead__grow {
+    flex: 1 1 0;
+}
+
+.masthead__right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.masthead button {
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.global-navigation,
+.toc-container {
+    position: fixed;
+    top: 0;
+    width: 300px;
+    height: 100%;
+    transition: transform 0.25s ease-in-out;
+    z-index: 200;
+}
+
+.global-navigation {
+    left: -300px;
+}
+
+html.drawer-revealed .global-navigation {
+    transform: translate3d(300px, 0, 0);
+}
+
+html.toc-revealed .global-navigation {
+    z-index: 10;
+}
+
+.global-navigation > ul,
+.toc {
+    overflow-y: auto;
+    max-height: 100%;
+    scrollbar-width: thin;
+}
+
+.global-navigation > ul::-webkit-scrollbar,
+.toc::-webkit-scrollbar {
+    width: 5px;
+}
+
+.global-navigation > ul::-webkit-scrollbar-thumb,
+.toc::-webkit-scrollbar-thumb {
+    background-color: var(--border);
+}
+
+.global-navigation > ul {
+    padding: 10px 0;
+    text-align: center;
+}
+
+.global-navigation > ul > li:first-of-type {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.global-navigation > ul > li.highlight {
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-right: 0;
+}
+
+.global-navigation > ul > li {
+    padding: 0.5rem 10px;
+    line-height: 1.5;
+    text-align: left;
+}
+
+.toggle-theme {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    background-color: var(--background-contents);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.toggle-theme > i {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.25s ease-in-out, opacity 0.25s ease-in-out;
+}
+
+html.dark .toggle-theme > i.icon-sun,
+html.light .toggle-theme > i.icon-moon {
+    transform: scale(0.5) rotate(180deg);
+    opacity: 0;
+}
+
+.toc-container {
+    right: -300px;
+    background-color: var(--background);
+}
+
+html.toc-revealed .toc-container {
+    transform: translate3d(-300px, 0, 0);
+}
+
+.closer {
+    display: none;
+}
+
+html:is(.toc-revealed, .drawer-revealed) .closer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.toc {
+    padding: 10px;
+}
+
+.toc ul {
+    padding-left: 8px;
+}
+
+.toc a {
+    display: inline-block;
+    max-width: 100%;
+    padding: 4px 8px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.article :is(h1, h2, h3, h4, h5, h6) {
+    font-weight: 700;
+}
+
+.article
+    :is(p, blockquote, ul, ol, dl, table, pre, details, h1, h2, h3, h4, h5, h6) {
+    margin-bottom: 1rem;
+}
+
+.article h1 {
+    font-size: 2.3rem;
+}
+
+.article h2 {
+    font-size: 1.7rem;
+}
+
+.article h3 {
+    font-size: 1.4rem;
+}
+
+.article h4 {
+    font-size: 1.25rem;
+}
+
+.article h5 {
+    font-size: 1.1rem;
+}
+
+.article h6 {
+    font-size: 0.9rem;
+}
+
+.article a {
+    color: var(--highlight);
+}
+
+.article :is(ol, ul) {
+    padding-left: 1.5rem;
+}
+
+.article ol li {
+    list-style: decimal;
+}
+
+.article ul li {
+    list-style: disc;
+}
+
+.article ul ul li {
+    list-style: circle;
+}
+
+.article strong {
+    font-weight: 700;
+}
+
+.article em {
+    font-style: italic;
+}
+
+.article code:not(.hljs) {
+    display: inline-block;
+    padding: 0 0.2rem;
+    background-color: var(--background-elevated);
+}
+
+.article blockquote {
+    padding: 0 1rem;
+    border-left: 0.25rem solid var(--border);
+}
+
+.article table {
+    width: max-content;
+    max-width: 100%;
+}
+
+.article table :is(th, td) {
+    padding: 0.5rem 0.8rem;
+    border: 1px solid var(--border);
+}
+
+.article table thead {
+    background-color: var(--background-elevated);
+}
+
+.article table tr:nth-child(2n) {
+    background-color: var(--background-contents);
+}
+
+@media screen and (min-width: 1180px) {
+    body,
+    main {
+        display: flex;
+        width: 100%;
+    }
+
+    .masthead__inner {
+        margin-left: var(--side-width);
+    }
+
+    .masthead .drawer-opener {
+        display: none;
+    }
+
+    .global-navigation {
+        height: auto;
+    }
+
+    .global-navigation,
+    .toc-container {
+        width: var(--side-width);
+        flex-shrink: 0;
+    }
+
+    .global-navigation {
+        position: static;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .global-navigation > ul,
+    .toc {
+        position: fixed;
+        width: clamp(0px, 100%, 300px);
+        height: 100%;
+    }
+
+    .article {
+        padding: 20px 50px;
+    }
+}
+
+@media screen and (min-width: 1580px) {
+    main {
+        padding: 0;
+    }
+
+    .toc-container {
+        position: static;
+        height: auto;
+    }
+
+    .masthead {
+        display: none;
+    }
+}
