@@ -3,8 +3,18 @@
     --background: #ffffff;
     --background-elevated: #e0e0e0;
     --background-contents: #f1f1f1;
+    --text: #000000;
     --border: #d0d0d0;
     --highlight: #7a0fbd;
+}
+
+html.dark {
+    --background: #121212;
+    --background-elevated: #2f2f2f;
+    --background-contents: #202020;
+    --text: #ddd;
+    --border: #d0d0d0;
+    --highlight: #cd7dff;
 }
 
 html,
@@ -14,6 +24,11 @@ body {
 
 html {
     background-color: var(--background);
+    color: var(--text);
+}
+
+a {
+    color: var(--text);
 }
 
 body {
@@ -139,6 +154,34 @@ html.toc-revealed .global-navigation {
 .global-navigation > ul > li {
     padding: 0.5rem 10px;
     line-height: 1.5;
+}
+
+.toggle-theme {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    background-color: var(--background-contents);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.toggle-theme > i {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.25s ease-in-out, opacity 0.25s ease-in-out;
+}
+
+html.dark .toggle-theme > i.icon-sun,
+html.light .toggle-theme > i.icon-moon {
+    transform: scale(0.5) rotate(180deg);
+    opacity: 0;
 }
 
 .toc-container {
