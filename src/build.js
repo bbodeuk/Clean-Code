@@ -47,9 +47,17 @@ function createNavigation(fileNameWithExtension) {
 }
 
 function createFile({ fileName, content, toc, info }) {
-    const { title, author, date } = info;
+    const { title, author, date, description } = info;
+    const descriptionFromContent = content
+        .replace(/<.+?>/gm, "")
+        .replace(/(\r?\n)+/gm, " ")
+        .slice(0, 200);
     const templated = TEMPLATE.replace("<!-- CONTENT -->", content)
         .replace(/<!-- TITLE -->/gm, title)
+        .replace(
+            /<!-- DESCRIPTION -->/gm,
+            description || descriptionFromContent
+        )
         .replace(/<!-- DATE -->/gm, new Date(date).toISOString())
         .replace(/<!-- AUTHOR -->/gm, author)
         .replace(/<!-- TOC -->/gm, toc)
@@ -64,6 +72,7 @@ function parseInfo(regexMatchGroup, fileName) {
         title: fileName,
         author: "Anonymous",
         date: new Date().toISOString(),
+        description: "",
     };
 
     if (!regexMatchGroup) {
