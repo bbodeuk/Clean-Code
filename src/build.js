@@ -62,7 +62,7 @@ function createFile({ fileName, content, toc, info }) {
         .replace(/<!-- AUTHOR -->/gm, author)
         .replace(/<!-- TOC -->/gm, toc)
         .replace(/<!-- NAVIGATION -->/gm, createNavigation(fileName))
-        .replace(/(src|href)="\//g, `$1="${config.baseURL}`);
+        .replace(/(src=|href=|url\())"\//g, `$1="${config.baseURL}`);
 
     fs.writeFileSync(path.resolve(OUTPUT_DIR, fileName), templated);
 }

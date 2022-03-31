@@ -17,9 +17,19 @@
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap"
             rel="stylesheet"
         />
-        <link rel="stylesheet" async href="/reset.css" />
-        <link rel="stylesheet" async href="/icon.css" />
-        <link rel="stylesheet" async href="/style.css" />
+        <link rel="stylesheet" async href="/css/reset.css" />
+        <link rel="stylesheet" async href="/css/icon.css" />
+        <link rel="stylesheet" async href="/css/style.css" />
+        <style>
+            @font-face {
+                font-family: icon;
+                src: url("/icon/icon.woff?zg8y3j") format("woff"),
+                    url("/icon/icon.svg?zg8y3j#icon") format("svg");
+                font-weight: 400;
+                font-style: normal;
+                font-display: block;
+            }
+        </style>
     </head>
     <body>
         <div class="masthead">
@@ -49,6 +59,6 @@
             <!-- TOC -->
         </main>
         <div class="closer"></div>
-        <script defer src="/app.js"></script>
+        <script defer src="/js/app.js"></script>
     </body>
 </html>
