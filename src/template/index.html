@@ -21,6 +21,23 @@
         <link rel="stylesheet" async href="/style.css" />
     </head>
     <body>
+        <div class="masthead">
+            <div class="masthead__inner">
+                <div class="masthead__grow masthead__left">
+                    <button
+                        class="drawer-opener icon-menu"
+                        aria-label="메뉴 보기"
+                    ></button>
+                </div>
+                <div class="masthead__center"><!-- TITLE --></div>
+                <div class="masthead__grow masthead__right">
+                    <button
+                        class="toc-opener icon-bookmark_outline"
+                        aria-label="목차 보기"
+                    ></button>
+                </div>
+            </div>
+        </div>
         <nav class="global-navigation">
             <!-- NAVIGATION -->
         </nav>
@@ -30,5 +47,7 @@
             </article>
             <!-- TOC -->
         </main>
+        <div class="closer"></div>
+        <script defer src="/app.js"></script>
     </body>
 </html>
