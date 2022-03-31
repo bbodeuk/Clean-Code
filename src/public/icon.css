@@ -1,7 +1,7 @@
 @font-face {
     font-family: "icon";
-    src: url("./icon/icon.woff?zg8y3j") format("woff"),
-        url("./icon/icon.svg?zg8y3j#icon") format("svg");
+    src: url("./icon/icon.woff?3xa9g4") format("woff"),
+        url("./icon/icon.svg?3xa9g4#icon") format("svg");
     font-weight: normal;
     font-style: normal;
     font-display: block;
@@ -34,10 +34,10 @@
 .icon-mode_comment:before {
     content: "\e904";
 }
-.icon-brightness_2:before {
+.icon-moon:before {
     content: "\e905";
 }
-.icon-wb_sunny:before {
+.icon-sun:before {
     content: "\e906";
 }
 .icon-arrow_back:before {
