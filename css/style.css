@@ -5,6 +5,11 @@
     --border: #d0d0d0;
 }
 
+html,
+body {
+    min-height: 100vh;
+}
+
 html {
     background-color: var(--background);
 }
