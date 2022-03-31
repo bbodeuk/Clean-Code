@@ -319,6 +319,10 @@ html:is(.toc-revealed, .drawer-revealed) .closer {
     background-color: var(--background-contents);
 }
 
+.article .sr-only {
+    font-size: 1rem;
+}
+
 @media screen and (min-width: 1180px) {
     body,
     main {
