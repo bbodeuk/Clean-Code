@@ -50,7 +50,7 @@ video {
 }
 
 .article {
-    max-width: 960px;
+    width: clamp(0px, 100%, 960px);
     padding: 20px 10px;
     line-height: 1.5;
 }
