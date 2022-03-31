@@ -135,11 +135,12 @@ html.toc-revealed .global-navigation {
 
 .global-navigation > ul {
     padding: 10px 0;
+    text-align: center;
 }
 
-.global-navigation > ul > li:first-child {
-    margin-bottom: 0.5rem;
-    padding-bottom: 0.5rem;
+.global-navigation > ul > li:first-of-type {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
     border-bottom: 1px solid var(--border);
     font-size: 1.5rem;
     font-weight: 700;
@@ -154,13 +155,13 @@ html.toc-revealed .global-navigation {
 .global-navigation > ul > li {
     padding: 0.5rem 10px;
     line-height: 1.5;
+    text-align: left;
 }
 
 .toggle-theme {
     position: relative;
     width: 30px;
     height: 30px;
-    margin-left: 10px;
     font-size: 16px;
     background-color: var(--background-contents);
     border-radius: 50%;
