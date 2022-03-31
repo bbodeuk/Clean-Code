@@ -106,10 +106,46 @@ function addTocTitleToData(data) {
     return `## Table of contents\n${data}`;
 }
 
+function parseTocFromContent(content) {
+    const lineBreakFormatted = content.replace(/\r?\n/gm, "\n");
+    const contentArray = lineBreakFormatted.split("\n");
+    const { length } = contentArray;
+    let ulOpened = 0;
+    let ulClosed = 0;
+    const startIndex = contentArray.indexOf(
+        '<h2 id="table-of-contents">Table of contents</h2>'
+    );
+    let endIndex = 0;
+
+    for (let i = startIndex; i <= length; i++) {
+        const currentLine = contentArray[i];
+
+        if (currentLine === "<ul>") {
+            ulOpened++;
+        }
+
+        if (currentLine === "</ul>") {
+            ulClosed++;
+        }
+
+        if (0 < ulClosed && ulOpened === ulClosed) {
+            endIndex = i + 1;
+            break;
+        }
+    }
+
+    return {
+        content: `${contentArray.slice(0, startIndex).join("\n")}${contentArray
+            .slice(endIndex)
+            .join("\n")}`,
+        toc: `<div class="toc-container"><ul class="toc">${contentArray
+            .slice(startIndex + 2, endIndex)
+            .join("")}</div>`,
+    };
+}
+
 async function parseFile(fileName) {
     const commentsRegex = /^<!--((.|\r?\n)*)-->$/gm;
-    const tocRegex =
-        /<h2 id="table-of-contents">Table of contents<\/h2>\r?\n<ul>((.|\r?\n)*)<\/ul>/gm;
     const data = fs.readFileSync(path.resolve(DOCS_DIR, fileName), "utf-8");
     const parsed = `${await unified()
         .use(remarkParse)
@@ -119,14 +155,11 @@ async function parseFile(fileName) {
         .use(remarkGfm)
         .use(rehypeStringify)
         .process(addTocTitleToData(data))}`;
-    const [, matchesToc] = tocRegex.exec(parsed) || [];
-    const toc = matchesToc
-        ? `<div class="toc-container"><ul class="toc">${matchesToc}</ul></div>`
-        : "";
+    const { content, toc } = parseTocFromContent(parsed);
 
     createFile({
         fileName: `${path.basename(fileName, path.extname(fileName))}.html`,
-        content: parsed.replace(tocRegex, ""),
+        content,
         info: parseInfo(data.match(commentsRegex), fileName),
         toc,
     });
