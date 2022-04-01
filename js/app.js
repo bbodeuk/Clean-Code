@@ -41,6 +41,31 @@
         themeStyle.innerText = palette[nextTheme];
     }
 
+    function syncToc() {
+        const { scrollY, innerHeight: windowHeight } = window;
+        const currentPosition = scrollY;
+        const tocElements = document.querySelectorAll(".toc a");
+        const tocTargetHeadingIsInViewport = [...tocElements].map((x) => {
+            const { offsetTop } = document.querySelector(
+                decodeURIComponent(x.getAttribute("href"))
+            );
+
+            return (
+                currentPosition <= offsetTop &&
+                offsetTop <= currentPosition + windowHeight
+            );
+        });
+
+        tocElements.forEach((elt, i) => {
+            if (tocTargetHeadingIsInViewport[i]) {
+                elt.classList.add("highlight");
+                return;
+            }
+
+            elt.classList.remove("highlight");
+        });
+    }
+
     document.querySelector(".drawer-opener").addEventListener("click", () => {
         htmlClass.add("drawer-revealed");
         htmlClass.remove("toc-revealed");
@@ -70,6 +95,8 @@
         highlightTheme(theme);
         document.head.append(themeStyle);
     });
+
+    window.addEventListener("scroll", syncToc, { passive: true });
 
     initializeTheme();
 })();
