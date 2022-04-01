@@ -146,7 +146,7 @@ html.toc-revealed .global-navigation {
     font-weight: 700;
 }
 
-.global-navigation > ul > li.highlight {
+.global-navigation > ul > li:not(:first-of-type).highlight {
     background: var(--background);
     border: 1px solid var(--border);
     border-right: 0;
