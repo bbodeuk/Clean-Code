@@ -24,6 +24,12 @@ const TEMPLATE = fs.readFileSync(
     "utf-8",
 );
 
+function makeDir(dirName) {
+    fs.mkdir(dirName, { recursive: true }, (err) => {
+        if (err) throw err;
+    });
+}
+
 function getFileName(fileNameWithExtension) {
     return path.basename(
         fileNameWithExtension,
@@ -31,13 +37,7 @@ function getFileName(fileNameWithExtension) {
     );
 }
 
-function updateFileExtension(fileName, extension) {
-    return `${path.basename(fileName, path.extname(fileName))}.${extension}`;
-}
-
-function createNavigation(fileNameWithExtension) {
-    const fileName = getFileName(fileNameWithExtension);
-
+function createNavigation(fileName) {
     return `<ul>${NAVIGATION.map((file) => {
         const name = getFileName(file);
 
@@ -47,7 +47,7 @@ function createNavigation(fileNameWithExtension) {
 
         return `<li${
             name === fileName ? ' class="highlight"' : ""
-        }><a href="/${encodeURIComponent(name)}.html">${name}</a></li$>`;
+        }><a href="/${encodeURIComponent(name)}/">${name}</a></li$>`;
     }).reduce((acc, cur) => acc + cur, "")}</ul>`;
 }
 
@@ -69,7 +69,15 @@ function createFile({ fileName, content, toc, info }) {
         .replace(/<!-- NAVIGATION -->/gm, createNavigation(fileName))
         .replace(/(src=|href=|url\()"\//g, `$1"${config.baseURL}`);
 
-    fs.writeFileSync(path.resolve(OUTPUT_DIR, fileName), templated);
+    if (fileName === "index") {
+        fs.writeFileSync(path.resolve(OUTPUT_DIR, "index.html"), templated);
+        return;
+    }
+
+    fs.writeFileSync(
+        path.resolve(OUTPUT_DIR, getFileName(fileName), "index.html"),
+        templated,
+    );
 }
 
 function parseInfo(regexMatchGroup, fileName) {
@@ -120,7 +128,7 @@ function addNavigationToData(data, index) {
         const title = getFileName(rawTitle);
         const titleToDisplay = title === "index" ? config.defaultTitle : title;
 
-        return `<article class="navigation-item navigation-item--${type.toLowerCase()}"><a href="/${title}.html"><div><div class="navigation-item__type">${type}</div><h2 class="navigation-item__title">${titleToDisplay}</h2></div><div><i class="icon-arrow_${
+        return `<article class="navigation-item navigation-item--${type.toLowerCase()}"><a href="/${title}/"><div><div class="navigation-item__type">${type}</div><h2 class="navigation-item__title">${titleToDisplay}</h2></div><div><i class="icon-arrow_${
             type === "Previous" ? "back" : "forward"
         }"></i></div></a></article>`;
     };
@@ -183,7 +191,7 @@ function parseTocFromContent(content) {
     };
 }
 
-async function parseFile(fileName, index) {
+async function createHtmlOutputWithMd(fileName, index) {
     const commentsRegex = /^<!--((.|\r?\n)*)-->$/gm;
     const data = fs.readFileSync(path.resolve(DOCS_DIR, fileName), "utf-8");
     const parsed = `${await unified()
@@ -199,7 +207,7 @@ async function parseFile(fileName, index) {
     const { content, toc } = parseTocFromContent(navigationAdded);
 
     createFile({
-        fileName: `${path.basename(fileName, path.extname(fileName))}.html`,
+        fileName: path.basename(fileName, path.extname(fileName)),
         content,
         info: parseInfo(data.match(commentsRegex), fileName),
         toc,
@@ -207,10 +215,11 @@ async function parseFile(fileName, index) {
 }
 
 function main() {
-    fs.mkdir(OUTPUT_DIR, { recursive: true }, (err) => {
-        if (err) throw err;
+    makeDir(OUTPUT_DIR);
+    NAVIGATION.forEach((fileName) => {
+        makeDir(path.resolve(OUTPUT_DIR, getFileName(fileName)));
     });
-    NAVIGATION.forEach(parseFile);
+    NAVIGATION.forEach(createHtmlOutputWithMd);
 }
 
 main();
