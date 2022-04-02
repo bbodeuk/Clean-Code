@@ -346,6 +346,7 @@ html:is(.toc-revealed, .drawer-revealed) .closer {
 }
 
 .navigation-item {
+    width: 100%;
     padding: 14px;
     border-radius: 0.3rem;
     box-shadow: var(--box-shadow-1);
@@ -395,10 +396,6 @@ html:is(.toc-revealed, .drawer-revealed) .closer {
 @media screen and (min-width: 860px) {
     .navigation {
         flex-direction: row;
-    }
-
-    .navigation-item {
-        width: 50%;
     }
 }
 
