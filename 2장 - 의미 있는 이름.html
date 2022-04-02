@@ -100,9 +100,8 @@ const fileAgeInDays;
 <pre><code class="language-js">// bad - 코드의 맥락이 코드 자체에 명시적으로 드러나지 않는다.
 function getThem() {
     let list1 = [];
-    for(let x in theList){
-        if (x[0] === 4)
-            list1.push(x);
+    for (let x in theList) {
+        if (x[0] === 4) list1.push(x);
     }
     return list1;
 }
@@ -110,9 +109,8 @@ function getThem() {
 <pre><code class="language-js">// good - 각 개념에 이름이 붙어있어서 역할을 파악하기 쉽다.
 function getThem() {
     let flaggedCells = [];
-    for(let cell in gameBoard){
-        if (cell[STATUS_VALUE] === FLAGGED)
-            flaggedCells.push(cell);
+    for (let cell in gameBoard) {
+        if (cell[STATUS_VALUE] === FLAGGED) flaggedCells.push(cell);
     }
     return flaggedCells;
 }
@@ -138,7 +136,7 @@ function getThem() {
 </li>
 <li>이름으로 그릇된 정보 제공하지 않게 주의
 <ul>
-<li>O와 0,  1과 l</li>
+<li>O와 0, 1과 l</li>
 <li>그룹으로 묶을 때, 실제 컨테이너가 <code>List</code>가 아님에도 이름에 List를 붙이는 경우</li>
 </ul>
 </li>
@@ -181,7 +179,7 @@ const recordId = "102";
 <h3 id="검색하기-쉬운-이름을-사용하라">검색하기 쉬운 이름을 사용하라</h3>
 <ul>
 <li>검색 관점에서 <strong>긴 이름</strong>이 짧은 이름보다 좋다. 검색이 쉬운 이름이 상수보다 좋다.
-<pre><code class="language-js">const sum; 
+<pre><code class="language-js">const sum;
 const WORK_DAYS_PER_WEEK; // better
 </code></pre>
 </li>
@@ -246,22 +244,22 @@ const description; // good
 <h3 id="의미-있는-맥락을-추가하라">의미 있는 맥락을 추가하라</h3>
 <p>변수를 클래스, 함수, 이름 공간(Namespace)에 넣어 맥락을 부여한다. 최후의 수단으로 접두어를 붙인다.</p>
 <pre><code class="language-js">// bad
-function printGuessStatistics(candidate, count){
+function printGuessStatistics(candidate, count) {
     let number;
     let verb;
     let pluralModifier;
-    if (count === 0){
-        number = 'no';
-        verb = 'are';
-        pluralModifier = 's';
-    }else if (count === 1){
-        number = '1';
-        verb = 'is';
-        pluralModifier = '';
-    }else {
+    if (count === 0) {
+        number = "no";
+        verb = "are";
+        pluralModifier = "s";
+    } else if (count === 1) {
+        number = "1";
+        verb = "is";
+        pluralModifier = "";
+    } else {
         number = count.toString();
-        verb = 'are';
-        pluralModifier = 's';
+        verb = "are";
+        pluralModifier = "s";
     }
     const guessMessage = `There ${verb} ${number} ${candidate}${pluralModifier}`;
     console.log(guessMessage);
@@ -269,41 +267,39 @@ function printGuessStatistics(candidate, count){
 </code></pre>
 <pre><code class="language-js">// good
 class GuessStatisticsMessage {
-
-    make(candidate, count){
+    make(candidate, count) {
         createPluralDependentMessageParts(this.count);
         return `There ${this.verb} ${this.number} ${this.candidate}${this.pluralModifier}`;
     }
 
-    createPluralDependentMessageParts(count){
-        if (count === 0){
+    createPluralDependentMessageParts(count) {
+        if (count === 0) {
             thereAreNoLetters();
-        }else if (count === 1){
+        } else if (count === 1) {
             thereIsOneLetter();
-        }else{
+        } else {
             thereAreManyLetters(count);
         }
     }
 
-    thereAreManyLetters(count){
+    thereAreManyLetters(count) {
         this.number = count.toString();
-        this.verb = 'are';
-        this.pluralModifier = 's';
+        this.verb = "are";
+        this.pluralModifier = "s";
     }
 
-    thereIsOneLetter(){
-        this.number = '1';
-        this.verb = 'is';
-        this.pluralModifier = '';
+    thereIsOneLetter() {
+        this.number = "1";
+        this.verb = "is";
+        this.pluralModifier = "";
     }
 
-    thereAreNoLetters(){
-        this.number = 'no';
-        this.verb = 'are';
-        this.pluralModifier = 's';
+    thereAreNoLetters() {
+        this.number = "no";
+        this.verb = "are";
+        this.pluralModifier = "s";
     }
 }
-
 </code></pre>
 <h3 id="불필요한-맥락을-없애라">불필요한 맥락을 없애라</h3>
 <ul>

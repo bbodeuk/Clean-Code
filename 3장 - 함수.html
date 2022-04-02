@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>3장 함수</title>
-        <meta name="description" content="3장 함수작게 만들어라 함수를 만드는 첫째 규칙은 작게, 둘째 규칙은 더 작게 얼마나 짧아야 좋을까? 이 정도가 좋다. function renderPageWithSetupsAndTeardowns(pageData, isSuite){     if (isTestPage(pageDate))          includeSetupAndTeardownPages(pag" />
+        <meta name="description" content="3장 함수작게 만들어라 함수를 만드는 첫째 규칙은 작게, 둘째 규칙은 더 작게 얼마나 짧아야 좋을까? 이 정도가 좋다. function renderPageWithSetupsAndTeardowns(pageData, isSuite) {     if (isTestPage(pageDate)) includeSetupAndTeardownPages(pageData, i" />
         <link rel="preconnect" async href="https://fonts.googleapis.com" />
         <link
             rel="preconnect"
@@ -59,9 +59,8 @@
 <li>함수를 만드는 첫째 규칙은 <code>작게</code>, 둘째 규칙은 <code>더 작게</code></li>
 <li>얼마나 짧아야 좋을까? 이 정도가 좋다.</li>
 </ul>
-<pre><code class="language-js">function renderPageWithSetupsAndTeardowns(pageData, isSuite){
-    if (isTestPage(pageDate)) 
-        includeSetupAndTeardownPages(pageData, isSuite);
+<pre><code class="language-js">function renderPageWithSetupsAndTeardowns(pageData, isSuite) {
+    if (isTestPage(pageDate)) includeSetupAndTeardownPages(pageData, isSuite);
     return pageData.getHtml();
 }
 </code></pre>
@@ -90,8 +89,8 @@
 </ul>
 <h2 id="switch문">Switch문</h2>
 <p>switch문은 본질적으로 N가지를 처리한다. 불행히도 switch문을 완전히 피할 순 없으나, interface나 abstract factory 등 상속 관계로 숨기고 다른 코드에 노출하지 않는다.</p>
-<pre><code class="language-js">function calculatePay(employee){
-    switch(employee.type){
+<pre><code class="language-js">function calculatePay(employee) {
+    switch (employee.type) {
         case COMMISSIONED:
             return calculateCommisionedPay(employee);
         case COMMISSIONED:
@@ -175,15 +174,15 @@
 <ul>
 <li>부수효과는 때로는 예상치 못하게 지역/전역변수 및 인수를 수정한다. 많은 경우 시간적 결합이나 순서 종속성을 초래한다.</li>
 </ul>
-<pre><code class="language-js">function userValidator(){
+<pre><code class="language-js">function userValidator() {
     let cryptographer;
 
     function checkPassword(userName, password) {
         const user = UserGateWay.findByName(userName);
-        if (user !== User.NULL){
+        if (user !== User.NULL) {
             const codePhrase = user.getPhraseEncodedByPassword();
             const phrase = cryptograper.decrypt(codePhrase, password);
-            if ('Valid Password'.equals(phrase)){
+            if ("Valid Password".equals(phrase)) {
                 Session.initialize();
                 return true;
             }
@@ -206,28 +205,27 @@
 <pre><code class="language-js">if (set('username', 'unclebob'))
 </code></pre>
 <p>개발자는 <code>set</code>을 동사로 의도했지만 if문에 넣고 보면 형용사로 <strong>느껴진다.</strong> 해결책은 명령과 조회를 분리해 혼란을 애초에 뿌리뽑는 것이다.</p>
-<pre><code class="language-js">if (attributeExists('username')){
-    setAttribute('username', 'unclebob');
+<pre><code class="language-js">if (attributeExists("username")) {
+    setAttribute("username", "unclebob");
 }
 </code></pre>
 <h2 id="오류-코드보다-예외를-사용하라">오류 코드보다 예외를 사용하라</h2>
 <p>오류 코드 대신 예외를 사용하면 오류 처리 코드가 원래 코드에서 분리되므로 코드가 깔끔해진다.</p>
 <h3 id="trycatch-블록-뽑아내기">Try/Catch 블록 뽑아내기</h3>
-<pre><code class="language-js">if (deletePage(page) === E_OK){
-    if(registry.deleteReference(page.name === E_OK) {
-        if (configKeys.deleteKey(page.name.makeKey() === E_OK)){
-            logger.log('page deleted');
-        }else{
-        logger.log('configKey not deleted');
+<pre><code class="language-js">if (deletePage(page) === E_OK) {
+    if (registry.deleteReference(page.name === E_OK)) {
+        if (configKeys.deleteKey(page.name.makeKey() === E_OK)) {
+            logger.log("page deleted");
+        } else {
+            logger.log("configKey not deleted");
         }
-    }else{
-        logger.log('deleteReference from registry failed');
+    } else {
+        logger.log("deleteReference from registry failed");
     }
-}else{
-    logger.log('delete failed');
+} else {
+    logger.log("delete failed");
     return E_ERROR;
 }
-
 </code></pre>
 <p>위의 코드에서 정상 동작과 오류 처리 동작을 분리하면 코드를 이해하고 수정하기 쉬워진다.</p>
 <pre><code class="language-js">function delete(page){
@@ -269,7 +267,7 @@ function logError(e){
 </ul>
 <h2 id="구조적-프로그래밍">구조적 프로그래밍</h2>
 <ul>
-<li><code>Dijkstra 구조적 프로그래밍 원칙</code>:  모든 함수 내 모든 블록에 입구와 출구가 하나만 존재해야 한다.</li>
+<li><code>Dijkstra 구조적 프로그래밍 원칙</code>: 모든 함수 내 모든 블록에 입구와 출구가 하나만 존재해야 한다.</li>
 <li>함수는 return문이 하나여야 한다. 함수를 작게 만든다면 return, break, continue를 여러 차례 사용해도 괜찮다.</li>
 <li><strong>절대 goto를 사용해서는 안된다.</strong></li>
 </ul>
