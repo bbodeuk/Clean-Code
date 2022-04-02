@@ -116,14 +116,14 @@ function addNavigationToData(data, index) {
         return data;
     }
 
-    const getArticleTag = (type, title) =>
-        `<article class="navigation-item navigation-item--${type.toLowerCase()}"><a href="/${getFileName(
-            title,
-        )}.html"><div><div class="navigation-item__type">${type}</div><h2 class="navigation-item__title">${getFileName(
-            title,
-        )}</h2></div><div><i class="icon-arrow_${
+    const getArticleTag = (type, rawTitle) => {
+        const title = getFileName(rawTitle);
+        const titleToDisplay = title === "index" ? config.defaultTitle : title;
+
+        return `<article class="navigation-item navigation-item--${type.toLowerCase()}"><a href="/${title}.html"><div><div class="navigation-item__type">${type}</div><h2 class="navigation-item__title">${titleToDisplay}</h2></div><div><i class="icon-arrow_${
             type === "Previous" ? "back" : "forward"
         }"></i></div></a></article>`;
+    };
 
     if (index < 1) {
         return `${data}<div class="navigation">${getArticleTag(
