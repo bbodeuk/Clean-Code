@@ -2,7 +2,7 @@
     const { classList: htmlClass } = document.documentElement;
     const localTheme = localStorage.getItem("theme");
     const prefersDarkTheme = window.matchMedia(
-        "(prefers-color-scheme: dark)"
+        "(prefers-color-scheme: dark)",
     ).matches;
     const theme = localTheme || (prefersDarkTheme ? "dark" : "light");
     const themeButton = document.createElement("button");
@@ -47,7 +47,7 @@
         const tocElements = document.querySelectorAll(".toc a");
         const tocTargetHeadingIsInViewport = [...tocElements].map((x) => {
             const { offsetTop } = document.querySelector(
-                decodeURIComponent(x.getAttribute("href"))
+                decodeURIComponent(x.getAttribute("href")),
             );
 
             return (
@@ -71,7 +71,7 @@
         const response = await fetch(uri);
         const parsed = new DOMParser().parseFromString(
             await response.text(),
-            "text/html"
+            "text/html",
         );
 
         window.scrollTo(0, 0);
