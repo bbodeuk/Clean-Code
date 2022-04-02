@@ -21,13 +21,13 @@ const NAVIGATION = fs.readdirSync(DOCS_DIR).sort((a, b) => {
 });
 const TEMPLATE = fs.readFileSync(
     path.resolve("./src/template/index.html"),
-    "utf-8"
+    "utf-8",
 );
 
 function getFileName(fileNameWithExtension) {
     return path.basename(
         fileNameWithExtension,
-        path.extname(fileNameWithExtension)
+        path.extname(fileNameWithExtension),
     );
 }
 
@@ -61,7 +61,7 @@ function createFile({ fileName, content, toc, info }) {
         .replace(/<!-- TITLE -->/gm, title)
         .replace(
             /<!-- DESCRIPTION -->/gm,
-            description || descriptionFromContent
+            description || descriptionFromContent,
         )
         .replace(/<!-- DATE -->/gm, new Date(date).toISOString())
         .replace(/<!-- AUTHOR -->/gm, author)
@@ -95,7 +95,7 @@ function parseInfo(regexMatchGroup, fileName) {
                 .split("\n")
                 .filter((x) => x !== "")
                 .map((x) => x.split(":"))
-                .map(([key, value]) => [key.trim(), value.trim()])
+                .map(([key, value]) => [key.trim(), value.trim()]),
         ),
     };
 }
@@ -118,9 +118,9 @@ function addNavigationToData(data, index) {
 
     const getArticleTag = (type, title) =>
         `<article class="navigation-item navigation-item--${type.toLowerCase()}"><a href="/${getFileName(
-            title
+            title,
         )}.html"><div><div class="navigation-item__type">${type}</div><h2 class="navigation-item__title">${getFileName(
-            title
+            title,
         )}</h2></div><div><i class="icon-arrow_${
             type === "Previous" ? "back" : "forward"
         }"></i></div></a></article>`;
@@ -128,20 +128,20 @@ function addNavigationToData(data, index) {
     if (index < 1) {
         return `${data}<div class="navigation">${getArticleTag(
             "Next",
-            NAVIGATION[1]
+            NAVIGATION[1],
         )}</div>`;
     }
 
     if (NAVIGATION.length - 1 <= index) {
         return `${data}<div class="navigation">${getArticleTag(
             "Previous",
-            NAVIGATION[NAVIGATION.length - 2]
+            NAVIGATION[NAVIGATION.length - 2],
         )}</div>`;
     }
 
     return `${data}<div class="navigation">${getArticleTag(
         "Previous",
-        NAVIGATION[index - 1]
+        NAVIGATION[index - 1],
     )}${getArticleTag("Next", NAVIGATION[index + 1])}</div>`;
 }
 
@@ -152,7 +152,7 @@ function parseTocFromContent(content) {
     let ulOpenedCnt = 0;
     let ulClosedCnt = 0;
     const startIndex = contentArray.indexOf(
-        '<h2 id="table-of-contents">Table of contents</h2>'
+        '<h2 id="table-of-contents">Table of contents</h2>',
     );
     let endIndex = 0;
 
