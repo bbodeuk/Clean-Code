@@ -41,6 +41,89 @@
         themeStyle.innerText = palette[nextTheme];
     }
 
+    function syncToc() {
+        const { scrollY, innerHeight: windowHeight } = window;
+        const currentPosition = scrollY;
+        const tocElements = document.querySelectorAll(".toc a");
+        const tocTargetHeadingIsInViewport = [...tocElements].map((x) => {
+            const { offsetTop } = document.querySelector(
+                decodeURIComponent(x.getAttribute("href"))
+            );
+
+            return (
+                currentPosition <= offsetTop &&
+                offsetTop <= currentPosition + windowHeight
+            );
+        });
+
+        tocElements.forEach((elt, i) => {
+            if (tocTargetHeadingIsInViewport[i]) {
+                elt.classList.add("highlight");
+                return;
+            }
+
+            elt.classList.remove("highlight");
+        });
+    }
+
+    async function fetchPage(uri, target) {
+        const metaFragment = document.createDocumentFragment();
+        const response = await fetch(uri);
+        const parsed = new DOMParser().parseFromString(
+            await response.text(),
+            "text/html"
+        );
+
+        window.scrollTo(0, 0);
+
+        document.querySelector("main").innerHTML =
+            parsed.querySelector("main").innerHTML;
+        syncToc();
+
+        document.querySelectorAll("pre code").forEach((el) => {
+            hljs.highlightElement(el);
+        });
+        parsed.querySelectorAll("a").forEach((elt) => {
+            elt.addEventListener("click", handleAnchorClick);
+        });
+
+        document
+            .querySelectorAll(".global-navigation .highlight")
+            .forEach((elt) => {
+                elt.classList.remove("highlight");
+            });
+        target.parentNode.classList.add("highlight");
+
+        document.title = parsed.title;
+        document.head.querySelectorAll("meta").forEach((elt) => {
+            elt.remove();
+        });
+        parsed.head.querySelectorAll("meta").forEach((elt) => {
+            metaFragment.append(elt);
+        });
+        document.head.append(metaFragment);
+    }
+
+    async function handleAnchorClick(event) {
+        const { target } = event;
+        const { href, host, hash, pathname, search } = target;
+
+        if (host && location.host === host) {
+            event.preventDefault();
+        }
+
+        if (location.pathname === pathname) {
+            if (hash) {
+                location.hash = hash;
+            }
+
+            return;
+        }
+
+        history.pushState("", document.title, pathname + search);
+        fetchPage(href, target);
+    }
+
     document.querySelector(".drawer-opener").addEventListener("click", () => {
         htmlClass.add("drawer-revealed");
         htmlClass.remove("toc-revealed");
@@ -62,7 +145,13 @@
         htmlClass.remove("drawer-revealed");
     });
 
+    document.querySelectorAll("a").forEach((elt) => {
+        elt.addEventListener("click", handleAnchorClick);
+    });
+
     window.addEventListener("load", () => {
+        syncToc();
+
         document.querySelectorAll("pre code").forEach((el) => {
             hljs.highlightElement(el);
         });
@@ -70,6 +159,8 @@
         highlightTheme(theme);
         document.head.append(themeStyle);
     });
+
+    window.addEventListener("scroll", syncToc, { passive: true });
 
     initializeTheme();
 })();

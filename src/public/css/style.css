@@ -146,7 +146,7 @@ html.toc-revealed .global-navigation {
     font-weight: 700;
 }
 
-.global-navigation > ul > li.highlight {
+.global-navigation > ul > li:not(:first-of-type).highlight {
     background: var(--background);
     border: 1px solid var(--border);
     border-right: 0;
@@ -211,7 +211,9 @@ html:is(.toc-revealed, .drawer-revealed) .closer {
 }
 
 .toc {
+    position: relative;
     padding: 10px;
+    box-shadow: inset 3px 0px 0px 0px var(--background-elevated);
 }
 
 .toc ul {
@@ -223,10 +225,21 @@ html:is(.toc-revealed, .drawer-revealed) .closer {
     max-width: 100%;
     padding: 4px 8px;
     font-size: 0.9rem;
-    line-height: 1.5;
+    line-height: 1.3rem;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.toc a.highlight::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    display: block;
+    width: 3px;
+    height: calc(1.3rem + 10px);
+    margin-top: -1px;
+    background-color: var(--highlight);
 }
 
 .article :is(h1, h2, h3, h4, h5, h6) {
@@ -319,6 +332,10 @@ html:is(.toc-revealed, .drawer-revealed) .closer {
     background-color: var(--background-contents);
 }
 
+.article .sr-only {
+    font-size: 1rem;
+}
+
 @media screen and (min-width: 1180px) {
     body,
     main {
@@ -350,11 +367,14 @@ html:is(.toc-revealed, .drawer-revealed) .closer {
         justify-content: flex-end;
     }
 
+    .global-navigation > ul {
+        height: 100%;
+    }
+
     .global-navigation > ul,
     .toc {
         position: fixed;
         width: clamp(0px, 100%, 300px);
-        height: 100%;
     }
 
     .article {
