@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>2장 의미 있는 이름</title>
+        <meta name="description" content="2장 의미 있는 이름목차 기본적인 명명법 클래스 이름 메서드 이름 Rules 의도를 분명히 밝혀라 그릇된 정보를 피하라 의미 있게 구분하라 발음하기 쉬운 이름을 사용하라 검색하기 쉬운 이름을 사용하라 인코딩을 피하라 자신의 기억력을 자랑하지 마라 기발한 이름은 피하라 한 개념에 한 단어를 사용하라 말 장난을 하지 마라 해법 영역에서 가져온 이름을 사용하라 " />
+        <link rel="preconnect" async href="https://fonts.googleapis.com" />
+        <link
+            rel="preconnect"
+            async
+            href="https://fonts.gstatic.com"
+            crossorigin
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" async href="/Clean-Code/css/reset.css" />
+        <link rel="stylesheet" async href="/Clean-Code/css/icon.css" />
+        <link rel="stylesheet" async href="/Clean-Code/css/style.css" />
+        <style>
+            @font-face {
+                font-family: icon;
+                src: url("/Clean-Code/icon/icon.woff?zg8y3j") format("woff"),
+                    url("/Clean-Code/icon/icon.svg?zg8y3j#icon") format("svg");
+                font-weight: 400;
+                font-style: normal;
+                font-display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="masthead">
+            <div class="masthead__inner">
+                <div class="masthead__grow masthead__left">
+                    <button
+                        class="drawer-opener icon-menu"
+                        aria-label="메뉴 보기"
+                    ></button>
+                </div>
+                <div class="masthead__center">2장 의미 있는 이름</div>
+                <div class="masthead__grow masthead__right">
+                    <button
+                        class="toc-opener icon-bookmark_outline"
+                        aria-label="목차 보기"
+                    ></button>
+                </div>
+            </div>
+        </div>
+        <nav class="global-navigation">
+            <ul><li><a href="/Clean-Code/">클린 코드 스터디</a></li><li><a href="/Clean-Code/1%EC%9E%A5%20-%20%EA%B9%A8%EB%81%97%ED%95%9C%20%EC%BD%94%EB%93%9C.html">1장 - 깨끗한 코드</a></li$><li class="highlight"><a href="/Clean-Code/2%EC%9E%A5%20-%20%EC%9D%98%EB%AF%B8%20%EC%9E%88%EB%8A%94%20%EC%9D%B4%EB%A6%84.html">2장 - 의미 있는 이름</a></li$><li><a href="/Clean-Code/3%EC%9E%A5%20-%20%ED%95%A8%EC%88%98.html">3장 - 함수</a></li$></ul>
+        </nav>
+        <main>
+            <article class="article">
+                <h1 id="2장-의미-있는-이름">2장 의미 있는 이름</h1><h2 id="목차">목차</h2>
+<ul>
+<li><a href="#%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8-%EB%AA%85%EB%AA%85%EB%B2%95">기본적인 명명법</a>
+<ul>
+<li><a href="#%ED%81%B4%EB%9E%98%EC%8A%A4-%EC%9D%B4%EB%A6%84">클래스 이름</a></li>
+<li><a href="#%EB%A9%94%EC%84%9C%EB%93%9C-%EC%9D%B4%EB%A6%84">메서드 이름</a></li>
+</ul>
+</li>
+<li><a href="#rules">Rules</a>
+<ul>
+<li><a href="#%EC%9D%98%EB%8F%84%EB%A5%BC-%EB%B6%84%EB%AA%85%ED%9E%88-%EB%B0%9D%ED%98%80%EB%9D%BC">의도를 분명히 밝혀라</a></li>
+<li><a href="#%EA%B7%B8%EB%A6%87%EB%90%9C-%EC%A0%95%EB%B3%B4%EB%A5%BC-%ED%94%BC%ED%95%98%EB%9D%BC">그릇된 정보를 피하라</a></li>
+<li><a href="#%EC%9D%98%EB%AF%B8-%EC%9E%88%EA%B2%8C-%EA%B5%AC%EB%B6%84%ED%95%98%EB%9D%BC">의미 있게 구분하라</a></li>
+<li><a href="#%EB%B0%9C%EC%9D%8C%ED%95%98%EA%B8%B0-%EC%89%AC%EC%9A%B4-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">발음하기 쉬운 이름을 사용하라</a></li>
+<li><a href="#%EA%B2%80%EC%83%89%ED%95%98%EA%B8%B0-%EC%89%AC%EC%9A%B4-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">검색하기 쉬운 이름을 사용하라</a></li>
+<li><a href="#%EC%9D%B8%EC%BD%94%EB%94%A9%EC%9D%84-%ED%94%BC%ED%95%98%EB%9D%BC">인코딩을 피하라</a></li>
+<li><a href="#%EC%9E%90%EC%8B%A0%EC%9D%98-%EA%B8%B0%EC%96%B5%EB%A0%A5%EC%9D%84-%EC%9E%90%EB%9E%91%ED%95%98%EC%A7%80-%EB%A7%88%EB%9D%BC">자신의 기억력을 자랑하지 마라</a></li>
+<li><a href="#%EA%B8%B0%EB%B0%9C%ED%95%9C-%EC%9D%B4%EB%A6%84%EC%9D%80-%ED%94%BC%ED%95%98%EB%9D%BC">기발한 이름은 피하라</a></li>
+<li><a href="#%ED%95%9C-%EA%B0%9C%EB%85%90%EC%97%90-%ED%95%9C-%EB%8B%A8%EC%96%B4%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">한 개념에 한 단어를 사용하라</a></li>
+<li><a href="#%EB%A7%90-%EC%9E%A5%EB%82%9C%EC%9D%84-%ED%95%98%EC%A7%80-%EB%A7%88%EB%9D%BC">말 장난을 하지 마라</a></li>
+<li><a href="#%ED%95%B4%EB%B2%95-%EC%98%81%EC%97%AD%EC%97%90%EC%84%9C-%EA%B0%80%EC%A0%B8%EC%98%A8-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">해법 영역에서 가져온 이름을 사용하라</a></li>
+<li><a href="#%EB%AC%B8%EC%A0%9C-%EC%98%81%EC%97%AD%EC%97%90%EC%84%9C-%EA%B0%80%EC%A0%B8%EC%98%A8-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">문제 영역에서 가져온 이름을 사용하라</a></li>
+<li><a href="#%EC%9D%98%EB%AF%B8-%EC%9E%88%EB%8A%94-%EB%A7%A5%EB%9D%BD%EC%9D%84-%EC%B6%94%EA%B0%80%ED%95%98%EB%9D%BC">의미 있는 맥락을 추가하라</a></li>
+<li><a href="#%EB%B6%88%ED%95%84%EC%9A%94%ED%95%9C-%EB%A7%A5%EB%9D%BD%EC%9D%84-%EC%97%86%EC%95%A0%EB%9D%BC">불필요한 맥락을 없애라</a></li>
+<li><a href="#%EB%A7%88%EC%B9%98%EB%A9%B4%EC%84%9C">마치면서</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="기본적인-명명법">기본적인 명명법</h2>
+<h3 id="클래스-이름">클래스 이름</h3>
+<p>클래스 이름과 객체 이름은 <code>명사</code>나 <code>명사구</code>가 적합하다. 동사는 지양한다.</p>
+<ul>
+<li>좋은 예: Customer, WikiPage, Account, AddressParser</li>
+<li>피할 단어: Manager, Processor, Data, Info</li>
+</ul>
+<h3 id="메서드-이름">메서드 이름</h3>
+<p>메서드 이름은 <code>동사</code>나 <code>동사구</code>가 적합하다.</p>
+<ul>
+<li>좋은 예: postPayment, deletePage, save</li>
+</ul>
+<p>접근자, 변경자, 조건자는 앞에 get, set, is를 붙인다.</p>
+<pre><code class="language-js">const name = employee.getName();
+customer.setName('mike');
+if (paycheck.isPosted()) ...
+</code></pre>
+<p>메서드는 <code>인수를 설명하는 이름</code>을 사용한다.</p>
+<pre><code class="language-js">// good
+Complex fulcrumPoint = Complex.FromRealNumber(23.0);
+
+// better - 클래스 생성의 경우 생성자 사용
+ComPlex fulcrumPoint = new Complex(23.0);
+</code></pre>
+<h2 id="rules">Rules</h2>
+<h3 id="의도를-분명히-밝혀라">의도를 분명히 밝혀라</h3>
+<p>의도가 분명한 이름은 다음과 같은 질문에 모두 답할 수 있어야 한다.</p>
+<ul>
+<li>변수(or 함수/클래스)의 존재 이유</li>
+<li>수행 기능</li>
+<li>사용 방법</li>
+</ul>
+<p>예시 1)</p>
+<pre><code class="language-js">// bad - 아무 의미도 드러내지 않음
+const d;
+
+// good - 측정하려는 값, 단위를 표현함
+const elapsedTimeInDays;
+const daysSinceCreation;
+const daysSinceModification;
+const fileAgeInDays;
+</code></pre>
+<p>예시 2)</p>
+<pre><code class="language-js">// bad - 코드의 맥락이 코드 자체에 명시적으로 드러나지 않는다.
+function getThem() {
+    let list1 = [];
+    for(let x in theList){
+        if (x[0] === 4)
+            list1.push(x);
+    }
+    return list1;
+}
+</code></pre>
+<pre><code class="language-js">// good - 각 개념에 이름이 붙어있어서 역할을 파악하기 쉽다.
+function getThem() {
+    let flaggedCells = [];
+    for(let cell in gameBoard){
+        if (cell[STATUS_VALUE] === FLAGGED)
+            flaggedCells.push(cell);
+    }
+    return flaggedCells;
+}
+</code></pre>
+<pre><code class="language-js">// better - isFlagged라는 명시적인 함수를 사용해 FLAGGED라는 상수를 감췄다.
+function getThem() {
+    let flaggedCells = [];
+    for(Cell cell in gameBoard){
+        if (cell.isFlagged())
+            flaggedCells.push(cell);
+    })
+    return flaggedCells;
+}
+</code></pre>
+<h3 id="그릇된-정보를-피하라">그릇된 정보를 피하라</h3>
+<p>헷갈리게 만들거나, 오해의 소지가 있는 단어 피하기</p>
+<ul>
+<li>널리 쓰이는 이름을 다른 의미로 사용하면 안된다.</li>
+<li>서로 흡사한 이름 지양
+<ul>
+<li>ex) <code>XYZControllerForEfficientHandlingOfStrings</code> vs <code>XYZControllerForEfficientStorageOfStrings</code></li>
+</ul>
+</li>
+<li>이름으로 그릇된 정보 제공하지 않게 주의
+<ul>
+<li>O와 0,  1과 l</li>
+<li>그룹으로 묶을 때, 실제 컨테이너가 <code>List</code>가 아님에도 이름에 List를 붙이는 경우</li>
+</ul>
+</li>
+<li>유사한 개념은 유사한 표기법을 사용한다. 즉, 일관성 있게 표기한다.</li>
+</ul>
+<h3 id="의미-있게-구분하라">의미 있게 구분하라</h3>
+<ul>
+<li>연속된 숫자 피하기
+<ul>
+<li>a, b, c, ..., a1, a2, a3, ... 등</li>
+<li>저자의 의도가 드러나지 않음. 아무런 정보도 제공하지 못함</li>
+</ul>
+</li>
+<li>불용어 피하기
+<ul>
+<li>Info, Data 등은 의미가 불분명한 불용어임</li>
+<li>변수 이름에 variable, 표 이름에 table 등 금물</li>
+</ul>
+</li>
+<li>읽는 사람이 차이를 알도록 이름을 지어라
+<pre><code class="language-js">// bad - 용도의 차이를 구분할 수 없음
+getActiveAccount();
+getActiveAccounts();
+getActiveAccountInfo();
+</code></pre>
+</li>
+</ul>
+<h3 id="발음하기-쉬운-이름을-사용하라">발음하기 쉬운 이름을 사용하라</h3>
+<p>프로그래밍은 사회 활동이기 때문에 발음하기 쉬운 이름은 중요하다.</p>
+<pre><code class="language-js">// bad
+const genymdhms; // generated-ymd-hms의 약어임은 알겠으나 발음을 알 수 없음
+const modymdhms;
+const pszqint = '102';
+
+// good
+const generationTimeStamp;
+const modificationTimeStamp;
+const recordId = "102";
+</code></pre>
+<h3 id="검색하기-쉬운-이름을-사용하라">검색하기 쉬운 이름을 사용하라</h3>
+<ul>
+<li>검색 관점에서 <strong>긴 이름</strong>이 짧은 이름보다 좋다. 검색이 쉬운 이름이 상수보다 좋다.
+<pre><code class="language-js">const sum; 
+const WORK_DAYS_PER_WEEK; // better
+</code></pre>
+</li>
+<li>간단한 메서드에서 로컬 변수만 한 문자를 사용한다.</li>
+<li><strong>이름의 길이</strong>는 <strong>범위 크기에 비례</strong>해야 한다.
+<ul>
+<li>변수나 상수를 코드 여러 곳에서 사용한다면 검색하기 쉬운 이름이 바람직하다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="인코딩을-피하라">인코딩을 피하라</h3>
+<p>변수명에 굳이 유형이나 범위 정보까지 인코딩하지 말자.</p>
+<ul>
+<li>헝가리식 표기법 지양하기 (변수명에 타입을 적지 말자)
+<pre><code class="language-js">PhoneNumber phoneString; // 타입이 바뀌어도 이름은 바뀌지 않는다
+</code></pre>
+</li>
+<li>접두어(또는 접미어)는 구닥다리 코드다.
+<pre><code class="language-js">const m_dsc; // bad
+const description; // good
+</code></pre>
+</li>
+<li>인터페이스 클래스와 구현 클래스
+<ul>
+<li>인터페이스 이름은 접두어(I)를 붙이지 않는 편이 좋다.</li>
+<li>인터페이스 클래스 이름과 구현 클래스 이름 중 하나를 인코딩해야 한다면 구현 클래스 이름을 선택한다. ShapeFactoryImp나 CShapeFactory가 IShapeFactory보다 좋다.</li>
+</ul>
+</li>
+</ul>
+<h3 id="자신의-기억력을-자랑하지-마라">자신의 기억력을 자랑하지 마라</h3>
+<ul>
+<li>명료함이 최고</li>
+<li>남들이 이해하는 코드를 작성하는 것이 더 중요하다.</li>
+<li>문자 하나만 사용하는 변수 이름은 피하라. 단, 루프에서 반복 횟수 변수는 전통적으로 한 글자 (i, j, k)이므로 제외한다. l은 절대 안된다 (1과 헷갈림)</li>
+</ul>
+<h3 id="기발한-이름은-피하라">기발한 이름은 피하라</h3>
+<ul>
+<li>재미난 이름보다 명료한 이름을 선택하라.</li>
+<li>HolyHandGrenade (X), DeleteItems (O)</li>
+<li>의도를 분명하고 솔직하게 표현하라.</li>
+</ul>
+<h3 id="한-개념에-한-단어를-사용하라">한 개념에 한 단어를 사용하라</h3>
+<ul>
+<li>일관성 있는 어휘</li>
+<li>똑같은 메서드를 클래스마다 fetch, retrieve, get으로 제각각 부르면 혼란스럽다. 마찬가지로 동일 코드 기반에 controller, manager, driver를 섞어쓰면 혼란스럽다.</li>
+</ul>
+<h3 id="말-장난을-하지-마라">말 장난을 하지 마라</h3>
+<ul>
+<li>다른 개념에 같은 단어를 사용하지 마라.</li>
+<li>add 메서드가 두 개를 이어 붙여 새로운 값을 만든다고 가정하자. 집합에 값 하나를 추가하는 메서드는 기존 add 메서드와 맥락이 다르므로 insert, append 등의 다른 이름을 써야 한다.</li>
+</ul>
+<h3 id="해법-영역에서-가져온-이름을-사용하라">해법 영역에서 가져온 이름을 사용하라</h3>
+<ul>
+<li>전산 용어, 알고리즘 이름, 패턴 이름, 수학 용어 등을 사용해도 괜찮다. 기술 개념에는 기술 이름이 가장 적합한 선택이다.</li>
+<li>개발자라면 <code>JobQueue</code>, <code>AccountVisitor(VISITOR 패턴)</code>을 알고 있으니 이름에 사용해도 무방하다.</li>
+</ul>
+<h3 id="문제-영역에서-가져온-이름을-사용하라">문제 영역에서 가져온 이름을 사용하라</h3>
+<ul>
+<li>적절한 프로그래머 용어가 없다면 문제 영역에서 이름을 가져온다.</li>
+<li>문제 영역 개념과 관련이 깊은 코드라면 문제 영역에서 이름을 가져와야 한다.</li>
+</ul>
+<h3 id="의미-있는-맥락을-추가하라">의미 있는 맥락을 추가하라</h3>
+<p>변수를 클래스, 함수, 이름 공간(Namespace)에 넣어 맥락을 부여한다. 최후의 수단으로 접두어를 붙인다.</p>
+<pre><code class="language-js">// bad
+function printGuessStatistics(candidate, count){
+    let number;
+    let verb;
+    let pluralModifier;
+    if (count === 0){
+        number = 'no';
+        verb = 'are';
+        pluralModifier = 's';
+    }else if (count === 1){
+        number = '1';
+        verb = 'is';
+        pluralModifier = '';
+    }else {
+        number = count.toString();
+        verb = 'are';
+        pluralModifier = 's';
+    }
+    const guessMessage = `There ${verb} ${number} ${candidate}${pluralModifier}`;
+    console.log(guessMessage);
+}
+</code></pre>
+<pre><code class="language-js">// good
+class GuessStatisticsMessage {
+
+    make(candidate, count){
+        createPluralDependentMessageParts(this.count);
+        return `There ${this.verb} ${this.number} ${this.candidate}${this.pluralModifier}`;
+    }
+
+    createPluralDependentMessageParts(count){
+        if (count === 0){
+            thereAreNoLetters();
+        }else if (count === 1){
+            thereIsOneLetter();
+        }else{
+            thereAreManyLetters(count);
+        }
+    }
+
+    thereAreManyLetters(count){
+        this.number = count.toString();
+        this.verb = 'are';
+        this.pluralModifier = 's';
+    }
+
+    thereIsOneLetter(){
+        this.number = '1';
+        this.verb = 'is';
+        this.pluralModifier = '';
+    }
+
+    thereAreNoLetters(){
+        this.number = 'no';
+        this.verb = 'are';
+        this.pluralModifier = 's';
+    }
+}
+
+</code></pre>
+<h3 id="불필요한-맥락을-없애라">불필요한 맥락을 없애라</h3>
+<ul>
+<li><code>고급 휘발유 충전소(Gas Station Deluxe)</code>라는 애플리케이션을 짠다고 가정하자.</li>
+<li>모든 클래스 이름 앞에 <code>GSD</code>를 붙이는 것은 좋지 않다. IDE를 방해하기까지 한다.</li>
+<li><code>GSD</code> 모듈에 MailingAddress 클래스를 추가하면서 GSDAccountAddress로 이름을 바꿨다. 나중에 다른 고객 관리 프로그램에서 고객의 주소가 필요할 때, 이 GSDAccountAddress 클래스를 사용할까?</li>
+<li>의미가 분명한 경우에 한해서 짧은 이름이 긴 이름보다 좋다.</li>
+</ul>
+<h2 id="마치면서">마치면서</h2>
+<p>좋은 이름을 선택하는 것은 어렵다.<br>
+설명 능력이 뛰어나야 하고 문화적인 배경이 같아야 하기 때문이다.<br>
+사람들이 이름을 바꾸지 않으려는 이유 하나는 다른 개발자가 반대할까 두려워서다.<br>
+그러나 코드를 개선하려는 노력을 중단해서는 안되며, 우리는 쉽게 읽히는 코드를 짜는데 집중해야한다.</p>
+            </article>
+            <div class="toc-container"><ul class="toc"><li><p><a href="#%EB%AA%A9%EC%B0%A8">목차</a></p></li><li><p><a href="#%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8-%EB%AA%85%EB%AA%85%EB%B2%95">기본적인 명명법</a></p><ul><li><a href="#%ED%81%B4%EB%9E%98%EC%8A%A4-%EC%9D%B4%EB%A6%84">클래스 이름</a></li><li><a href="#%EB%A9%94%EC%84%9C%EB%93%9C-%EC%9D%B4%EB%A6%84">메서드 이름</a></li></ul></li><li><p><a href="#rules">Rules</a></p><ul><li><a href="#%EC%9D%98%EB%8F%84%EB%A5%BC-%EB%B6%84%EB%AA%85%ED%9E%88-%EB%B0%9D%ED%98%80%EB%9D%BC">의도를 분명히 밝혀라</a></li><li><a href="#%EA%B7%B8%EB%A6%87%EB%90%9C-%EC%A0%95%EB%B3%B4%EB%A5%BC-%ED%94%BC%ED%95%98%EB%9D%BC">그릇된 정보를 피하라</a></li><li><a href="#%EC%9D%98%EB%AF%B8-%EC%9E%88%EA%B2%8C-%EA%B5%AC%EB%B6%84%ED%95%98%EB%9D%BC">의미 있게 구분하라</a></li><li><a href="#%EB%B0%9C%EC%9D%8C%ED%95%98%EA%B8%B0-%EC%89%AC%EC%9A%B4-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">발음하기 쉬운 이름을 사용하라</a></li><li><a href="#%EA%B2%80%EC%83%89%ED%95%98%EA%B8%B0-%EC%89%AC%EC%9A%B4-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">검색하기 쉬운 이름을 사용하라</a></li><li><a href="#%EC%9D%B8%EC%BD%94%EB%94%A9%EC%9D%84-%ED%94%BC%ED%95%98%EB%9D%BC">인코딩을 피하라</a></li><li><a href="#%EC%9E%90%EC%8B%A0%EC%9D%98-%EA%B8%B0%EC%96%B5%EB%A0%A5%EC%9D%84-%EC%9E%90%EB%9E%91%ED%95%98%EC%A7%80-%EB%A7%88%EB%9D%BC">자신의 기억력을 자랑하지 마라</a></li><li><a href="#%EA%B8%B0%EB%B0%9C%ED%95%9C-%EC%9D%B4%EB%A6%84%EC%9D%80-%ED%94%BC%ED%95%98%EB%9D%BC">기발한 이름은 피하라</a></li><li><a href="#%ED%95%9C-%EA%B0%9C%EB%85%90%EC%97%90-%ED%95%9C-%EB%8B%A8%EC%96%B4%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">한 개념에 한 단어를 사용하라</a></li><li><a href="#%EB%A7%90-%EC%9E%A5%EB%82%9C%EC%9D%84-%ED%95%98%EC%A7%80-%EB%A7%88%EB%9D%BC">말 장난을 하지 마라</a></li><li><a href="#%ED%95%B4%EB%B2%95-%EC%98%81%EC%97%AD%EC%97%90%EC%84%9C-%EA%B0%80%EC%A0%B8%EC%98%A8-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">해법 영역에서 가져온 이름을 사용하라</a></li><li><a href="#%EB%AC%B8%EC%A0%9C-%EC%98%81%EC%97%AD%EC%97%90%EC%84%9C-%EA%B0%80%EC%A0%B8%EC%98%A8-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">문제 영역에서 가져온 이름을 사용하라</a></li><li><a href="#%EC%9D%98%EB%AF%B8-%EC%9E%88%EB%8A%94-%EB%A7%A5%EB%9D%BD%EC%9D%84-%EC%B6%94%EA%B0%80%ED%95%98%EB%9D%BC">의미 있는 맥락을 추가하라</a></li><li><a href="#%EB%B6%88%ED%95%84%EC%9A%94%ED%95%9C-%EB%A7%A5%EB%9D%BD%EC%9D%84-%EC%97%86%EC%95%A0%EB%9D%BC">불필요한 맥락을 없애라</a></li></ul></li><li><p><a href="#%EB%A7%88%EC%B9%98%EB%A9%B4%EC%84%9C">마치면서</a></p></li></ul></div>
+        </main>
+        <div class="closer"></div>
+        <script
+            defer
+            src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"
+        ></script>
+        <script defer src="/Clean-Code/js/app.js"></script>
+    </body>
+</html>
