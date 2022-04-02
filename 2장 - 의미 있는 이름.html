@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>2장 의미 있는 이름</title>
-        <meta name="description" content="2장 의미 있는 이름목차 기본적인 명명법 클래스 이름 메서드 이름 Rules 의도를 분명히 밝혀라 그릇된 정보를 피하라 의미 있게 구분하라 발음하기 쉬운 이름을 사용하라 검색하기 쉬운 이름을 사용하라 인코딩을 피하라 자신의 기억력을 자랑하지 마라 기발한 이름은 피하라 한 개념에 한 단어를 사용하라 말 장난을 하지 마라 해법 영역에서 가져온 이름을 사용하라 " />
+        <meta name="description" content="2장 의미 있는 이름기본적인 명명법 클래스 이름 클래스 이름과 객체 이름은 명사나 명사구가 적합하다. 동사는 지양한다. 좋은 예: Customer, WikiPage, Account, AddressParser 피할 단어: Manager, Processor, Data, Info 메서드 이름 메서드 이름은 동사나 동사구가 적합하다. 좋은 예: postPaymen" />
         <link rel="preconnect" async href="https://fonts.googleapis.com" />
         <link
             rel="preconnect"
@@ -54,36 +54,7 @@
         </nav>
         <main>
             <article class="article">
-                <h1 id="2장-의미-있는-이름">2장 의미 있는 이름</h1><h2 id="목차">목차</h2>
-<ul>
-<li><a href="#%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8-%EB%AA%85%EB%AA%85%EB%B2%95">기본적인 명명법</a>
-<ul>
-<li><a href="#%ED%81%B4%EB%9E%98%EC%8A%A4-%EC%9D%B4%EB%A6%84">클래스 이름</a></li>
-<li><a href="#%EB%A9%94%EC%84%9C%EB%93%9C-%EC%9D%B4%EB%A6%84">메서드 이름</a></li>
-</ul>
-</li>
-<li><a href="#rules">Rules</a>
-<ul>
-<li><a href="#%EC%9D%98%EB%8F%84%EB%A5%BC-%EB%B6%84%EB%AA%85%ED%9E%88-%EB%B0%9D%ED%98%80%EB%9D%BC">의도를 분명히 밝혀라</a></li>
-<li><a href="#%EA%B7%B8%EB%A6%87%EB%90%9C-%EC%A0%95%EB%B3%B4%EB%A5%BC-%ED%94%BC%ED%95%98%EB%9D%BC">그릇된 정보를 피하라</a></li>
-<li><a href="#%EC%9D%98%EB%AF%B8-%EC%9E%88%EA%B2%8C-%EA%B5%AC%EB%B6%84%ED%95%98%EB%9D%BC">의미 있게 구분하라</a></li>
-<li><a href="#%EB%B0%9C%EC%9D%8C%ED%95%98%EA%B8%B0-%EC%89%AC%EC%9A%B4-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">발음하기 쉬운 이름을 사용하라</a></li>
-<li><a href="#%EA%B2%80%EC%83%89%ED%95%98%EA%B8%B0-%EC%89%AC%EC%9A%B4-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">검색하기 쉬운 이름을 사용하라</a></li>
-<li><a href="#%EC%9D%B8%EC%BD%94%EB%94%A9%EC%9D%84-%ED%94%BC%ED%95%98%EB%9D%BC">인코딩을 피하라</a></li>
-<li><a href="#%EC%9E%90%EC%8B%A0%EC%9D%98-%EA%B8%B0%EC%96%B5%EB%A0%A5%EC%9D%84-%EC%9E%90%EB%9E%91%ED%95%98%EC%A7%80-%EB%A7%88%EB%9D%BC">자신의 기억력을 자랑하지 마라</a></li>
-<li><a href="#%EA%B8%B0%EB%B0%9C%ED%95%9C-%EC%9D%B4%EB%A6%84%EC%9D%80-%ED%94%BC%ED%95%98%EB%9D%BC">기발한 이름은 피하라</a></li>
-<li><a href="#%ED%95%9C-%EA%B0%9C%EB%85%90%EC%97%90-%ED%95%9C-%EB%8B%A8%EC%96%B4%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">한 개념에 한 단어를 사용하라</a></li>
-<li><a href="#%EB%A7%90-%EC%9E%A5%EB%82%9C%EC%9D%84-%ED%95%98%EC%A7%80-%EB%A7%88%EB%9D%BC">말 장난을 하지 마라</a></li>
-<li><a href="#%ED%95%B4%EB%B2%95-%EC%98%81%EC%97%AD%EC%97%90%EC%84%9C-%EA%B0%80%EC%A0%B8%EC%98%A8-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">해법 영역에서 가져온 이름을 사용하라</a></li>
-<li><a href="#%EB%AC%B8%EC%A0%9C-%EC%98%81%EC%97%AD%EC%97%90%EC%84%9C-%EA%B0%80%EC%A0%B8%EC%98%A8-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">문제 영역에서 가져온 이름을 사용하라</a></li>
-<li><a href="#%EC%9D%98%EB%AF%B8-%EC%9E%88%EB%8A%94-%EB%A7%A5%EB%9D%BD%EC%9D%84-%EC%B6%94%EA%B0%80%ED%95%98%EB%9D%BC">의미 있는 맥락을 추가하라</a></li>
-<li><a href="#%EB%B6%88%ED%95%84%EC%9A%94%ED%95%9C-%EB%A7%A5%EB%9D%BD%EC%9D%84-%EC%97%86%EC%95%A0%EB%9D%BC">불필요한 맥락을 없애라</a></li>
-<li><a href="#%EB%A7%88%EC%B9%98%EB%A9%B4%EC%84%9C">마치면서</a></li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="기본적인-명명법">기본적인 명명법</h2>
+                <h1 id="2장-의미-있는-이름">2장 의미 있는 이름</h1><h2 id="기본적인-명명법">기본적인 명명법</h2>
 <h3 id="클래스-이름">클래스 이름</h3>
 <p>클래스 이름과 객체 이름은 <code>명사</code>나 <code>명사구</code>가 적합하다. 동사는 지양한다.</p>
 <ul>
@@ -347,7 +318,7 @@ class GuessStatisticsMessage {
 사람들이 이름을 바꾸지 않으려는 이유 하나는 다른 개발자가 반대할까 두려워서다.<br>
 그러나 코드를 개선하려는 노력을 중단해서는 안되며, 우리는 쉽게 읽히는 코드를 짜는데 집중해야한다.</p>
             </article>
-            <div class="toc-container"><ul class="toc"><li><p><a href="#%EB%AA%A9%EC%B0%A8">목차</a></p></li><li><p><a href="#%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8-%EB%AA%85%EB%AA%85%EB%B2%95">기본적인 명명법</a></p><ul><li><a href="#%ED%81%B4%EB%9E%98%EC%8A%A4-%EC%9D%B4%EB%A6%84">클래스 이름</a></li><li><a href="#%EB%A9%94%EC%84%9C%EB%93%9C-%EC%9D%B4%EB%A6%84">메서드 이름</a></li></ul></li><li><p><a href="#rules">Rules</a></p><ul><li><a href="#%EC%9D%98%EB%8F%84%EB%A5%BC-%EB%B6%84%EB%AA%85%ED%9E%88-%EB%B0%9D%ED%98%80%EB%9D%BC">의도를 분명히 밝혀라</a></li><li><a href="#%EA%B7%B8%EB%A6%87%EB%90%9C-%EC%A0%95%EB%B3%B4%EB%A5%BC-%ED%94%BC%ED%95%98%EB%9D%BC">그릇된 정보를 피하라</a></li><li><a href="#%EC%9D%98%EB%AF%B8-%EC%9E%88%EA%B2%8C-%EA%B5%AC%EB%B6%84%ED%95%98%EB%9D%BC">의미 있게 구분하라</a></li><li><a href="#%EB%B0%9C%EC%9D%8C%ED%95%98%EA%B8%B0-%EC%89%AC%EC%9A%B4-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">발음하기 쉬운 이름을 사용하라</a></li><li><a href="#%EA%B2%80%EC%83%89%ED%95%98%EA%B8%B0-%EC%89%AC%EC%9A%B4-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">검색하기 쉬운 이름을 사용하라</a></li><li><a href="#%EC%9D%B8%EC%BD%94%EB%94%A9%EC%9D%84-%ED%94%BC%ED%95%98%EB%9D%BC">인코딩을 피하라</a></li><li><a href="#%EC%9E%90%EC%8B%A0%EC%9D%98-%EA%B8%B0%EC%96%B5%EB%A0%A5%EC%9D%84-%EC%9E%90%EB%9E%91%ED%95%98%EC%A7%80-%EB%A7%88%EB%9D%BC">자신의 기억력을 자랑하지 마라</a></li><li><a href="#%EA%B8%B0%EB%B0%9C%ED%95%9C-%EC%9D%B4%EB%A6%84%EC%9D%80-%ED%94%BC%ED%95%98%EB%9D%BC">기발한 이름은 피하라</a></li><li><a href="#%ED%95%9C-%EA%B0%9C%EB%85%90%EC%97%90-%ED%95%9C-%EB%8B%A8%EC%96%B4%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">한 개념에 한 단어를 사용하라</a></li><li><a href="#%EB%A7%90-%EC%9E%A5%EB%82%9C%EC%9D%84-%ED%95%98%EC%A7%80-%EB%A7%88%EB%9D%BC">말 장난을 하지 마라</a></li><li><a href="#%ED%95%B4%EB%B2%95-%EC%98%81%EC%97%AD%EC%97%90%EC%84%9C-%EA%B0%80%EC%A0%B8%EC%98%A8-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">해법 영역에서 가져온 이름을 사용하라</a></li><li><a href="#%EB%AC%B8%EC%A0%9C-%EC%98%81%EC%97%AD%EC%97%90%EC%84%9C-%EA%B0%80%EC%A0%B8%EC%98%A8-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">문제 영역에서 가져온 이름을 사용하라</a></li><li><a href="#%EC%9D%98%EB%AF%B8-%EC%9E%88%EB%8A%94-%EB%A7%A5%EB%9D%BD%EC%9D%84-%EC%B6%94%EA%B0%80%ED%95%98%EB%9D%BC">의미 있는 맥락을 추가하라</a></li><li><a href="#%EB%B6%88%ED%95%84%EC%9A%94%ED%95%9C-%EB%A7%A5%EB%9D%BD%EC%9D%84-%EC%97%86%EC%95%A0%EB%9D%BC">불필요한 맥락을 없애라</a></li></ul></li><li><p><a href="#%EB%A7%88%EC%B9%98%EB%A9%B4%EC%84%9C">마치면서</a></p></li></ul></div>
+            <div class="toc-container"><ul class="toc"><li><p><a href="#%EA%B8%B0%EB%B3%B8%EC%A0%81%EC%9D%B8-%EB%AA%85%EB%AA%85%EB%B2%95">기본적인 명명법</a></p><ul><li><a href="#%ED%81%B4%EB%9E%98%EC%8A%A4-%EC%9D%B4%EB%A6%84">클래스 이름</a></li><li><a href="#%EB%A9%94%EC%84%9C%EB%93%9C-%EC%9D%B4%EB%A6%84">메서드 이름</a></li></ul></li><li><p><a href="#rules">Rules</a></p><ul><li><a href="#%EC%9D%98%EB%8F%84%EB%A5%BC-%EB%B6%84%EB%AA%85%ED%9E%88-%EB%B0%9D%ED%98%80%EB%9D%BC">의도를 분명히 밝혀라</a></li><li><a href="#%EA%B7%B8%EB%A6%87%EB%90%9C-%EC%A0%95%EB%B3%B4%EB%A5%BC-%ED%94%BC%ED%95%98%EB%9D%BC">그릇된 정보를 피하라</a></li><li><a href="#%EC%9D%98%EB%AF%B8-%EC%9E%88%EA%B2%8C-%EA%B5%AC%EB%B6%84%ED%95%98%EB%9D%BC">의미 있게 구분하라</a></li><li><a href="#%EB%B0%9C%EC%9D%8C%ED%95%98%EA%B8%B0-%EC%89%AC%EC%9A%B4-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">발음하기 쉬운 이름을 사용하라</a></li><li><a href="#%EA%B2%80%EC%83%89%ED%95%98%EA%B8%B0-%EC%89%AC%EC%9A%B4-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">검색하기 쉬운 이름을 사용하라</a></li><li><a href="#%EC%9D%B8%EC%BD%94%EB%94%A9%EC%9D%84-%ED%94%BC%ED%95%98%EB%9D%BC">인코딩을 피하라</a></li><li><a href="#%EC%9E%90%EC%8B%A0%EC%9D%98-%EA%B8%B0%EC%96%B5%EB%A0%A5%EC%9D%84-%EC%9E%90%EB%9E%91%ED%95%98%EC%A7%80-%EB%A7%88%EB%9D%BC">자신의 기억력을 자랑하지 마라</a></li><li><a href="#%EA%B8%B0%EB%B0%9C%ED%95%9C-%EC%9D%B4%EB%A6%84%EC%9D%80-%ED%94%BC%ED%95%98%EB%9D%BC">기발한 이름은 피하라</a></li><li><a href="#%ED%95%9C-%EA%B0%9C%EB%85%90%EC%97%90-%ED%95%9C-%EB%8B%A8%EC%96%B4%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">한 개념에 한 단어를 사용하라</a></li><li><a href="#%EB%A7%90-%EC%9E%A5%EB%82%9C%EC%9D%84-%ED%95%98%EC%A7%80-%EB%A7%88%EB%9D%BC">말 장난을 하지 마라</a></li><li><a href="#%ED%95%B4%EB%B2%95-%EC%98%81%EC%97%AD%EC%97%90%EC%84%9C-%EA%B0%80%EC%A0%B8%EC%98%A8-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">해법 영역에서 가져온 이름을 사용하라</a></li><li><a href="#%EB%AC%B8%EC%A0%9C-%EC%98%81%EC%97%AD%EC%97%90%EC%84%9C-%EA%B0%80%EC%A0%B8%EC%98%A8-%EC%9D%B4%EB%A6%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC">문제 영역에서 가져온 이름을 사용하라</a></li><li><a href="#%EC%9D%98%EB%AF%B8-%EC%9E%88%EB%8A%94-%EB%A7%A5%EB%9D%BD%EC%9D%84-%EC%B6%94%EA%B0%80%ED%95%98%EB%9D%BC">의미 있는 맥락을 추가하라</a></li><li><a href="#%EB%B6%88%ED%95%84%EC%9A%94%ED%95%9C-%EB%A7%A5%EB%9D%BD%EC%9D%84-%EC%97%86%EC%95%A0%EB%9D%BC">불필요한 맥락을 없애라</a></li></ul></li><li><p><a href="#%EB%A7%88%EC%B9%98%EB%A9%B4%EC%84%9C">마치면서</a></p></li></ul></div>
         </main>
         <div class="closer"></div>
         <script
