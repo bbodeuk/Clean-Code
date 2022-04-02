@@ -66,7 +66,7 @@
         });
     }
 
-    async function fetchPage(uri, target) {
+    async function fetchPage(uri) {
         const metaFragment = document.createDocumentFragment();
         const response = await fetch(uri);
         const parsed = new DOMParser().parseFromString(
@@ -83,16 +83,20 @@
         document.querySelectorAll("pre code").forEach((el) => {
             hljs.highlightElement(el);
         });
-        parsed.querySelectorAll("a").forEach((elt) => {
+        document.querySelectorAll("main a").forEach((elt) => {
             elt.addEventListener("click", handleAnchorClick);
         });
 
-        document
-            .querySelectorAll(".global-navigation .highlight")
-            .forEach((elt) => {
-                elt.classList.remove("highlight");
-            });
-        target.parentNode.classList.add("highlight");
+        document.querySelectorAll(".global-navigation a").forEach((elt) => {
+            const { parentNode } = elt;
+
+            if (elt.pathname === location.pathname) {
+                parentNode.classList.add("highlight");
+                return;
+            }
+
+            parentNode.classList.remove("highlight");
+        });
 
         document.title = parsed.title;
         document.head.querySelectorAll("meta").forEach((elt) => {
@@ -105,8 +109,8 @@
     }
 
     async function handleAnchorClick(event) {
-        const { target } = event;
-        const { href, host, hash, pathname, search } = target;
+        const { currentTarget } = event;
+        const { href, host, hash, pathname, search } = currentTarget;
 
         if (host && location.host === host) {
             event.preventDefault();
@@ -121,7 +125,7 @@
         }
 
         history.pushState("", document.title, pathname + search);
-        fetchPage(href, target);
+        fetchPage(href, currentTarget);
     }
 
     document.querySelector(".drawer-opener").addEventListener("click", () => {

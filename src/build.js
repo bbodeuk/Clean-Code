@@ -31,6 +31,10 @@ function getFileName(fileNameWithExtension) {
     );
 }
 
+function updateFileExtension(fileName, extension) {
+    return `${path.basename(fileName, path.extname(fileName))}.${extension}`;
+}
+
 function createNavigation(fileNameWithExtension) {
     const fileName = getFileName(fileNameWithExtension);
 
@@ -107,6 +111,40 @@ function addTocTitleToData(data) {
     return `## Table of contents\n${data}`;
 }
 
+function addNavigationToData(data, index) {
+    if (NAVIGATION.length < 1) {
+        return data;
+    }
+
+    const getArticleTag = (type, title) =>
+        `<article class="navigation-item navigation-item--${type.toLowerCase()}"><a href="/${getFileName(
+            title
+        )}.html"><div><div class="navigation-item__type">${type}</div><h2 class="navigation-item__title">${getFileName(
+            title
+        )}</h2></div><div><i class="icon-arrow_${
+            type === "Previous" ? "back" : "forward"
+        }"></i></div></a></article>`;
+
+    if (index < 1) {
+        return `${data}<div class="navigation">${getArticleTag(
+            "Next",
+            NAVIGATION[1]
+        )}</div>`;
+    }
+
+    if (NAVIGATION.length - 1 <= index) {
+        return `${data}<div class="navigation">${getArticleTag(
+            "Previous",
+            NAVIGATION[NAVIGATION.length - 2]
+        )}</div>`;
+    }
+
+    return `${data}<div class="navigation">${getArticleTag(
+        "Previous",
+        NAVIGATION[index - 1]
+    )}${getArticleTag("Next", NAVIGATION[index + 1])}</div>`;
+}
+
 function parseTocFromContent(content) {
     const lineBreakFormatted = content.replace(/\r?\n/gm, "\n");
     const contentArray = lineBreakFormatted.split("\n");
@@ -145,7 +183,7 @@ function parseTocFromContent(content) {
     };
 }
 
-async function parseFile(fileName) {
+async function parseFile(fileName, index) {
     const commentsRegex = /^<!--((.|\r?\n)*)-->$/gm;
     const data = fs.readFileSync(path.resolve(DOCS_DIR, fileName), "utf-8");
     const parsed = `${await unified()
@@ -157,7 +195,8 @@ async function parseFile(fileName) {
         .use(remarkGfm)
         .use(rehypeStringify)
         .process(addTocTitleToData(data))}`;
-    const { content, toc } = parseTocFromContent(parsed);
+    const navigationAdded = addNavigationToData(parsed, index);
+    const { content, toc } = parseTocFromContent(navigationAdded);
 
     createFile({
         fileName: `${path.basename(fileName, path.extname(fileName))}.html`,
@@ -171,7 +210,7 @@ function main() {
     fs.mkdir(OUTPUT_DIR, { recursive: true }, (err) => {
         if (err) throw err;
     });
-    fs.readdirSync(DOCS_DIR).forEach(parseFile);
+    NAVIGATION.forEach(parseFile);
 }
 
 main();
