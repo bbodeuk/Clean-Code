@@ -126,9 +126,11 @@ function addNavigationToData(data, index) {
 
     const getArticleTag = (type, rawTitle) => {
         const title = getFileName(rawTitle);
-        const titleToDisplay = title === "index" ? config.defaultTitle : title;
+        const isIndexFile = title === "index";
+        const titleToDisplay = isIndexFile ? config.defaultTitle : title;
+        const uri = isIndexFile ? "/" : `/${title}/`;
 
-        return `<article class="navigation-item navigation-item--${type.toLowerCase()}"><a href="/${title}/"><div><div class="navigation-item__type">${type}</div><h2 class="navigation-item__title">${titleToDisplay}</h2></div><div><i class="icon-arrow_${
+        return `<article class="navigation-item navigation-item--${type.toLowerCase()}"><a href="${uri}"><div><div class="navigation-item__type">${type}</div><h2 class="navigation-item__title">${titleToDisplay}</h2></div><div><i class="icon-arrow_${
             type === "Previous" ? "back" : "forward"
         }"></i></div></a></article>`;
     };
