@@ -72,11 +72,11 @@ customer.setName('mike');
 if (paycheck.isPosted()) ...
 </code></pre>
 <p>메서드는 <code>인수를 설명하는 이름</code>을 사용한다.</p>
-<pre><code class="language-js">// good
-Complex fulcrumPoint = Complex.FromRealNumber(23.0);
+<pre><code class="language-ts">// good
+const fulcrumPoint: Complex = Complex.FromRealNumber(23.0);
 
 // better - 클래스 생성의 경우 생성자 사용
-ComPlex fulcrumPoint = new Complex(23.0);
+const fulcrumPoint: Complex = new Complex(23.0);
 </code></pre>
 <h2 id="rules">Rules</h2>
 <h3 id="의도를-분명히-밝혀라">의도를 분명히 밝혀라</h3>
@@ -88,19 +88,19 @@ ComPlex fulcrumPoint = new Complex(23.0);
 </ul>
 <p>예시 1)</p>
 <pre><code class="language-js">// bad - 아무 의미도 드러내지 않음
-const d;
+let d;
 
 // good - 측정하려는 값, 단위를 표현함
-const elapsedTimeInDays;
-const daysSinceCreation;
-const daysSinceModification;
-const fileAgeInDays;
+let elapsedTimeInDays;
+let daysSinceCreation;
+let daysSinceModification;
+let fileAgeInDays;
 </code></pre>
 <p>예시 2)</p>
 <pre><code class="language-js">// bad - 코드의 맥락이 코드 자체에 명시적으로 드러나지 않는다.
 function getThem() {
     let list1 = [];
-    for (let x in theList) {
+    for (const x in theList) {
         if (x[0] === 4) list1.push(x);
     }
     return list1;
@@ -109,7 +109,7 @@ function getThem() {
 <pre><code class="language-js">// good - 각 개념에 이름이 붙어있어서 역할을 파악하기 쉽다.
 function getThem() {
     let flaggedCells = [];
-    for (let cell in gameBoard) {
+    for (const cell in gameBoard) {
         if (cell[STATUS_VALUE] === FLAGGED) flaggedCells.push(cell);
     }
     return flaggedCells;
@@ -118,10 +118,9 @@ function getThem() {
 <pre><code class="language-js">// better - isFlagged라는 명시적인 함수를 사용해 FLAGGED라는 상수를 감췄다.
 function getThem() {
     let flaggedCells = [];
-    for(Cell cell in gameBoard){
-        if (cell.isFlagged())
-            flaggedCells.push(cell);
-    })
+    for (const cell in gameBoard) {
+        if (cell.isFlagged()) flaggedCells.push(cell);
+    }
     return flaggedCells;
 }
 </code></pre>
@@ -167,20 +166,20 @@ getActiveAccountInfo();
 <h3 id="발음하기-쉬운-이름을-사용하라">발음하기 쉬운 이름을 사용하라</h3>
 <p>프로그래밍은 사회 활동이기 때문에 발음하기 쉬운 이름은 중요하다.</p>
 <pre><code class="language-js">// bad
-const genymdhms; // generated-ymd-hms의 약어임은 알겠으나 발음을 알 수 없음
-const modymdhms;
-const pszqint = '102';
+let genymdhms; // generated-ymd-hms의 약어임은 알겠으나 발음을 알 수 없음
+let modymdhms;
+const pszqint = "102";
 
 // good
-const generationTimeStamp;
-const modificationTimeStamp;
+let generationTimeStamp;
+let modificationTimeStamp;
 const recordId = "102";
 </code></pre>
 <h3 id="검색하기-쉬운-이름을-사용하라">검색하기 쉬운 이름을 사용하라</h3>
 <ul>
 <li>검색 관점에서 <strong>긴 이름</strong>이 짧은 이름보다 좋다. 검색이 쉬운 이름이 상수보다 좋다.
-<pre><code class="language-js">const sum;
-const WORK_DAYS_PER_WEEK; // better
+<pre><code class="language-js">let sum;
+let WORK_DAYS_PER_WEEK; // better
 </code></pre>
 </li>
 <li>간단한 메서드에서 로컬 변수만 한 문자를 사용한다.</li>
@@ -194,12 +193,12 @@ const WORK_DAYS_PER_WEEK; // better
 <p>변수명에 굳이 유형이나 범위 정보까지 인코딩하지 말자.</p>
 <ul>
 <li>헝가리식 표기법 지양하기 (변수명에 타입을 적지 말자)
-<pre><code class="language-js">PhoneNumber phoneString; // 타입이 바뀌어도 이름은 바뀌지 않는다
+<pre><code class="language-ts">let phoneString: PhoneNumber; // 타입이 바뀌어도 이름은 바뀌지 않는다
 </code></pre>
 </li>
 <li>접두어(또는 접미어)는 구닥다리 코드다.
-<pre><code class="language-js">const m_dsc; // bad
-const description; // good
+<pre><code class="language-js">let m_dsc; // bad
+let description; // good
 </code></pre>
 </li>
 <li>인터페이스 클래스와 구현 클래스

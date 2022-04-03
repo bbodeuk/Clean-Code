@@ -228,11 +228,11 @@
 }
 </code></pre>
 <p>위의 코드에서 정상 동작과 오류 처리 동작을 분리하면 코드를 이해하고 수정하기 쉬워진다.</p>
-<pre><code class="language-js">function delete(page){
-    try{
+<pre><code class="language-js">function deletePage(page) {
+    try {
         deletePageAndAllReferences(page);
-    }catch(e){
-        logError(e)
+    } catch (e) {
+        logError(e);
     }
 }
 function deletePageAndAllReferences(page) {
@@ -240,8 +240,8 @@ function deletePageAndAllReferences(page) {
     registry.deleteReference(page.name);
     configKeys.deleteKey(page.name.makeKye());
 }
-function logError(e){
-    logger.log(e.getMessage())
+function logError(e) {
+    logger.log(e.getMessage());
 }
 </code></pre>
 <h3 id="오류-처리도-한-가지-작업이다">오류 처리도 한 가지 작업이다</h3>
