@@ -100,7 +100,7 @@ let fileAgeInDays;
 <pre><code class="language-js">// bad - 코드의 맥락이 코드 자체에 명시적으로 드러나지 않는다.
 function getThem() {
     let list1 = [];
-    for (const x in theList) {
+    for (const x of theList) {
         if (x[0] === 4) list1.push(x);
     }
     return list1;
@@ -109,7 +109,7 @@ function getThem() {
 <pre><code class="language-js">// good - 각 개념에 이름이 붙어있어서 역할을 파악하기 쉽다.
 function getThem() {
     let flaggedCells = [];
-    for (const cell in gameBoard) {
+    for (const cell of gameBoard) {
         if (cell[STATUS_VALUE] === FLAGGED) flaggedCells.push(cell);
     }
     return flaggedCells;
@@ -118,7 +118,7 @@ function getThem() {
 <pre><code class="language-js">// better - isFlagged라는 명시적인 함수를 사용해 FLAGGED라는 상수를 감췄다.
 function getThem() {
     let flaggedCells = [];
-    for (const cell in gameBoard) {
+    for (const cell of gameBoard) {
         if (cell.isFlagged()) flaggedCells.push(cell);
     }
     return flaggedCells;
