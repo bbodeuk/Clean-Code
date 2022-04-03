@@ -74,8 +74,6 @@
             "text/html",
         );
 
-        window.scrollTo(0, 0);
-
         document.querySelector("main").innerHTML =
             parsed.querySelector("main").innerHTML;
         syncToc();
@@ -112,6 +110,8 @@
         const { currentTarget } = event;
         const { href, host, hash, pathname, search } = currentTarget;
 
+        htmlClass.remove("toc-revealed", "drawer-revealed");
+
         if (host && location.host === host) {
             event.preventDefault();
         }
@@ -124,6 +124,7 @@
             return;
         }
 
+        window.scrollTo(0, 0);
         history.pushState("", document.title, pathname + search);
         fetchPage(href, currentTarget);
     }
@@ -145,8 +146,7 @@
     });
 
     document.querySelector(".closer").addEventListener("click", () => {
-        htmlClass.remove("toc-revealed");
-        htmlClass.remove("drawer-revealed");
+        htmlClass.remove("toc-revealed", "drawer-revealed");
     });
 
     document.querySelectorAll("a").forEach((elt) => {
@@ -156,12 +156,17 @@
     window.addEventListener("load", () => {
         syncToc();
 
-        document.querySelectorAll("pre code").forEach((el) => {
-            hljs.highlightElement(el);
+        document.querySelectorAll("pre code").forEach((elt) => {
+            hljs.highlightElement(elt);
         });
 
         highlightTheme(theme);
         document.head.append(themeStyle);
+    });
+
+    window.addEventListener("popstate", (event) => {
+        event.preventDefault();
+        fetchPage(location.href);
     });
 
     window.addEventListener("scroll", syncToc, { passive: true });
