@@ -109,14 +109,17 @@ function parseInfo(regexMatchGroup, fileName) {
 }
 
 function addTocTitleToData(data) {
-    const h1Regex = /^# .+/gm;
-    const [matchHeading] = data.match(h1Regex) || [];
+    const h2Regex = /^## .+/gm;
+    const [matchHeading] = data.match(h2Regex) || [];
 
     if (matchHeading) {
-        return data.replace(h1Regex, `${matchHeading}\n## Table of contents\n`);
+        return data.replace(
+            matchHeading,
+            `\n\n## Table of contents\n\n${matchHeading}\n\n`,
+        );
     }
 
-    return `## Table of contents\n${data}`;
+    return `## Table of contents\n\n${data}`;
 }
 
 function addNavigationToData(data, index) {
