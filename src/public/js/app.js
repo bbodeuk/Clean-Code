@@ -34,7 +34,9 @@
         });
 
         themeButton.append(sunIcon, moonIcon);
-        document.querySelector(".global-navigation > ul").prepend(themeButton);
+        document
+            .querySelector(".global-navigation__content")
+            .prepend(themeButton);
     }
 
     function highlightTheme(nextTheme) {
@@ -112,9 +114,11 @@
 
         htmlClass.remove("toc-revealed", "drawer-revealed");
 
-        if (host && location.host === host) {
-            event.preventDefault();
+        if (!host || location.host !== host) {
+            return;
         }
+
+        event.preventDefault();
 
         if (location.pathname === pathname) {
             if (hash) {

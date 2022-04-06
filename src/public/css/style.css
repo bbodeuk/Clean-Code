@@ -4,6 +4,7 @@
     --background-elevated: #e0e0e0;
     --background-contents: #f1f1f1;
     --text: #000000;
+    --text-muted: #757575;
     --border: #d0d0d0;
     --highlight: #7a0fbd;
     --box-shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -13,7 +14,8 @@ html.dark {
     --background: #121212;
     --background-elevated: #2f2f2f;
     --background-contents: #202020;
-    --text: #ddd;
+    --text: #bbb;
+    --text-muted: #9f9f9f;
     --border: #d0d0d0;
     --highlight: #cd7dff;
     --box-shadow-1: 0 0 3px rgba(255, 255, 255, 0.5);
@@ -37,6 +39,10 @@ body {
     font-family: "Noto Sans KR", sans-serif;
 }
 
+code {
+    font-family: "Anonymous Pro", "Nanum Gothic Coding", monospace;
+}
+
 main {
     padding-top: 80px;
 }
@@ -44,6 +50,17 @@ main {
 img,
 video {
     max-width: 100%;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    word-wrap: normal;
+    border: 0;
 }
 
 .global-navigation {
@@ -118,29 +135,29 @@ html.toc-revealed .global-navigation {
     z-index: 10;
 }
 
-.global-navigation > ul,
+.global-navigation__content,
 .toc {
     overflow-y: auto;
     max-height: 100%;
     scrollbar-width: thin;
 }
 
-.global-navigation > ul::-webkit-scrollbar,
+.global-navigation__content::-webkit-scrollbar,
 .toc::-webkit-scrollbar {
     width: 5px;
 }
 
-.global-navigation > ul::-webkit-scrollbar-thumb,
+.global-navigation__content::-webkit-scrollbar-thumb,
 .toc::-webkit-scrollbar-thumb {
     background-color: var(--border);
 }
 
-.global-navigation > ul {
+.global-navigation__content {
     padding: 10px 0;
     text-align: center;
 }
 
-.global-navigation > ul > li:first-of-type {
+.global-navigation__content > ul > li:first-of-type {
     margin-bottom: 1rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--border);
@@ -148,13 +165,13 @@ html.toc-revealed .global-navigation {
     font-weight: 700;
 }
 
-.global-navigation > ul > li:not(:first-of-type).highlight {
+.global-navigation__content > ul > li:not(:first-of-type).highlight {
     background: var(--background);
     border: 1px solid var(--border);
     border-right: 0;
 }
 
-.global-navigation > ul > li {
+.global-navigation__content > ul > li {
     padding: 0.5rem 10px;
     line-height: 1.5;
     text-align: left;
@@ -285,15 +302,15 @@ html:is(.toc-revealed, .drawer-revealed) .closer {
     padding-left: 1.5rem;
 }
 
-.article ol li {
+.article ol > li {
     list-style: decimal;
 }
 
-.article ul li {
+.article ul > li {
     list-style: disc;
 }
 
-.article ul ul li {
+.article ul ul > li {
     list-style: circle;
 }
 
@@ -307,8 +324,10 @@ html:is(.toc-revealed, .drawer-revealed) .closer {
 
 .article code:not(.hljs) {
     display: inline-block;
-    padding: 0 0.2rem;
+    padding: 0.1rem 0.2rem;
     background-color: var(--background-elevated);
+    border-radius: 0.3rem;
+    font-size: 85%;
 }
 
 .article blockquote {
@@ -334,8 +353,12 @@ html:is(.toc-revealed, .drawer-revealed) .closer {
     background-color: var(--background-contents);
 }
 
-.article .sr-only {
-    font-size: 1rem;
+.article .footnotes {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
 }
 
 .navigation {
@@ -430,11 +453,11 @@ html:is(.toc-revealed, .drawer-revealed) .closer {
         justify-content: flex-end;
     }
 
-    .global-navigation > ul {
+    .global-navigation__content {
         height: 100%;
     }
 
-    .global-navigation > ul,
+    .global-navigation__content,
     .toc {
         position: fixed;
         width: clamp(0px, 100%, 300px);
