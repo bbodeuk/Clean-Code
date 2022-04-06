@@ -5,7 +5,6 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import remarkGfm from "remark-gfm";
 import remarkToc from "remark-toc";
-import remarkFootnotes from "remark-footnotes";
 import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
 import config from "./config.js";
@@ -201,12 +200,14 @@ async function createHtmlOutputWithMd(fileName, index) {
     const data = fs.readFileSync(path.resolve(DOCS_DIR, fileName), "utf-8");
     const parsed = `${await unified()
         .use(remarkParse)
-        .use(remarkFootnotes)
         .use(remarkToc)
-        .use(remarkRehype)
+        .use(remarkRehype, { allowDangerousHtml: true })
         .use(rehypeSlug)
         .use(remarkGfm)
-        .use(rehypeStringify)
+        .use(rehypeStringify, {
+            allowDangerousCharacters: true,
+            allowDangerousHtml: true,
+        })
         .process(addTocTitleToData(data))}`;
     const navigationAdded = addNavigationToData(parsed, index);
     const { content, toc } = parseTocFromContent(navigationAdded);
