@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>9장 - 단위 테스트</title>
-        <meta name="description" content="9장 단위 테스트TDD 법칙 세 가지 실패하는 단위 테스트를 작성할 때까지 실제 코드를 작성하지 않는다. 컴파일은 실패하지 않으면서 실행이 실패하는 정도로만 단위 테스트를 작성한다. 현재 실패하는 테스트를 통과할 정도로만 실제 코드를 작성한다. 위 세 규칙을 따르면 개발과 테스트가 약 30초 주기로 묶인다. 이렇게 일하면 매일 수십 개에 달하는, 거의 모든" />
+        <meta name="description" content="9장 단위 테스트 들어가기 전 모든 예시 코드는 Javascript에 맞게 cypress, jest 등의 라이브러리를 쓴다는 가정하에 작성했다. 1997년만 해도 TDD(Test Driven Development)라는 개념을 아무도 몰랐다.1 단위 테스트란 프로그램이 '돌아간다'는 사실을 확인하는 급조된 일회성 코드에 불과했다. 그 이후 개발 분야는 눈부신" />
         <link rel="preconnect" async href="https://fonts.googleapis.com" />
         <link
             rel="preconnect"
@@ -54,7 +54,13 @@
         </nav>
         <main>
             <article class="article">
-                <h1 id="9장-단위-테스트">9장 단위 테스트</h1><h2 id="tdd-법칙-세-가지">TDD 법칙 세 가지</h2>
+                <h1 id="9장-단위-테스트">9장 단위 테스트</h1>
+<blockquote>
+<p>들어가기 전<br>
+모든 예시 코드는 Javascript에 맞게 cypress, jest 등의 라이브러리를 쓴다는 가정하에 작성했다.</p>
+</blockquote>
+<p>1997년만 해도 TDD(Test Driven Development)라는 개념을 아무도 몰랐다.<sup><a href="#user-content-fn-1" id="user-content-fnref-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup> 단위 테스트란 프로그램이 '돌아간다'는 사실을 확인하는 급조된 일회성 코드에 불과했다.</p>
+<p>그 이후 개발 분야는 눈부신 성장을 이루며 애자일과 TDD 덕택에 단위 테스트를 자동화하는 프로그래머가 늘어났고, 더 늘어나는 추세다. 하지만 그 과정에 프로그래머들이 <strong>제대로 된</strong> 테스트 케이스를 작성해야 한다는 사실을 놓쳐버렸다.</p><h2 id="tdd-법칙-세-가지">TDD 법칙 세 가지</h2>
 <ol>
 <li>실패하는 단위 테스트를 작성할 때까지 실제 코드를 작성하지 않는다.</li>
 <li>컴파일은 실패하지 않으면서 실행이 실패하는 정도로만 단위 테스트를 작성한다.</li>
@@ -111,7 +117,7 @@
 <li>테스트 자료를 조작하는 부분</li>
 <li>조작한 결과가 올바른지 확인하는 부분</li>
 </ol>
-<p>위와 같은 테스트 구조에는 각 테스트를 상술한 세 부분으로 명확히 나누는 Build-Operate-Check 패턴<sup><a href="#user-content-fn-2" id="user-content-fnref-2" data-footnote-ref aria-describedby="footnote-label">1</a></sup>이 적합하다.</p>
+<p>위와 같은 테스트 구조에는 각 테스트를 상술한 세 부분으로 명확히 나누는 Build-Operate-Check 패턴<sup><a href="#user-content-fn-2" id="user-content-fnref-2" data-footnote-ref aria-describedby="footnote-label">2</a></sup>이 적합하다.</p>
 <p>잡다하고 세세한 코드를 거의 다 없앴다는 사실에 주목하자. 테스트 코드가 진짜 필요한 자료 유형과 함수만 사용하면 코드를 읽는 사람은 잡다하고 세세한 코드에 휘둘릴 필요 없이 코드가 수행하는 기능을 재빨리 이해할 수 있다.</p>
 <h3 id="도메인에-특화된-테스트-언어">도메인에 특화된 테스트 언어</h3>
 <p>목록 9-2는 도메인에 특화된 언어DSL로 테스트 코드를 구현하는 기법을 보여준다. API 위에다 함수와 유틸리티를 구현한 뒤, 그 함수와 유틸리티를 사용하므로 테스트 코드를 작성하기도, 읽기도 쉬워진다. 이런 함수와 유틸리티는 테스트 코드에서 사용하는 특수 API가 되어 구현하는 당사자와 나중에 읽어볼 독자를 도와주는 언어가 된다.</p>
@@ -138,7 +144,7 @@
 });
 </code></pre>
 <p><code>tic</code> 함수를 숨기고, 상태를 하나하나 확인하는 대신 <code>HBchL</code>이란 이상한 문자열과 비교를 진행한다. <code>{heater, blower, cooler, hi-temp-alarm, lo-temp-alarm}</code> 순서로 대문자는 켜짐on, 소문자는 꺼짐off을 의미하는 문자열이다.<br>
-이는 그릇된 정보를 피하라<sup><a href="#user-content-fn-3" id="user-content-fnref-3" data-footnote-ref aria-describedby="footnote-label">2</a></sup>는 규칙에 위반되지만, 의미를 안다면 눈길이 문자열을 따라 움직이며 빠른 판단을 돕기에 여기서는 적절해 보인다.</p>
+이는 그릇된 정보를 피하라<sup><a href="#user-content-fn-3" id="user-content-fnref-3" data-footnote-ref aria-describedby="footnote-label">3</a></sup>는 규칙에 위반되지만, 의미를 안다면 눈길이 문자열을 따라 움직이며 빠른 판단을 돕기에 여기서는 적절해 보인다.</p>
 <p><strong><em>목록 9-5(더 복잡한 선택)</em></strong></p>
 <pre><code class="language-js">it("Turn on cooler and blower if too hot", () => {
     tooHot();
@@ -175,7 +181,7 @@ it("Turn on low temperature alarm at threshold", () => {
 }
 </code></pre>
 <p>위 <code>getState</code> 함수는 <code>+=</code> 연산자를 사용해 문자열을 연결하고 있다.<br>
-저자는 <code>StringBuffer</code>와 비교를 통해 <code>+=</code> 연산자의 사용이 성능상 좋지 않지만 테스트 환경에선 컴퓨터 자원과 메모리가 제한적이지 않을 가능성이 높으므로 문제 없다고 말한다.<sup><a href="#user-content-fn-4" id="user-content-fnref-4" data-footnote-ref aria-describedby="footnote-label">3</a></sup></p>
+저자는 <code>StringBuffer</code>와 비교를 통해 <code>+=</code> 연산자의 사용이 성능상 좋지 않지만 테스트 환경에선 컴퓨터 자원과 메모리가 제한적이지 않을 가능성이 높으므로 문제 없다고 말한다.<sup><a href="#user-content-fn-4" id="user-content-fnref-4" data-footnote-ref aria-describedby="footnote-label">4</a></sup></p>
 <pre><code class="language-js">const profile = (func) => {
     const start = Date.now();
 
@@ -327,6 +333,10 @@ it("Get page hierarchy as XML", () => {
 <hr>
 <section data-footnotes class="footnotes"><h2 id="footnote-label" class="sr-only">Footnotes</h2>
 <ol>
+<li id="user-content-fn-1">
+<p>2003년 Kent Beck에 의해 널리 알려진 것으로 추정됨.<br>
+Beck, Kent (2002-11-08). Test-Driven Development by Example. Vaseem: Addison Wesley. ISBN 978-0-321-14653-3. <a href="#user-content-fnref-1" data-footnote-backref class="data-footnote-backref" aria-label="Back to content">↩</a></p>
+</li>
 <li id="user-content-fn-2">
 <p><a href="http://butunclebob.com/FitNesse.BuildOperateCheck">http://butunclebob.com/FitNesse.BuildOperateCheck</a> <a href="#user-content-fnref-2" data-footnote-backref class="data-footnote-backref" aria-label="Back to content">↩</a></p>
 </li>
