@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>3장 함수</title>
-        <meta name="description" content="3장 함수 어떤 프로그램이든 가장 기본적인 단위가 함수다. 이 장은 함수에 어떤 속성을 부여해야 처음 읽는 사람이 프로그램 내부를 직관적으로 파악할 수 있는지, 더욱 읽기 쉽고 이해하기 쉬운지, 의도를 분명히 표현하는 함수를 구현할 수 있는 지에 대해 소개한다.작게 만들어라 함수를 만드는 첫째 규칙은 작게, 둘째 규칙은 더 작게 얼마나 짧아야 좋을까? 이 " />
+        <meta name="description" content="<!-- title: 3장 함수 author: Gaeun Lee date: 2022-04-02 --> 3장 함수 어떤 프로그램이든 가장 기본적인 단위가 함수다. 이 장은 함수에 어떤 속성을 부여해야 처음 읽는 사람이 프로그램 내부를 직관적으로 파악할 수 있는지, 더욱 읽기 쉽고 이해하기 쉬운지, 의도를 분명히 표현하는 함수를 구현할 수 있는 지에 대해 소개" />
         <link rel="preconnect" async href="https://fonts.googleapis.com" />
         <link
             rel="preconnect"
@@ -14,7 +14,8 @@
             crossorigin
         />
         <link
-            href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap"
+            async
+            href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital@0;1&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400;700&display=swap"
             rel="stylesheet"
         />
         <link rel="stylesheet" async href="/Clean-Code/css/reset.css" />
@@ -50,11 +51,18 @@
             </div>
         </div>
         <nav class="global-navigation">
-            <ul><li><a href="/Clean-Code/">클린 코드 스터디</a></li><li><a href="/Clean-Code/1%EC%9E%A5%20-%20%EA%B9%A8%EB%81%97%ED%95%9C%20%EC%BD%94%EB%93%9C/">1장 - 깨끗한 코드</a></li$><li><a href="/Clean-Code/2%EC%9E%A5%20-%20%EC%9D%98%EB%AF%B8%20%EC%9E%88%EB%8A%94%20%EC%9D%B4%EB%A6%84/">2장 - 의미 있는 이름</a></li$><li class="highlight"><a href="/Clean-Code/3%EC%9E%A5%20-%20%ED%95%A8%EC%88%98/">3장 - 함수</a></li$><li><a href="/Clean-Code/9%EC%9E%A5%20-%20%EB%8B%A8%EC%9C%84%20%ED%85%8C%EC%8A%A4%ED%8A%B8/">9장 - 단위 테스트</a></li$></ul>
+            <div class="global-navigation__content">
+                <ul><li><a href="/Clean-Code/">클린 코드 스터디</a></li><li><a href="/Clean-Code/1%EC%9E%A5%20-%20%EA%B9%A8%EB%81%97%ED%95%9C%20%EC%BD%94%EB%93%9C/">1장 - 깨끗한 코드</a></li$><li><a href="/Clean-Code/2%EC%9E%A5%20-%20%EC%9D%98%EB%AF%B8%20%EC%9E%88%EB%8A%94%20%EC%9D%B4%EB%A6%84/">2장 - 의미 있는 이름</a></li$><li class="highlight"><a href="/Clean-Code/3%EC%9E%A5%20-%20%ED%95%A8%EC%88%98/">3장 - 함수</a></li$><li><a href="/Clean-Code/9%EC%9E%A5%20-%20%EB%8B%A8%EC%9C%84%20%ED%85%8C%EC%8A%A4%ED%8A%B8/">9장 - 단위 테스트</a></li$></ul>
+            </div>
         </nav>
         <main>
             <article class="article">
-                <h1 id="3장-함수">3장 함수</h1>
+                <!--
+title: 3장 함수
+author: Gaeun Lee
+date: 2022-04-02
+-->
+<h1 id="3장-함수">3장 함수</h1>
 <p>어떤 프로그램이든 가장 기본적인 단위가 함수다. 이 장은 함수에 어떤 속성을 부여해야 처음 읽는 사람이 프로그램 내부를 직관적으로 파악할 수 있는지, 더욱 읽기 쉽고 이해하기 쉬운지, 의도를 분명히 표현하는 함수를 구현할 수 있는 지에 대해 소개한다.</p><h2 id="작게-만들어라">작게 만들어라</h2>
 <ul>
 <li>함수를 만드는 첫째 규칙은 <code>작게</code>, 둘째 규칙은 <code>더 작게</code></li>
