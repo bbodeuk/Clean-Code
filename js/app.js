@@ -79,7 +79,6 @@
         document.querySelector("main").innerHTML =
             parsed.querySelector("main").innerHTML;
         syncToc();
-        document.querySelector(".masthead__center").innerText = parsed.title;
 
         document.querySelectorAll("pre code").forEach((el) => {
             hljs.highlightElement(el);
