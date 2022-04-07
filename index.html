@@ -33,23 +33,6 @@
         </style>
     </head>
     <body>
-        <div class="masthead">
-            <div class="masthead__inner">
-                <div class="masthead__grow masthead__left">
-                    <button
-                        class="drawer-opener icon-menu"
-                        aria-label="메뉴 보기"
-                    ></button>
-                </div>
-                <div class="masthead__center">클린 코드 스터디</div>
-                <div class="masthead__grow masthead__right">
-                    <button
-                        class="toc-opener icon-bookmark_outline"
-                        aria-label="목차 보기"
-                    ></button>
-                </div>
-            </div>
-        </div>
         <nav class="global-navigation">
             <div class="global-navigation__content">
                 <ul><li><a href="/Clean-Code/">클린 코드 스터디</a></li><li><a href="/Clean-Code/1%EC%9E%A5%20-%20%EA%B9%A8%EB%81%97%ED%95%9C%20%EC%BD%94%EB%93%9C/">1장 - 깨끗한 코드</a></li$><li><a href="/Clean-Code/2%EC%9E%A5%20-%20%EC%9D%98%EB%AF%B8%20%EC%9E%88%EB%8A%94%20%EC%9D%B4%EB%A6%84/">2장 - 의미 있는 이름</a></li$><li><a href="/Clean-Code/3%EC%9E%A5%20-%20%ED%95%A8%EC%88%98/">3장 - 함수</a></li$><li><a href="/Clean-Code/7%EC%9E%A5%20-%20%EC%98%A4%EB%A5%98%20%EC%B2%98%EB%A6%AC/">7장 - 오류 처리</a></li$><li><a href="/Clean-Code/9%EC%9E%A5%20-%20%EB%8B%A8%EC%9C%84%20%ED%85%8C%EC%8A%A4%ED%8A%B8/">9장 - 단위 테스트</a></li$></ul>
@@ -110,7 +93,12 @@ description: 클린 코드 스터디 정리용 저장소입니다. 2022년 4월 
             </article>
             <div class="toc-container"><ul class="toc"><li><a href="#-%EA%B8%B0%EA%B0%84">📅 기간</a></li><li><a href="#-%EC%A3%BC%EC%B0%A8%EB%B3%84-%EC%B1%95%ED%84%B0">🔖 주차별 챕터</a></li></ul></div>
         </main>
-        <div class="closer"></div>
+        <button class="drawer-opener icon-menu" aria-label="메뉴 보기"></button>
+        <button
+            class="toc-opener icon-bookmark_outline"
+            aria-label="목차 보기"
+        ></button>
+        <button class="closer"></button>
         <script
             defer
             src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"
