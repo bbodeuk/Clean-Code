@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>7장 - 오류 처리</title>
-        <meta name="description" content="<!-- author: Marshall Ku date: 2022-04-02 --> 오류 처리 프로그램은 입력이 이상하거나, 기기에 문제가 생기는 등 뭔가 잘못될 가능성이 항상 존재한다. 따라서 프로그래머는 그 상황을 바로 잡을 책임이 있다. 하지만 흩어진 오류 처리 코드는 코드의 가독성을 낮출 수 있기에, 우아하고 고상하게 오류를 처리할 필요가 있다.오류 " />
+        <meta name="description" content="<!-- author: Marshall Ku date: 2022-04-02 --> 7장 - 오류 처리 프로그램은 입력이 이상하거나, 기기에 문제가 생기는 등 뭔가 잘못될 가능성이 항상 존재한다. 따라서 프로그래머는 그 상황을 바로 잡을 책임이 있다. 하지만 흩어진 오류 처리 코드는 코드의 가독성을 낮출 수 있기에, 우아하고 고상하게 오류를 처리할 필요가 있" />
         <link rel="preconnect" async href="https://fonts.googleapis.com" />
         <link
             rel="preconnect"
@@ -62,7 +62,7 @@
 author: Marshall Ku
 date: 2022-04-02
 -->
-<h1 id="오류-처리">오류 처리</h1>
+<h1 id="7장---오류-처리">7장 - 오류 처리</h1>
 <p>프로그램은 입력이 이상하거나, 기기에 문제가 생기는 등 뭔가 잘못될 가능성이 항상 존재한다. 따라서 프로그래머는 그 상황을 바로 잡을 책임이 있다.</p>
 <p>하지만 흩어진 오류 처리 코드는 코드의 가독성을 낮출 수 있기에, <strong>우아하고 고상하게</strong> 오류를 처리할 필요가 있다.</p><h2 id="오류-코드보다-예외를-사용하라">오류 코드보다 예외를 사용하라</h2>
 <pre><code class="language-ts">class DeviceController {
