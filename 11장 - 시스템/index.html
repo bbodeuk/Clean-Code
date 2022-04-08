@@ -122,10 +122,12 @@ date: 2022-04-08
 <p>원론적으로는 모듈화되고 캡슐화된 방식으로 영속성 방식을 구상할 수 있다. 하지만 현실적으로는 영속성 방식을 구현한 코드가 온갖 객체로 흩어진다. 여기서 <strong>횡단 관심사</strong>라는 용어가 나온다. 영속성 프레임워크도, 도메인 논리도 독자적으로 모듈화할 수 있으나, 문제는 이 두 영역이 세밀한 단위로 겹친다는 점이다.</p>
 <p>관심 지향 프로그래밍<sup>Aspect-Oriented Programming, AOP</sup><sup><a href="#user-content-fn-4" id="user-content-fnref-4" data-footnote-ref aria-describedby="footnote-label">4</a></sup>은 횡단 관심사에 대처해 모듈성을 확보하는 일반적인 방법론이다. <strong>관점</strong><sup>aspect</sup>이라는 모듈 구성 개념은 "특정 관심사를 지원하려면 시스템에서 특정 지점들이 동작하는 방식을 일관성 있게 바꿔야 한다"라고 명시한다. 명시는 간결한 선언이나 프로그래밍 메커니즘으로 수행한다.</p>
 <p>횡단 관심사의 대표적인 예로 로깅이 있다. 로깅은 시스템에서 로깅하는 모든 부분에 영향을 미치기에, 로그가 되는 모든 클래스와 메서드를 횡단한다.</p>
-<p><strong>참고하면 좋을 자료</strong><br>
-<a href="https://github.com/mgechev/aspect.js">aspect.js</a>
-<a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Proxy">MDN - Proxy</a>
-<a href="https://meetup.toast.com/posts/109">자바스크립트 AOP 맛보기</a></p>
+<p><strong>참고하면 좋을 자료</strong></p>
+<ul>
+<li><a href="https://github.com/mgechev/aspect.js">aspect.js</a></li>
+<li><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Proxy">MDN - Proxy</a></li>
+<li><a href="https://meetup.toast.com/posts/109">자바스크립트 AOP 맛보기</a></li>
+</ul>
 <h2 id="테스트-주도-시스템-아키텍처-구축">테스트 주도 시스템 아키텍처 구축</h2>
 <p>관점이나 그와 유사한 개념으로 관심사를 분리하는 방식은 그 위력이 막강하다.코드 수준에서 아키텍처 관심사를 분리할 수 있다면, 진정한 <strong>테스트 주도</strong> 아키텍처 구축이 가능해진다. 그때그때 새로운 기술을 채택해 단순한 아키텍처를 복잡한 아키텍처로 키워갈 수 있고, 해롭기까지 한 BDUF<sup>Big Design Up Front</sup><sup><a href="#user-content-fn-5" id="user-content-fnref-5" data-footnote-ref aria-describedby="footnote-label">5</a></sup>를 추구할 필요도 없다. 다시 말해, '아주 단순'하면서도 멋지게 분리된 아키텍처로 소프트웨어 프로젝트를 진행해 결과물을 재빨리 출시한 후, 기반 구조를 추가하며 조금씩 확장해 나가도 괜찮다는 말이다.</p>
 <p>물론 이것이 '아무 방향 없이' 프로젝트에 뛰어들어도 좋다는 소리는 아니다. 프로젝트를 시작할 때는 일반적인 범위, 목표, 일정은 물론이고 결과로 내놓을 시스템의 일반적인 구조도 생각해야 한다. 하지만 변하는 환경에 대처해 진로를 변경할 능력도 반드시 유지해야 한다.</p>
