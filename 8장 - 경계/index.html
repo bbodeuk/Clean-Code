@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>8장 - 경계</title>
+        <meta name="description" content="<!-- author: Marshall Ku date: 2022-04-08 --> 8장 - 경계 시스템에 들어가는 모든 소프트웨어를 직접 개발하는 경우는 드물다. 패키지를 사거나, 오픈 소스를 이용하거나, 사내 다른 팀이 제공하는 외부 코드를 우리 코드에 깔끔하게 통합해야만 한다.외부 코드 사용하기 패키지, 라이브러리 등의 제공자와 사용자 사이엔 특유의 긴" />
+        <link rel="preconnect" async href="https://fonts.googleapis.com" />
+        <link
+            rel="preconnect"
+            async
+            href="https://fonts.gstatic.com"
+            crossorigin
+        />
+        <link
+            async
+            href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital@0;1&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" async href="/Clean-Code/css/reset.css" />
+        <link rel="stylesheet" async href="/Clean-Code/css/icon.css" />
+        <link rel="stylesheet" async href="/Clean-Code/css/style.css" />
+        <style>
+            @font-face {
+                font-family: icon;
+                src: url("/Clean-Code/icon/icon.woff?zg8y3j") format("woff"),
+                    url("/Clean-Code/icon/icon.svg?zg8y3j#icon") format("svg");
+                font-weight: 400;
+                font-style: normal;
+                font-display: block;
+            }
+        </style>
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/Clean-Code/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="96x96"
+            href="/Clean-Code/favicon-96x96.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/Clean-Code/favicon-16x16.png"
+        />
+    </head>
+    <body>
+        <nav class="global-navigation">
+            <div class="global-navigation__content">
+                <ul><li><a href="/Clean-Code/">클린 코드 스터디</a></li><li><a href="/Clean-Code/1%EC%9E%A5%20-%20%EA%B9%A8%EB%81%97%ED%95%9C%20%EC%BD%94%EB%93%9C/">1장 - 깨끗한 코드</a></li$><li><a href="/Clean-Code/2%EC%9E%A5%20-%20%EC%9D%98%EB%AF%B8%20%EC%9E%88%EB%8A%94%20%EC%9D%B4%EB%A6%84/">2장 - 의미 있는 이름</a></li$><li><a href="/Clean-Code/3%EC%9E%A5%20-%20%ED%95%A8%EC%88%98/">3장 - 함수</a></li$><li><a href="/Clean-Code/7%EC%9E%A5%20-%20%EC%98%A4%EB%A5%98%20%EC%B2%98%EB%A6%AC/">7장 - 오류 처리</a></li$><li class="highlight"><a href="/Clean-Code/8%EC%9E%A5%20-%20%EA%B2%BD%EA%B3%84/">8장 - 경계</a></li$><li><a href="/Clean-Code/9%EC%9E%A5%20-%20%EB%8B%A8%EC%9C%84%20%ED%85%8C%EC%8A%A4%ED%8A%B8/">9장 - 단위 테스트</a></li$></ul>
+            </div>
+        </nav>
+        <main>
+            <article class="article">
+                <!--
+author: Marshall Ku
+date: 2022-04-08
+-->
+<h1 id="8장---경계">8장 - 경계</h1>
+<p>시스템에 들어가는 모든 소프트웨어를 직접 개발하는 경우는 드물다. 패키지를 사거나, 오픈 소스를 이용하거나, 사내 다른 팀이 제공하는 외부 코드를 우리 코드에 깔끔하게 통합해야만 한다.</p><h2 id="외부-코드-사용하기">외부 코드 사용하기</h2>
+<p>패키지, 라이브러리 등의 제공자와 사용자 사이엔 특유의 긴장이 존재한다. 제공자는 더 많은 환경에서 더 많은 고객의 요구에 부합하기 위해 적용성을 넓히려 애쓴다. 사용자는 자신의 요구에 집중하길 바란다. 이런 긴장 때문에 시스템 경계에서 문제가 생길 소지가 많다.</p>
+<p><img src="/Clean-Code/images/map_methods.png" alt="Map의 메서드"></p>
+<p><code>Map</code>은 다양한 메서드를 제공한다. 프로그램에서 <code>Map</code>을 만들어 여기저기 넘긴다고 가정할 때, 넘기는 쪽에서는 아무도 <code>Map</code>의 내용을 삭제하지 않길 바라더라도, <code>clear</code> 메서드로 <code>Map</code>에 접근하는 누구나 내용을 지울 권한이 있다.</p>
+<pre><code class="language-ts">const map = new Map();
+const sensor = map.get(sensorId) as Sensor;
+</code></pre>
+<p>특정한 자료형을 저장하기로 했을 때도 <code>Map</code>은 타입을 제한하지 않기에, <code>Map</code>에 접근할 수 있는 사용자는 모든 유형의 값을 추가할 수 있다.</p>
+<p>특정한 타입을 갖는 <code>Map</code>을 제작하면, 위 예시와 같이 <code>Map</code>을 사용하는 클라이언트에게 올바른 타입으로 변환할 책임이 있다. 코드가 동작하긴 하지만, 깨끗한 코드라 보기 어렵다. 게다가 코드의 의도를 파악하기도 힘들다.</p>
+<pre><code class="language-ts">const map = new Map&#x3C;string, Sensor>();
+const sensor = map.get(sensorId);
+</code></pre>
+<p>위 예시와 같이 제네릭스<sup>Generics</sup>를 사용하면 코드 가독성을 크게 높일 순 있지만, 여전히 <code>Map&#x3C;string, Sensor></code>가 사용자에게 필요하지 않은 기능까지 제공하는 문제는 해결하지 못했다.</p>
+<pre><code class="language-ts">class Sensors {
+    private sensors = new Map&#x3C;string, Sensor>();
+
+    getById(id: string): Sensor {
+        return this.sensors.get(id) as Sensor;
+    }
+}
+</code></pre>
+<p>위 예제는 <code>Map</code>을 좀 더 깔끔하게 사용한 코드다. <code>Map</code>을 <code>Sensors</code> 안에 숨겨 사용자는 제네릭스의 사용 여부를 신경 쓸 필요가 없고, <code>Map</code> 인터페이스가 변하더라도 나머지 프로그램에는 영향을 미치지 않는다.</p>
+<p>또한, <code>Sensors</code> 클래스는 프로그램에 필요한 메서드만 제공하기에, 코드를 이해하긴 쉬워지고, 오용하긴 어려워졌다.</p>
+<p><code>Map</code>을 사용할 때마다 위와 같이 캡슐화하라는 소리가 아니다. 경계 인터페이스를 여기저기 넘기지 말라는 말이다.</p>
+<h2 id="경계-살피고-익히기">경계 살피고 익히기</h2>
+<p>외부 코드를 사용하면 적은 시간에 더 많은 기능을 출시하기 쉬워진다. 외부에서 가져온 패키지를 사용할 때 외부 패키지 테스트가 우리 책임은 아니지만, 우리 자신을 위해 우리가 사용할 코드를 테스트하는 편이 바람직하다.</p>
+<p>사용법이 분명치 않은 타사 라이브러리를 가져왔다고 가정하자. 하루나 이틀간 문서를 읽으며 사용법을 결정하고, 우리 쪽 코드를 작성해 라이브러리가 예상대로 동작하는지 확인한다. 때로는 버그가 작성한 코드에서 발생한 것인지, 라이브러리에서 발생한 것인지 찾아내느라 오랜 시간 골머리를 앓기도 한다.</p>
+<p>외부 코드를 익히긴 어렵다. 외부 코드를 통합하기도 어렵다. 두 가지를 동시에 하는 건 배로 어렵다. 우리 쪽 코드를 작성해 외부 코드를 호출하는 대신 먼저 간단한 테스트 케이스를 작성해 외부 코드를 익히는 방식으로 다르게 접근하면 어떨까? 짐 뉴커크<sup>Jim Newkirk</sup>는 이를 <strong>학습 테스트</strong>라 부른다.</p>
+<p>학습 테스트는 프로그램에서 사용하려는 방식대로 외부 API를 호출한다. 통제된 환경에서 API를 제대로 이해하는지 확인하는 셈이다. 학습 테스트는 API를 사용하려는 목적에 초점을 맞춘다.</p>
+<h2 id="log4j-익히기">log4j 익히기</h2>
+<p>아래 대체재들을 참고해보자.</p>
+<ul>
+<li><a href="https://github.com/winstonjs/winston">Winston</a></li>
+<li><a href="https://www.datadoghq.com/">Datadog</a></li>
+<li><a href="https://sentry.io/">Sentry</a></li>
+<li><a href="https://logrocket.com/">Log Rocket</a></li>
+</ul>
+<h2 id="학습-테스트는-공짜-이상이다">학습 테스트는 공짜 이상이다</h2>
+<p>어쨌든 API를 배워야 하기에, 학습 테스트에는 비용이 들지 않는다. 오히려 투자하는 노력보다 얻는 성과가 더 크고, 필요한 지식만 정확하게 확보하는 손쉬운 방법이다.</p>
+<p>학습 테스트는 패키지가 예상대로 도는지 검증한다. 통합한 이후에도 패키지가 우리 코드와 호환되리란 보장은 없다. 패키지 코드 작성자가 코드를 변경해야 할 수도, 버그를 수정하고 기능을 추가할 수도 있다. 패키지의 새 버전이 나올 때마다 위험도 생긴다. 이때 학습 테스트가 새 버전이 우리 코드와 호환되는지 검증해준다.</p>
+<p>학습 테스트를 이용한 학습이 필요하건 필요하지 않건, 실제 코드와 같은 방식으로 인터페이스를 사용하는 테스트 케이스가 필요하다. 이런 경계 테스트가 없다면 패키지의 새 버전으로 이전이 어려워지고, 낡은 버전을 필요 이상으로 오랫동안 사용하려는 유혹에 빠지기 쉽다.</p>
+<h2 id="아직-존재하지-않는-코드를-사용하기">아직 존재하지 않는 코드를 사용하기</h2>
+<p>경계와 관련해 또 다른 유형은 아는 코드와 모르는 코드를 분리하는 경계다. 때로는 우리 지식이 경계를 너머 미치지 못하는 코드 영역도 있다.</p>
+<p>예를 들어 다른 팀이 API를 제작해주길 기다리는 상황이라 가정해보자. 이때 우리가 바라는 인터페이스를 구현하면 우리가 인터페이스를 전적으로 통제한다는 장점이 생긴다. 또한, 코드 가독성도 높아지고 코드 의도도 분명해진다. 다른 팀이 API를 정의한 후에는 ADAPTER 패턴<sup><a href="#user-content-fn-1" id="user-content-fnref-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup>으로 API의 사용을 캡슐화해 API가 바뀔 때 수정할 코드를 한 곳으로 모을 수도 있다.</p>
+<h2 id="깨끗한-경계">깨끗한 경계</h2>
+<p>경계에선 변경처럼 흥미로운 일이 많이 벌어진다. 소프트웨어 설계가 우수하다면 변경하는데 엄청난 시간과 노력과 재작업을 요구하지 않는다. 통제하지 못하는 코드를 사용할 때는 너무 많은 투자를 하거나 향후 변경 비용이 지나치게 커지지 않도록 각별히 주의해야 한다.</p>
+<p>경계에 있는 코드는 깔끔히 분리하고, 기대치를 정의하는 테스트도 작성하자. 또한, 외부 패키지를 호출하는 코드를 가능한 한 줄여 경계를 관리하자. 상술한 것처럼 새로운 클래스로 경계를 감싸거나, ADAPTER 패턴을 사용해 우리가 원하는 인터페이스를 패키지가 제공하는 인터페이스로 변환하자. 어느 방법이든 코드 가독성이 높아지며, 경계 인터페이스를 사용하는 일관성도 높아지며, 외부 패키지가 변했을 때 변경할 코드도 줄어든다.</p>
+<section data-footnotes class="footnotes"><h2 id="footnote-label" class="sr-only">Footnotes</h2>
+<ol>
+<li id="user-content-fn-1">
+<p><a href="https://en.wikipedia.org/wiki/Adapter_pattern">https://en.wikipedia.org/wiki/Adapter_pattern</a> <a href="#user-content-fnref-1" data-footnote-backref class="data-footnote-backref" aria-label="Back to content">↩</a></p>
+</li>
+</ol>
+</section><div class="navigation"><article class="navigation-item navigation-item--previous"><a href="/Clean-Code/7장 - 오류 처리/"><div><div class="navigation-item__type">Previous</div><h2 class="navigation-item__title">7장 - 오류 처리</h2></div><div><i class="icon-arrow_back"></i></div></a></article><article class="navigation-item navigation-item--next"><a href="/Clean-Code/9장 - 단위 테스트/"><div><div class="navigation-item__type">Next</div><h2 class="navigation-item__title">9장 - 단위 테스트</h2></div><div><i class="icon-arrow_forward"></i></div></a></article></div>
+            </article>
+            <div class="toc-container"><ul class="toc"><li><a href="#%EC%99%B8%EB%B6%80-%EC%BD%94%EB%93%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0">외부 코드 사용하기</a></li><li><a href="#%EA%B2%BD%EA%B3%84-%EC%82%B4%ED%94%BC%EA%B3%A0-%EC%9D%B5%ED%9E%88%EA%B8%B0">경계 살피고 익히기</a></li><li><a href="#log4j-%EC%9D%B5%ED%9E%88%EA%B8%B0">log4j 익히기</a></li><li><a href="#%ED%95%99%EC%8A%B5-%ED%85%8C%EC%8A%A4%ED%8A%B8%EB%8A%94-%EA%B3%B5%EC%A7%9C-%EC%9D%B4%EC%83%81%EC%9D%B4%EB%8B%A4">학습 테스트는 공짜 이상이다</a></li><li><a href="#%EC%95%84%EC%A7%81-%EC%A1%B4%EC%9E%AC%ED%95%98%EC%A7%80-%EC%95%8A%EB%8A%94-%EC%BD%94%EB%93%9C%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0">아직 존재하지 않는 코드를 사용하기</a></li><li><a href="#%EA%B9%A8%EB%81%97%ED%95%9C-%EA%B2%BD%EA%B3%84">깨끗한 경계</a></li></ul></div>
+        </main>
+        <button class="drawer-opener icon-menu" aria-label="메뉴 보기"></button>
+        <button
+            class="toc-opener icon-bookmark_outline"
+            aria-label="목차 보기"
+        ></button>
+        <button class="closer"></button>
+        <script
+            defer
+            src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"
+        ></script>
+        <script defer src="/Clean-Code/js/app.js"></script>
+    </body>
+</html>
