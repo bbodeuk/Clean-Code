@@ -211,11 +211,12 @@ async function createHtmlOutputWithMd(fileName, index) {
         .process(addTocTitleToData(data))}`;
     const navigationAdded = addNavigationToData(parsed, index);
     const { content, toc } = parseTocFromContent(navigationAdded);
+    const nameWithoutExtension = getFileName(fileName);
 
     createFile({
-        fileName: path.basename(fileName, path.extname(fileName)),
+        fileName: nameWithoutExtension,
         content,
-        info: parseInfo(data.match(commentsRegex), fileName),
+        info: parseInfo(data.match(commentsRegex), nameWithoutExtension),
         toc,
     });
 }
