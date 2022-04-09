@@ -101,7 +101,7 @@ date: 2022-04-08
 <h3 id="팩토리">팩토리</h3>
 <p>때로는 객체가 생성되는 <strong>시점</strong>을 애플리케이션이 결정할 필요도 생긴다. 이때 추상 팩토리 패턴<sup>Abstract Factory Pattern</sup><sup><a href="#user-content-fn-1" id="user-content-fnref-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup>을 사용하면 인스턴스를 생성하는 시점은 애플리케이션이 결정하지만 그를 생성하는 코드는 애플리케이션이 모르고 모든 의존성이 <code>main</code>에서 향한다.</p>
 <h3 id="의존성-주입">의존성 주입</h3>
-<p>사용과 제작을 분리하는 강력한 메커니즘 하나가 <strong>의존성 주입</strong><sup>Dependency Injection, DI</sup>이다. 의존성 주입은 제어 역전<sup>Inversion of Control, IoC</sup> 기법을 의존성 관리에 적용한 메커니즘이다.제어 역전에서는 한 객체가 맡은 보조 책임을 새로운 객체에게 전적으로 떠넘긴다. 새로운 객체는 넘겨받은 책임만 맡으므로 <strong>단일 책임 원칙</strong><sup>Single Responsibility Principle, SRP</sup>을 지키게 된다.의존성 관리 맥락에서 객체는 의존성 자체를 인스턴스로 만드는 책임을 다른 '전담' 메커니즘에 넘김으로써 제어를 역전한다. 초기 설정은 시스템 전체에 필요하므로 대개 '책임질' 메커니즘으로 <code>main</code> 루틴이나 특수 <strong>컨테이너</strong>를 사용한다.</p>
+<p>사용과 제작을 분리하는 강력한 메커니즘 하나가 <strong>의존성 주입</strong><sup>Dependency Injection, DI</sup>이다. 의존성 주입은 제어 역전<sup>Inversion of Control, IoC</sup> 기법을 의존성 관리에 적용한 메커니즘이다. 제어 역전에서는 한 객체가 맡은 보조 책임을 새로운 객체에게 전적으로 떠넘긴다. 새로운 객체는 넘겨받은 책임만 맡으므로 <strong>단일 책임 원칙</strong><sup>Single Responsibility Principle, SRP</sup>을 지키게 된다. 의존성 관리 맥락에서 객체는 의존성 자체를 인스턴스로 만드는 책임을 다른 '전담' 메커니즘에 넘김으로써 제어를 역전한다. 초기 설정은 시스템 전체에 필요하므로 대개 '책임질' 메커니즘으로 <code>main</code> 루틴이나 특수 <strong>컨테이너</strong>를 사용한다.</p>
 <pre><code class="language-js">this.myService = jndiContext.lookup("NameOfMyService") as MyService;
 </code></pre>
 <p>반환되는 객체가 적절한 인터페이스를 구현하는 한 호출하는 객체는 실제로 반환되는 객체의 유형을 제어하지 않는다. 대신 호출하는 객체는 의존성을 능동적으로 해결한다.</p>
@@ -129,7 +129,7 @@ date: 2022-04-08
 <li><a href="https://meetup.toast.com/posts/109">자바스크립트 AOP 맛보기</a></li>
 </ul>
 <h2 id="테스트-주도-시스템-아키텍처-구축">테스트 주도 시스템 아키텍처 구축</h2>
-<p>관점이나 그와 유사한 개념으로 관심사를 분리하는 방식은 그 위력이 막강하다.코드 수준에서 아키텍처 관심사를 분리할 수 있다면, 진정한 <strong>테스트 주도</strong> 아키텍처 구축이 가능해진다. 그때그때 새로운 기술을 채택해 단순한 아키텍처를 복잡한 아키텍처로 키워갈 수 있고, 해롭기까지 한 BDUF<sup>Big Design Up Front</sup><sup><a href="#user-content-fn-5" id="user-content-fnref-5" data-footnote-ref aria-describedby="footnote-label">5</a></sup>를 추구할 필요도 없다. 다시 말해, '아주 단순'하면서도 멋지게 분리된 아키텍처로 소프트웨어 프로젝트를 진행해 결과물을 재빨리 출시한 후, 기반 구조를 추가하며 조금씩 확장해 나가도 괜찮다는 말이다.</p>
+<p>관점이나 그와 유사한 개념으로 관심사를 분리하는 방식은 그 위력이 막강하다. 코드 수준에서 아키텍처 관심사를 분리할 수 있다면, 진정한 <strong>테스트 주도</strong> 아키텍처 구축이 가능해진다. 그때그때 새로운 기술을 채택해 단순한 아키텍처를 복잡한 아키텍처로 키워갈 수 있고, 해롭기까지 한 BDUF<sup>Big Design Up Front</sup><sup><a href="#user-content-fn-5" id="user-content-fnref-5" data-footnote-ref aria-describedby="footnote-label">5</a></sup>를 추구할 필요도 없다. 다시 말해, '아주 단순'하면서도 멋지게 분리된 아키텍처로 소프트웨어 프로젝트를 진행해 결과물을 재빨리 출시한 후, 기반 구조를 추가하며 조금씩 확장해 나가도 괜찮다는 말이다.</p>
 <p>물론 이것이 '아무 방향 없이' 프로젝트에 뛰어들어도 좋다는 소리는 아니다. 프로젝트를 시작할 때는 일반적인 범위, 목표, 일정은 물론이고 결과로 내놓을 시스템의 일반적인 구조도 생각해야 한다. 하지만 변하는 환경에 대처해 진로를 변경할 능력도 반드시 유지해야 한다.</p>
 <h2 id="의사-결정을-최적화하라">의사 결정을 최적화하라</h2>
 <p>모듈을 나누고 관심사를 분리하면 지엽적인 관리와 결정이 가능해진다. 아주 큰 시스템에선 한 사람이 모든 결정을 내리기 어려우니 가장 적합한 사람에게 책임을 맡기는 것이 가장 좋다.</p>
