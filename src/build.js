@@ -50,12 +50,22 @@ function createNavigation(fileName) {
     }).reduce((acc, cur) => acc + cur, "")}</ul>`;
 }
 
+function getDescriptionFromContent(content) {
+    const maxLength = 200;
+    const contentForDescription = content
+        .replace(/<.+?>/gm, "")
+        .replace(/(\r?\n)+/gm, " ");
+
+    if (contentForDescription.length < maxLength) {
+        return contentForDescription;
+    }
+
+    return `${contentForDescription.slice(0, maxLength)}...`;
+}
+
 function createFile({ fileName, content, toc, info }) {
     const { title, author, date, description } = info;
-    const descriptionFromContent = content
-        .replace(/<.+?>/gm, "")
-        .replace(/(\r?\n)+/gm, " ")
-        .slice(0, 200);
+    const descriptionFromContent = getDescriptionFromContent(content);
     const templated = TEMPLATE.replace("<!-- CONTENT -->", content)
         .replace(/<!-- TITLE -->/gm, title)
         .replace(
