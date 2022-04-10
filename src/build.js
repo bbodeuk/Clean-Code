@@ -68,6 +68,7 @@ function createFile({ fileName, content, toc, info }) {
     const descriptionFromContent = getDescriptionFromContent(content);
     const templated = TEMPLATE.replace("<!-- CONTENT -->", content)
         .replace(/<!-- TITLE -->/gm, title)
+        .replace(/<!-- SITENAME -->/gm, config.defaultTitle)
         .replace(
             /<!-- DESCRIPTION -->/gm,
             description || descriptionFromContent,
