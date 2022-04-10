@@ -7,6 +7,7 @@ import remarkGfm from "remark-gfm";
 import remarkToc from "remark-toc";
 import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
+import gitDateExtractor from "git-date-extractor";
 import config from "./config.js";
 
 const DOCS_DIR = path.resolve("./docs");
@@ -21,6 +22,19 @@ const NAVIGATION = fs.readdirSync(DOCS_DIR).sort((a, b) => {
 const TEMPLATE = fs.readFileSync(
     path.resolve("./src/template/index.html"),
     "utf-8",
+);
+const TIMESTAMPS = Object.fromEntries(
+    Object.entries(
+        await gitDateExtractor.getStamps({
+            onlyIn: DOCS_DIR,
+        }),
+    ).map(([key, { created, modified }]) => [
+        key.replace("docs/", ""),
+        {
+            createdAt: new Date(Number(created) * 1000).toISOString(),
+            modifiedAt: new Date(Number(modified) * 1000).toISOString(),
+        },
+    ]),
 );
 
 function makeDir(dirName) {
@@ -64,16 +78,17 @@ function getDescriptionFromContent(content) {
 }
 
 function createFile({ fileName, content, toc, info }) {
-    const { title, author, date, description } = info;
+    const { title, author, createdAt, modifiedAt, description } = info;
     const descriptionFromContent = getDescriptionFromContent(content);
     const templated = TEMPLATE.replace("<!-- CONTENT -->", content)
         .replace(/<!-- TITLE -->/gm, title)
-        .replace(/<!-- SITENAME -->/gm, config.defaultTitle)
+        .replace(/<!-- SITE_NAME -->/gm, config.defaultTitle)
         .replace(
             /<!-- DESCRIPTION -->/gm,
             description || descriptionFromContent,
         )
-        .replace(/<!-- DATE -->/gm, new Date(date).toISOString())
+        .replace(/<!-- CREATED_AT -->/gm, createdAt)
+        .replace(/<!-- MODIFIED_AT -->/gm, modifiedAt)
         .replace(/<!-- AUTHOR -->/gm, author)
         .replace(/<!-- TOC -->/gm, toc)
         .replace(/<!-- NAVIGATION -->/gm, createNavigation(fileName))
@@ -91,10 +106,12 @@ function createFile({ fileName, content, toc, info }) {
 }
 
 function parseInfo(regexMatchGroup, fileName) {
+    const { createdAt, modifiedAt } = TIMESTAMPS[fileName];
     const defaultValue = {
-        title: fileName,
+        title: getFileName(fileName),
         author: "Anonymous",
-        date: new Date().toISOString(),
+        createdAt,
+        modifiedAt,
         description: "",
     };
 
@@ -227,7 +244,7 @@ async function createHtmlOutputWithMd(fileName, index) {
     createFile({
         fileName: nameWithoutExtension,
         content,
-        info: parseInfo(data.match(commentsRegex), nameWithoutExtension),
+        info: parseInfo(data.match(commentsRegex), fileName),
         toc,
     });
 }
