@@ -67,8 +67,11 @@ function createNavigation(fileName) {
 function getDescriptionFromContent(content) {
     const maxLength = 200;
     const contentForDescription = content
+        .replace(/^<!--((.|\r?\n)*)-->$/m, "")
+        .replace(/"/gm, "&quot;")
         .replace(/<.+?>/gm, "")
-        .replace(/(\r?\n)+/gm, " ");
+        .replace(/(\r?\n)+/gm, " ")
+        .trim();
 
     if (contentForDescription.length < maxLength) {
         return contentForDescription;
