@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>6장 - 객체와 자료구조</title>
+        <meta name="description" content="6장 - 객체와 자료구조자료 추상화 구체적인 Point 클래스: class Point {     x: number;     y: number; } 구체적인 Point 클래스는 어떤 좌표계를 사용하는지 명확하다.  그리고 개별적으로 좌표값을 읽고, 설정하도록 강제한다.  해당 구현을 노출한다. 변수가 private로 선언되더라도 Getter, Setter가 ..." />
+        <meta name="author" content="Seyoung Chung" />
+        <meta name="robots" content="index,follow" />
+        <meta property="og:type" content="article" />
+        <meta property="og:site_name" content="클린 코드 스터디" />
+        <meta property="og:title" content="6장 - 객체와 자료구조" />
+        <meta property="og:description" content="6장 - 객체와 자료구조자료 추상화 구체적인 Point 클래스: class Point {     x: number;     y: number; } 구체적인 Point 클래스는 어떤 좌표계를 사용하는지 명확하다.  그리고 개별적으로 좌표값을 읽고, 설정하도록 강제한다.  해당 구현을 노출한다. 변수가 private로 선언되더라도 Getter, Setter가 ..." />
+        <meta name="twitter:title" content="6장 - 객체와 자료구조" />
+        <meta name="twitter:description" content="6장 - 객체와 자료구조자료 추상화 구체적인 Point 클래스: class Point {     x: number;     y: number; } 구체적인 Point 클래스는 어떤 좌표계를 사용하는지 명확하다.  그리고 개별적으로 좌표값을 읽고, 설정하도록 강제한다.  해당 구현을 노출한다. 변수가 private로 선언되더라도 Getter, Setter가 ..." />
+        <meta property="article:published_time" content="2022-04-11T05:26:02.000Z" />
+        <meta property="og:regDate" content="2022-04-11T05:26:02.000Z" />
+        <meta property="article:modified_time" content="2022-04-11T05:26:02.000Z" />
+        <meta property="og:updated_time" content="2022-04-11T05:26:02.000Z" />
+        <link rel="preconnect" async href="https://fonts.googleapis.com" />
+        <link
+            rel="preconnect"
+            async
+            href="https://fonts.gstatic.com"
+            crossorigin
+        />
+        <link
+            async
+            href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital@0;1&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" async href="/Clean-Code/css/reset.css" />
+        <link rel="stylesheet" async href="/Clean-Code/css/icon.css" />
+        <link rel="stylesheet" async href="/Clean-Code/css/style.css" />
+        <style>
+            @font-face {
+                font-family: icon;
+                src: url("/Clean-Code/icon/icon.woff?zg8y3j") format("woff"),
+                    url("/Clean-Code/icon/icon.svg?zg8y3j#icon") format("svg");
+                font-weight: 400;
+                font-style: normal;
+                font-display: block;
+            }
+        </style>
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/Clean-Code/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="96x96"
+            href="/Clean-Code/favicon-96x96.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/Clean-Code/favicon-16x16.png"
+        />
+    </head>
+    <body>
+        <nav class="global-navigation">
+            <div class="global-navigation__content">
+                <ul><li><a href="/Clean-Code/">클린 코드 스터디</a></li><li><a href="/Clean-Code/1%EC%9E%A5%20-%20%EA%B9%A8%EB%81%97%ED%95%9C%20%EC%BD%94%EB%93%9C/">1장 - 깨끗한 코드</a></li$><li><a href="/Clean-Code/2%EC%9E%A5%20-%20%EC%9D%98%EB%AF%B8%20%EC%9E%88%EB%8A%94%20%EC%9D%B4%EB%A6%84/">2장 - 의미 있는 이름</a></li$><li><a href="/Clean-Code/3%EC%9E%A5%20-%20%ED%95%A8%EC%88%98/">3장 - 함수</a></li$><li class="highlight"><a href="/Clean-Code/6%EC%9E%A5%20-%20%EA%B0%9D%EC%B2%B4%EC%99%80%20%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0/">6장 - 객체와 자료구조</a></li$><li><a href="/Clean-Code/7%EC%9E%A5%20-%20%EC%98%A4%EB%A5%98%20%EC%B2%98%EB%A6%AC/">7장 - 오류 처리</a></li$><li><a href="/Clean-Code/8%EC%9E%A5%20-%20%EA%B2%BD%EA%B3%84/">8장 - 경계</a></li$><li><a href="/Clean-Code/9%EC%9E%A5%20-%20%EB%8B%A8%EC%9C%84%20%ED%85%8C%EC%8A%A4%ED%8A%B8/">9장 - 단위 테스트</a></li$><li><a href="/Clean-Code/11%EC%9E%A5%20-%20%EC%8B%9C%EC%8A%A4%ED%85%9C/">11장 - 시스템</a></li$></ul>
+            </div>
+        </nav>
+        <main>
+            <article class="article">
+                <!--
+author: Seyoung Chung
+-->
+<h1 id="6장---객체와-자료구조">6장 - 객체와 자료구조</h1><h2 id="자료-추상화">자료 추상화</h2>
+<p><strong>구체적인 Point 클래스:</strong></p>
+<pre><code class="language-ts">class Point {
+    x: number;
+    y: number;
+}
+</code></pre>
+<p><strong>구체적인 Point 클래스</strong>는 어떤 좌표계를 사용하는지 명확하다. <br>
+그리고 개별적으로 좌표값을 읽고, 설정하도록 강제한다. <br>
+해당 구현을 노출한다. 변수가 private로 선언되더라도 Getter, Setter가 있다면 <br>
+구현을 외부로 노출하는 것과 같다.</p>
+<p><strong>추상적인 Point 클래스:</strong></p>
+<pre><code class="language-ts">interface Point {
+    getX(): number;
+    getY(): number;
+    setCartesian(x: number, y: number): void;
+    getR(): number;
+    getTheta(): number;
+    setPolar(r: number, theta: number): void;
+}
+</code></pre>
+<p><strong>추상적인 Point 클래스</strong>는 x, y가 어떤 좌표계를 사용하는지 알 수 없다. <br>
+그리고 정의된 메서드로 변수에 대한 접근을 강제한다. (읽어올 땐 하나씩, 설정할 땐 한번에)</p>
+<p><strong>구현을 감추기 위해서는 추상화가 필요</strong>하다. <br>
+추상 인터페이스를 제공해 사용자가 구현을 모른 채 자료의 핵심을 조작할 수 있어야 한다.</p>
+<p>객체는 자료를 세세하게 공개하기보다 추상적인 개념으로 표현하는 편이 좋다. <br>
+포함하는 자료를 표현할 가장 좋은 방법에 대해 고민해야 한다.</p>
+<h2 id="자료객체-비대칭">자료/객체 비대칭</h2>
+<p><code>객체</code>는 추상화 뒤로 자료를 숨긴 채, 자료를 다루는 함수만 공개한다. <br>
+<code>자료구조</code>는 자료를 그대로 공개하며 별다른 함수는 제공하지 않는다.</p>
+<p><strong>절차적인 도형:</strong></p>
+<pre><code class="language-ts">class Square {
+    topLeft: Point;
+    side: number;
+}
+
+class Rectangle {
+    topLeft: Point;
+    height: number;
+    width: number;
+}
+
+class Geometry {
+    area(shape: Object) {
+        if (shape instanceof Square) {
+            const s = shape as Square;
+            return s.side * s.side;
+        } else if (shape instanceof Rectangle) {
+            const r = shape as Rectangle;
+            return r.height * r.width;
+        }
+        throw new Error("No Such Shape");
+    }
+}
+</code></pre>
+<p>Square, Rectangle는 도형 클래스로 간단한 자료구조이다. (메서드 정의 없음) <br>
+Geometry는 각 도형 클래스를 다뤄 도형이 동작하는 방식을 구현한다.</p>
+<p>Geometry에 둘레 길이를 구하는 <code>perimeter()</code> 함수를 추가하고 싶다면, <br>
+도형 클래스는 아무 영향을 받지 않는다. <br>
+반면에 새로운 도형을 추가하고 싶다면 Geometry에 정의된 메서드를 모두 고쳐야 한다.</p>
+<details>
+<summary><b>새로운 도형을 추가할 때 변화</b></summary>
+<pre><code class="language-ts">class Circle {
+    center: Point;
+    radius: number;
+}
+
+class Geometry {
+    readonly PI = 3.14159265;
+
+    area(shape: Object) {
+        if (shape instanceof Square) {
+            const s = shape as Square;
+            return s.side * s.side;
+        } else if (shape instanceof Rectangle) {
+            const r = shape as Rectangle;
+            return r.height * r.width;
+        } else if (shape instanceof Circle) {
+            const c = shape as Circle;
+            return PI * c.radius * c.radius;
+        }
+        throw new Error("No Such Shape");
+    }
+}
+</code></pre>
+<p>위와 같이 Geometry에 조건문이 추가된다.</p>
+</details>
+<br>
+<p><strong>다형적인 도형:</strong></p>
+<pre><code class="language-ts">interface Shape {
+    area(): number;
+}
+
+class Square implements Shape {
+    private topLeft: Point;
+    private side: number;
+
+    area(): number {
+        return this.side * this.side;
+    }
+}
+
+class Rectangle implements Shape {
+    private topLeft: Point;
+    private height: number;
+    private width: number;
+
+    area(): number {
+        return this.height * this.width;
+    }
+}
+</code></pre>
+<p>객체 지향적인 도형 클래스이다. <br>
+Geometry 클래스는 필요없다. 새 도형을 추가해도 기존 함수에 영향이 없다. <br>
+반면 새 함수를 추가하고 싶다면 도형 클래스 전부를 고쳐야 한다.</p>
+<details>
+<summary><b>새 함수를 추가할 때 변화</b></summary>
+<pre><code class="language-ts">class Square implements Shape {
+    private topLeft: Point;
+    private side: number;
+
+    area(): number {
+        return this.side * this.side;
+    }
+
+    perimeter(): number {
+        return this.side * 4;
+    }
+}
+
+class Rectangle implements Shape {
+    private topLeft: Point;
+    private height: number;
+    private width: number;
+
+    area(): number {
+        return this.height * this.width;
+    }
+
+    perimeter(): number {
+        return this.height * 2 + this.width * 2;
+    }
+}
+</code></pre>
+<p>위와 같이 각 도형 클래스에 함수를 따로 구현해준다.</p>
+</details>
+<br>
+<p>객체와 자료 구조는 근본적으로 양분된다. <br>
+객체 지향 코드에서 어려운 변경은 절차적인 코드에서 쉽고, <br>
+절차적인 코드에서 어려운 변경은 객체 지향 코드에서 쉽다.</p>
+<p><strong>객체로 구현하는 것이 모든 해답은 아니다.</strong> <br>
+<strong>때에 따라 단순한 자료구조와 절차적인 코드가 가장 적합한 상황도 있다.</strong></p>
+<h2 id="디미터-법칙">디미터 법칙</h2>
+<p><code>디미터의 법칙</code>은 다른 객체가 어떠한 자료를 갖고 있는지 속사정을 몰라야 한다는 것을 의미한다. <br>
+캡슐화를 높혀 객체의 자율성과 응집도를 높일 수 있다.</p>
+<h3 id="기차-충돌">기차 충돌</h3>
+<pre><code class="language-ts">outputDir = ctxt.getOptions().getScratchDir().getAbsolutePath();
+</code></pre>
+<p>위와 같은 코드를 <code>기차 충돌</code>이라고 말한다. <br>
+각각 객체를 반환하는 함수가 연결되고 연결된 상황이다. <br>
+함수 하나가 아는 지식이 굉장히 많다. 함수는 많은 객체를 탐색할 수 있어야 한다는 것이다.</p>
+<p>디미터 법칙을 위반하는지 여부는 <code>ctxt</code>, <code>Options</code>, <code>ScratchDir</code>이 객체인지 자료구조인지에 달렸다. <br>
+<strong>객체라면 내부 구조를 숨겨야하므로 디미터 법칙을 위반</strong>, 자료구조는 디미터 법칙을 적용하지 않는다.</p>
+<p>자료 구조는 무조건 함수 없이 공개 변수만 포함하고, 객체는 비공개 변수와 공개 함수만 포함한다면 문제 없다. <br>
+하지만 단순한 자료구조에도 Getter, Setter를 정의하는 프레임워크와 표준이 존재한다.</p>
+<h3 id="잡종-구조">잡종 구조</h3>
+<p>이러한 혼란은 절반은 객체, 절반은 자료구조인 잡종 구조를 야기한다. <br>
+중요한 기능을 수행하는 함수도 표함하고, 공개 변수나 Getter, Setter도 있다.</p>
+<p>이러한 모습은 객체와 자료구조의 단점만 모아 놓은 구조이기 때문에 피하는 편이 좋다.</p>
+<h3 id="구조체-감추기">구조체 감추기</h3>
+<p><code>ctxt</code>, <code>Options</code>, <code>ScratchDir</code>가 객체라면? <br>
+앞선 코드와 같이 모두 엮어서는 안된다. (객체는 내부 구조를 감춰야 하기 때문에)</p>
+<blockquote>
+<p>앞서 설명한 내용과 같이 private으로 변수를 감추더라도 Getter로 가져올 수 있다면 내부 구조를 감춘 것이 아니다.</p>
+</blockquote>
+<pre><code class="language-ts">ctxt.getAbsolutePathOfScratchDriectoryOption(); // 1번
+
+ctxt.getScratchDirectoryOption().getAbsolutePath(); // 2번
+</code></pre>
+<p>1번의 경우 <code>ctxt</code>에 공개해야 하는 메서드가 너무 많아진다. <br>
+2번의 경우 <code>getScratchDirectoryOption()</code> 메서드가 객체가 아닌 자료구조를 반환한다고 가정한다.<br>
+두 방법 모두 좋은 것은 아닌 것 같다.</p>
+<p><code>ctxt</code>가 객체라면 <code>내부구조를 보여라라고 하는 것</code>이 아니라 <code>뭔가를 하라</code>고 해야 한다. <br>
+<code>ctxt</code> 객체가 절대 경로를 얻어야 하는 이유는 임시 파일을 생성하기 위한 목적이 있다. <br>
+그렇다면 위와 같은 로직이 아니라 임시파일을 생성하는 코드를 작성한다면? <br>
+이러한 코드를 구현하면 모듈에서 몰라야 하는 여러 객체를 탐색할 필요가 없고, 디미터 법칙을 위반하지 않는다.</p>
+<h2 id="자료-전달-객체">자료 전달 객체</h2>
+<p>자료 전달 객체<sup>Data Transfer Object, DTO</sup>는 공개 변수만 있고 함수가 없는 클래스이다.</p>
+<p>좀 더 일반적인 형태는 빈<sup>bean</sup>구조이다. 빈은 비공개 변수를 Getter, Setter로 조작한다.</p>
+<p><strong>빈 예시:</strong></p>
+<pre><code class="language-ts">class Address {
+    private street: string;
+    private city: string;
+    private state: string;
+
+    constructor(street: string, city: string, state: string) {
+        this.street = street;
+        this.city = city;
+        this.state = state;
+    }
+
+    getStreet(): string {
+        return this.street;
+    }
+
+    getCity(): string {
+        return this.city;
+    }
+
+    getState(): string {
+        return this.state;
+    }
+}
+</code></pre>
+<h2 id="결론">결론</h2>
+<p>객체는 동작을 공개하고 자료를 숨긴다. <br>
+자료구조는 별다른 동작 없이 자료를 노출한다.</p>
+<p>시스템을 구현할 때, <strong>새로운 자료 타입을 추가</strong>하는 유연성이 필요하다면 <strong>객체</strong>가 적합하다. <br>
+<strong>새로운 동작을 추가</strong>하는 유연성이 필요하다면 <strong>자료구조</strong>가 적합하다.</p><div class="navigation"><article class="navigation-item navigation-item--previous"><a href="/Clean-Code/3장 - 함수/"><div><div class="navigation-item__type">Previous</div><h2 class="navigation-item__title">3장 - 함수</h2></div><div><i class="icon-arrow_back"></i></div></a></article><article class="navigation-item navigation-item--next"><a href="/Clean-Code/7장 - 오류 처리/"><div><div class="navigation-item__type">Next</div><h2 class="navigation-item__title">7장 - 오류 처리</h2></div><div><i class="icon-arrow_forward"></i></div></a></article></div>
+            </article>
+            <div class="toc-container"><ul class="toc"><li><p><a href="#%EC%9E%90%EB%A3%8C-%EC%B6%94%EC%83%81%ED%99%94">자료 추상화</a></p></li><li><p><a href="#%EC%9E%90%EB%A3%8C%EA%B0%9D%EC%B2%B4-%EB%B9%84%EB%8C%80%EC%B9%AD">자료/객체 비대칭</a></p></li><li><p><a href="#%EB%94%94%EB%AF%B8%ED%84%B0-%EB%B2%95%EC%B9%99">디미터 법칙</a></p><ul><li><a href="#%EA%B8%B0%EC%B0%A8-%EC%B6%A9%EB%8F%8C">기차 충돌</a></li><li><a href="#%EC%9E%A1%EC%A2%85-%EA%B5%AC%EC%A1%B0">잡종 구조</a></li><li><a href="#%EA%B5%AC%EC%A1%B0%EC%B2%B4-%EA%B0%90%EC%B6%94%EA%B8%B0">구조체 감추기</a></li></ul></li><li><p><a href="#%EC%9E%90%EB%A3%8C-%EC%A0%84%EB%8B%AC-%EA%B0%9D%EC%B2%B4">자료 전달 객체</a></p></li><li><p><a href="#%EA%B2%B0%EB%A1%A0">결론</a></p></li></ul></div>
+        </main>
+        <button class="drawer-opener icon-menu" aria-label="메뉴 보기"></button>
+        <button
+            class="toc-opener icon-bookmark_outline"
+            aria-label="목차 보기"
+        ></button>
+        <button class="closer"></button>
+        <script
+            defer
+            src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"
+        ></script>
+        <script defer src="/Clean-Code/js/app.js"></script>
+    </body>
+</html>
