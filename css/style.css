@@ -54,6 +54,12 @@ main {
     padding-bottom: 30px;
 }
 
+button,
+details summary,
+a {
+    cursor: pointer;
+}
+
 .sr-only {
     position: absolute;
     width: 1px;
