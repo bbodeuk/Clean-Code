@@ -14,10 +14,10 @@
         <meta property="og:description" content="6장 - 객체와 자료구조 객체와 자료구조의 차이를 이해하고, 특성에 따라 활용한다. 무조건 객체만! 고집할 것은 없다. 객체를 사용한다면 객체의 특성에 맞게 사용해야 한다. 자료 추상화 구체적인 Point 클래스: class Point {     x: number;     y: number; } 구체적인 Point 클래스는 어떤 좌표계를 사용하는지 명확하다..." />
         <meta name="twitter:title" content="6장 - 객체와 자료구조" />
         <meta name="twitter:description" content="6장 - 객체와 자료구조 객체와 자료구조의 차이를 이해하고, 특성에 따라 활용한다. 무조건 객체만! 고집할 것은 없다. 객체를 사용한다면 객체의 특성에 맞게 사용해야 한다. 자료 추상화 구체적인 Point 클래스: class Point {     x: number;     y: number; } 구체적인 Point 클래스는 어떤 좌표계를 사용하는지 명확하다..." />
-        <meta property="article:published_time" content="2022-04-12T03:38:17.000Z" />
-        <meta property="og:regDate" content="2022-04-12T03:38:17.000Z" />
-        <meta property="article:modified_time" content="2022-04-12T03:38:17.000Z" />
-        <meta property="og:updated_time" content="2022-04-12T03:38:17.000Z" />
+        <meta property="article:published_time" content="2022-04-12T23:40:28.000Z" />
+        <meta property="og:regDate" content="2022-04-12T23:40:28.000Z" />
+        <meta property="article:modified_time" content="2022-04-12T23:40:28.000Z" />
+        <meta property="og:updated_time" content="2022-04-12T23:40:28.000Z" />
         <link rel="preconnect" async href="https://fonts.googleapis.com" />
         <link
             rel="preconnect"
@@ -111,22 +111,25 @@ author: Seyoung Chung
 <pre><code class="language-ts">class Square {
     topLeft: Point;
     side: number;
+
+    // ...
 }
 
 class Rectangle {
     topLeft: Point;
     height: number;
     width: number;
+
+    // ...
 }
 
 class Geometry {
     area(shape: Object) {
         if (shape instanceof Square) {
-            const s = shape as Square;
-            return s.side * s.side;
-        } else if (shape instanceof Rectangle) {
-            const r = shape as Rectangle;
-            return r.height * r.width;
+            return shape.side * shape.side;
+        }
+        if (shape instanceof Rectangle) {
+            return shape.height * shape.width;
         }
         throw new Error("No Such Shape");
     }
@@ -142,6 +145,8 @@ Geometry는 각 도형 클래스를 다뤄 도형이 동작하는 방식을 구�
 <pre><code class="language-ts">class Circle {
     center: Point;
     radius: number;
+
+    // ...
 }
 
 class Geometry {
@@ -149,14 +154,13 @@ class Geometry {
 
     area(shape: Object) {
         if (shape instanceof Square) {
-            const s = shape as Square;
-            return s.side * s.side;
-        } else if (shape instanceof Rectangle) {
-            const r = shape as Rectangle;
-            return r.height * r.width;
-        } else if (shape instanceof Circle) {
-            const c = shape as Circle;
-            return PI * c.radius * c.radius;
+            return shape.side * shape.side;
+        }
+        if (shape instanceof Rectangle) {
+            return shape.height * shape.width;
+        }
+        if (shape instanceof Circle) {
+            return PI * shape.radius * shape.radius;
         }
         throw new Error("No Such Shape");
     }
@@ -171,21 +175,21 @@ class Geometry {
 }
 
 class Square implements Shape {
-    private topLeft: Point;
-    private side: number;
+    #topLeft: Point;
+    #side: number;
 
     area(): number {
-        return this.side * this.side;
+        return this.#side * this.#side;
     }
 }
 
 class Rectangle implements Shape {
-    private topLeft: Point;
-    private height: number;
-    private width: number;
+    #topLeft: Point;
+    #height: number;
+    #width: number;
 
     area(): number {
-        return this.height * this.width;
+        return this.#height * this.#width;
     }
 }
 </code></pre>
@@ -195,29 +199,29 @@ Geometry 클래스는 필요없다. 새 도형을 추가해도 기존 함수에 
 <details>
 <summary><b>새 함수를 추가할 때 변화</b></summary>
 <pre><code class="language-ts">class Square implements Shape {
-    private topLeft: Point;
-    private side: number;
+    #topLeft: Point;
+    #side: number;
 
     area(): number {
-        return this.side * this.side;
+        return this.#side * this.#side;
     }
 
     perimeter(): number {
-        return this.side * 4;
+        return this.#side * 4;
     }
 }
 
 class Rectangle implements Shape {
-    private topLeft: Point;
-    private height: number;
-    private width: number;
+    #topLeft: Point;
+    #height: number;
+    #width: number;
 
     area(): number {
-        return this.height * this.width;
+        return this.#height * this.#width;
     }
 
     perimeter(): number {
-        return this.height * 2 + this.width * 2;
+        return this.#height * 2 + this.#width * 2;
     }
 }
 </code></pre>
@@ -271,9 +275,9 @@ ctxt.getScratchDirectoryOption().getAbsolutePath(); // 2번
 <p>좀 더 일반적인 형태는 빈<sup>bean</sup>구조이다. 빈은 비공개 변수를 Getter, Setter로 조작한다.</p>
 <p><strong>빈(Bean) 예시:</strong></p>
 <pre><code class="language-ts">class Address {
-    private street: string;
-    private city: string;
-    private state: string;
+    #street: string;
+    #city: string;
+    #state: string;
 
     constructor(street: string, city: string, state: string) {
         this.street = street;
@@ -282,15 +286,15 @@ ctxt.getScratchDirectoryOption().getAbsolutePath(); // 2번
     }
 
     getStreet(): string {
-        return this.street;
+        return this.#street;
     }
 
     getCity(): string {
-        return this.city;
+        return this.#city;
     }
 
     getState(): string {
-        return this.state;
+        return this.#state;
     }
 }
 </code></pre>
