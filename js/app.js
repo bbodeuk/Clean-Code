@@ -44,19 +44,25 @@
     }
 
     function syncToc() {
-        const { scrollY, innerHeight: windowHeight } = window;
-        const currentPosition = scrollY;
+        const { scrollY: currentPosition, innerHeight: windowHeight } = window;
         const tocElements = document.querySelectorAll(".toc a");
-        const tocTargetHeadingIsInViewport = [...tocElements].map((x) => {
-            const { offsetTop } = document.querySelector(
-                decodeURIComponent(x.getAttribute("href")),
-            );
+        const tocTargetHeadings = [...tocElements].map((x) =>
+            document.querySelector(decodeURIComponent(x.getAttribute("href"))),
+        );
+        const tocTargetHeadingIsInViewport = tocTargetHeadings.map(
+            (element, i) => {
+                const { offsetTop } = element;
+                const nextHeadingOffset =
+                    tocTargetHeadings[i + 1]?.offsetTop ??
+                    document.documentElement.scrollHeight -
+                        document.documentElement.clientHeight;
 
-            return (
-                currentPosition <= offsetTop &&
-                offsetTop <= currentPosition + windowHeight
-            );
-        });
+                return (
+                    currentPosition <= nextHeadingOffset &&
+                    offsetTop <= currentPosition + windowHeight
+                );
+            },
+        );
 
         tocElements.forEach((elt, i) => {
             if (tocTargetHeadingIsInViewport[i]) {
