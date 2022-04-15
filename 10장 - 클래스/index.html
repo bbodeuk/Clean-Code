@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>10장 - 클래스</title>
+        <meta name="description" content="10장 - 클래스 클래스의 체계 클래스는 작아야 한다. (높은 응집도) 변경으로부터 격리 (낮은 결합도) 클래스 체계 클래스 정의하는 방식 class Person {     // public 변수     job: number;     // private 변수     #name: string;     // constructor, 생성자     construc..." />
+        <meta name="author" content="Seyoung Chung" />
+        <meta name="robots" content="index,follow" />
+        <meta property="og:type" content="article" />
+        <meta property="og:site_name" content="클린 코드 스터디" />
+        <meta property="og:title" content="10장 - 클래스" />
+        <meta property="og:description" content="10장 - 클래스 클래스의 체계 클래스는 작아야 한다. (높은 응집도) 변경으로부터 격리 (낮은 결합도) 클래스 체계 클래스 정의하는 방식 class Person {     // public 변수     job: number;     // private 변수     #name: string;     // constructor, 생성자     construc..." />
+        <meta name="twitter:title" content="10장 - 클래스" />
+        <meta name="twitter:description" content="10장 - 클래스 클래스의 체계 클래스는 작아야 한다. (높은 응집도) 변경으로부터 격리 (낮은 결합도) 클래스 체계 클래스 정의하는 방식 class Person {     // public 변수     job: number;     // private 변수     #name: string;     // constructor, 생성자     construc..." />
+        <meta property="article:published_time" content="2022-04-15T04:09:35.000Z" />
+        <meta property="og:regDate" content="2022-04-15T04:09:35.000Z" />
+        <meta property="article:modified_time" content="2022-04-15T04:09:35.000Z" />
+        <meta property="og:updated_time" content="2022-04-15T04:09:35.000Z" />
+        <link rel="preconnect" async href="https://fonts.googleapis.com" />
+        <link
+            rel="preconnect"
+            async
+            href="https://fonts.gstatic.com"
+            crossorigin
+        />
+        <link
+            async
+            href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital@0;1&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" async href="/Clean-Code/css/reset.css" />
+        <link rel="stylesheet" async href="/Clean-Code/css/icon.css" />
+        <link rel="stylesheet" async href="/Clean-Code/css/style.css" />
+        <style>
+            @font-face {
+                font-family: icon;
+                src: url("/Clean-Code/icon/icon.woff?zg8y3j") format("woff"),
+                    url("/Clean-Code/icon/icon.svg?zg8y3j#icon") format("svg");
+                font-weight: 400;
+                font-style: normal;
+                font-display: block;
+            }
+        </style>
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/Clean-Code/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="96x96"
+            href="/Clean-Code/favicon-96x96.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/Clean-Code/favicon-16x16.png"
+        />
+    </head>
+    <body>
+        <nav class="global-navigation">
+            <div class="global-navigation__content">
+                <ul><li><a href="/Clean-Code/">클린 코드 스터디</a></li><li><a href="/Clean-Code/1%EC%9E%A5%20-%20%EA%B9%A8%EB%81%97%ED%95%9C%20%EC%BD%94%EB%93%9C/">1장 - 깨끗한 코드</a></li$><li><a href="/Clean-Code/2%EC%9E%A5%20-%20%EC%9D%98%EB%AF%B8%20%EC%9E%88%EB%8A%94%20%EC%9D%B4%EB%A6%84/">2장 - 의미 있는 이름</a></li$><li><a href="/Clean-Code/3%EC%9E%A5%20-%20%ED%95%A8%EC%88%98/">3장 - 함수</a></li$><li><a href="/Clean-Code/6%EC%9E%A5%20-%20%EA%B0%9D%EC%B2%B4%EC%99%80%20%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0/">6장 - 객체와 자료구조</a></li$><li><a href="/Clean-Code/7%EC%9E%A5%20-%20%EC%98%A4%EB%A5%98%20%EC%B2%98%EB%A6%AC/">7장 - 오류 처리</a></li$><li><a href="/Clean-Code/8%EC%9E%A5%20-%20%EA%B2%BD%EA%B3%84/">8장 - 경계</a></li$><li><a href="/Clean-Code/9%EC%9E%A5%20-%20%EB%8B%A8%EC%9C%84%20%ED%85%8C%EC%8A%A4%ED%8A%B8/">9장 - 단위 테스트</a></li$><li class="highlight"><a href="/Clean-Code/10%EC%9E%A5%20-%20%ED%81%B4%EB%9E%98%EC%8A%A4/">10장 - 클래스</a></li$><li><a href="/Clean-Code/11%EC%9E%A5%20-%20%EC%8B%9C%EC%8A%A4%ED%85%9C/">11장 - 시스템</a></li$></ul>
+            </div>
+        </nav>
+        <main>
+            <article class="article">
+                <!--
+author: Seyoung Chung
+-->
+<h1 id="10장---클래스">10장 - 클래스</h1>
+<ol>
+<li>클래스의 체계</li>
+<li>클래스는 작아야 한다. (높은 응집도)</li>
+<li>변경으로부터 격리 (낮은 결합도)</li>
+</ol><h2 id="클래스-체계">클래스 체계</h2>
+<p>클래스 정의하는 방식</p>
+<pre><code class="language-ts">class Person {
+    // public 변수
+    job: number;
+
+    // private 변수
+    #name: string;
+
+    // constructor, 생성자
+    constructor() {}
+
+    // public 메서드
+    introduce() {
+        console.log(getIntroString());
+    }
+
+    // public 메서드에서 사용하는 비공개 메서드
+    private getIntroString() {
+        return `My name is ${this.#name}. I'm ${job}`;
+    }
+}
+</code></pre>
+<ol>
+<li>변수 - 메서드 순으로 작성한다.</li>
+<li>public - private 순으로 작성한다.</li>
+<li>private 메서드는 사용되는 public 메서드 바로 다음에 작성한다. (하나의 아티클과 같이 읽을 수 있도록)</li>
+</ol>
+<blockquote>
+<p>캡슐화: <a href="https://ko.wikipedia.org/wiki/%EC%BA%A1%EC%8A%90%ED%99%94">캡슐화</a>는 객체 지향 프로그래밍에서 2가지 측면이 있다. 객체의 속성과 행위를 하나로 묶고, 실제 구현 내용 일부를 내부에 감추어 은닉한다.</p>
+</blockquote>
+<h2 id="클래스는-작아야-한다">클래스는 작아야 한다.</h2>
+<p><strong>클래스는 작아야 한다.</strong></p>
+<p>클래스 크기의 척도는 클래스가 맡은 <strong>책임</strong>의 정도. <br>
+메서드의 갯수가 적다고 책임이 적은 것이 아니라, 실제 책임의 정도가 적어야 한다. <br>
+책임의 정도가 적다면 클래스의 이름을 간결하게 지을 수 있어야 한다.</p>
+<blockquote>
+<p>단일 책임 원칙<sup>Single Responsibility Principle, SRP</sup>은 클래스나 모듈을 변경할 이유가 하나, 단 하나 뿐이어야 한다는 원칙.</p>
+</blockquote>
+<p>단일 책임 클래스가 많아지면 큰 그림을 이해하기 어려워진다고 우려하기도 한다. <br>
+큰 그림을 이해하기 위해 많은 클래스를 수없이 넘나 들어야 한다고 걱정한다. <br>
+하지만, 작은 클래스가 많은 시스템이든 큰 클래스가 몇 개뿐인 시스템이든 돌아가는 부품은 그 수가 비슷하다. <br>
+규모가 커지면 논리가 많고 복잡하다. 이런 복잡성을 다루려면 체계적인 정리가 필수다. <br>
+그래야 책임을 찾기 쉽고, 문제 해결을 위해 이해해야하는 분량이 적다.</p>
+<h3 id="응집도">응집도</h3>
+<p>클래스는 인스턴스 변수가 적어야 한다. 일반적으로 메서드가 변수를 더 많이 사용할수록 메서드와 클래스는 응집도가 높다. 응집도가 높다는 것은 클래스 내의 메서드와 변수가 서로 의존하며 논리적인 단위로 묶인다는 의미다.</p>
+<h3 id="응집도를-유지하면-작은-클래스-여럿이-나온다">응집도를 유지하면 작은 클래스 여럿이 나온다.</h3>
+<p>클래스 내에 변수가 아주 많은 큰 함수 하나가 있다. 일부를 작은 함수 하나로 빼고 싶은데, 큰 함수 내에서 정의된 변수 4개를 사용한다. 그 때, 4개를 함수의 인자로 전달할 것인가?</p>
+<p>4개의 변수를 인스턴스 변수로 정의한다면 인자로 전달하지 않아도 된다. 함수를 나누기 쉬워진다. <br>
+다만, 클래스의 응집력이 떨어진다. (몇몇 함수만 사용하는 인스턴스 변수가 늘어나기 때문) <br>
+그 땐, 클래스를 나누면 된다. \</p>
+<p>함수를 나누고, 클래스를 나누다보면 점점 프로그램에 체계가 잡히고 구조가 투명해진다.</p>
+<h2 id="변경하기-쉬운-클래스">변경하기 쉬운 클래스</h2>
+<p>대다수 시스템은 지속적인 변경이 가해진다. 변경할 때마다 의도치 않은 동작이 발생할 위험이 따른다. <br>
+클래스를 체계적으로 정리해 변경에 따른 위험을 낮춘다.</p>
+<pre><code class="language-ts">class Sql {
+    create(): string;
+    insert(fields: Object[]): string;
+    selectAll(): string;
+    // ...
+}
+</code></pre>
+<p>위 코드는 적절한 SQL 문자열을 만드는 클래스이다.<br>
+새로운 SQL 문을 지원하거나 새로운 기능을 추가, 기존 SQL 문을 변경해야 할 때, <br>
+모두 Sql 문을 고쳐야 한다. <strong>변경해야 할 이유가 여러 개이므로 Sql 클래스는 SRP를 위반한다.</strong></p>
+<pre><code class="language-ts">abstract class Sql {
+    constructor(table: string, columns: Column[]) {}
+    abstract generate(): string;
+}
+
+class CreateSql extends Sql {
+    constructor(table: string, columns: Column[]) {}
+    generate(): string {}
+}
+
+class InsertSql extends Sql {
+    constructor(table: string, columns: Column[]) {}
+    generate(): string {}
+}
+
+// ...
+</code></pre>
+<p>각 클래스는 단순하다. 수정에 대한 위험도 사라졌다. <br>
+update 문을 추가할 때도 기존 클래스를 변경할 필요 없이 새 클래스를 생성하면 된다.</p>
+<p>이는 OCP<sup>Open-Closed Principle</sup>을 지원한다. 확장에는 개방적이고 수정에 폐쇄적이어야 한다는 원칙. <br>
+파생 클래스를 생성하는 방식으로 새 기능에 개방적인 동시에, 다른 클래스를 닫아놓는 방식으로 수정에는 폐쇄적이다.</p>
+<h3 id="변경으로부터-격리">변경으로부터 격리</h3>
+<p>구체적인 클래스는 상세한 구현(코드)을 포함하며, 추상 클래스는 개념만 포함한다. <br>
+상세한 구현에 의존하는 클래스는 구현이 바뀌면 위험에 빠진다. <br>
+그래서 인터페이스와 추상 클래스를 사용해 구현이 미치는 영향을 격리한다.</p>
+<p>시스템의 결합도를 낮추면 유연성과 재사용성이 높아진다. <br>
+이는 변경으로부터 잘 격리되어 있다는 의미.</p>
+<p>결합도를 최솔 줄이면 DIP<sup>Dependency Inversion Principle</sup>를 따른다.</p>
+<p><strong>참고 자료</strong></p>
+<ul>
+<li><a href="https://github.com/jobhope/TechnicalNote/blob/master/programming_language/ObjectOrientedPrinciples.md">객체지향의 원칙 5가지 SOLID</a></li>
+</ul><div class="navigation"><article class="navigation-item navigation-item--previous"><a href="/Clean-Code/9장 - 단위 테스트/"><div><div class="navigation-item__type">Previous</div><h2 class="navigation-item__title">9장 - 단위 테스트</h2></div><div><i class="icon-arrow_back"></i></div></a></article><article class="navigation-item navigation-item--next"><a href="/Clean-Code/11장 - 시스템/"><div><div class="navigation-item__type">Next</div><h2 class="navigation-item__title">11장 - 시스템</h2></div><div><i class="icon-arrow_forward"></i></div></a></article></div>
+            </article>
+            <div class="toc-container"><ul class="toc"><li><p><a href="#%ED%81%B4%EB%9E%98%EC%8A%A4-%EC%B2%B4%EA%B3%84">클래스 체계</a></p></li><li><p><a href="#%ED%81%B4%EB%9E%98%EC%8A%A4%EB%8A%94-%EC%9E%91%EC%95%84%EC%95%BC-%ED%95%9C%EB%8B%A4">클래스는 작아야 한다.</a></p><ul><li><a href="#%EC%9D%91%EC%A7%91%EB%8F%84">응집도</a></li><li><a href="#%EC%9D%91%EC%A7%91%EB%8F%84%EB%A5%BC-%EC%9C%A0%EC%A7%80%ED%95%98%EB%A9%B4-%EC%9E%91%EC%9D%80-%ED%81%B4%EB%9E%98%EC%8A%A4-%EC%97%AC%EB%9F%BF%EC%9D%B4-%EB%82%98%EC%98%A8%EB%8B%A4">응집도를 유지하면 작은 클래스 여럿이 나온다.</a></li></ul></li><li><p><a href="#%EB%B3%80%EA%B2%BD%ED%95%98%EA%B8%B0-%EC%89%AC%EC%9A%B4-%ED%81%B4%EB%9E%98%EC%8A%A4">변경하기 쉬운 클래스</a></p><ul><li><a href="#%EB%B3%80%EA%B2%BD%EC%9C%BC%EB%A1%9C%EB%B6%80%ED%84%B0-%EA%B2%A9%EB%A6%AC">변경으로부터 격리</a></li></ul></li></ul></div>
+        </main>
+        <button class="drawer-opener icon-menu" aria-label="메뉴 보기"></button>
+        <button
+            class="toc-opener icon-bookmark_outline"
+            aria-label="목차 보기"
+        ></button>
+        <button class="closer"></button>
+        <script
+            defer
+            src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"
+        ></script>
+        <script defer src="/Clean-Code/js/app.js"></script>
+    </body>
+</html>
