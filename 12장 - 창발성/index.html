@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>12장 - 창발성</title>
+        <meta name="description" content="12장 - 창발성창발적 설계로 깔끔한 코드를 구현하자 컨트 벡이 제시한 단순한 설계 규칙 네 가지 (중요도 순) 모든 테스트를 실행한다. 중복을 없앤다. 프로그래머 의도를 표현한다. 클래스와 메서드 수를 최소로 줄인다. 단순한 설계 규칙 1 : 모든 테스트를 실행하라 테스트를 철저히 거쳐 모든 테스트 케이스를 항상 통과하는 시스템은 테스트가 가능한 시스템이..." />
+        <meta name="author" content="Eunsol kim" />
+        <meta name="robots" content="index,follow" />
+        <meta property="og:type" content="article" />
+        <meta property="og:site_name" content="클린 코드 스터디" />
+        <meta property="og:title" content="12장 - 창발성" />
+        <meta property="og:description" content="12장 - 창발성창발적 설계로 깔끔한 코드를 구현하자 컨트 벡이 제시한 단순한 설계 규칙 네 가지 (중요도 순) 모든 테스트를 실행한다. 중복을 없앤다. 프로그래머 의도를 표현한다. 클래스와 메서드 수를 최소로 줄인다. 단순한 설계 규칙 1 : 모든 테스트를 실행하라 테스트를 철저히 거쳐 모든 테스트 케이스를 항상 통과하는 시스템은 테스트가 가능한 시스템이..." />
+        <meta name="twitter:title" content="12장 - 창발성" />
+        <meta name="twitter:description" content="12장 - 창발성창발적 설계로 깔끔한 코드를 구현하자 컨트 벡이 제시한 단순한 설계 규칙 네 가지 (중요도 순) 모든 테스트를 실행한다. 중복을 없앤다. 프로그래머 의도를 표현한다. 클래스와 메서드 수를 최소로 줄인다. 단순한 설계 규칙 1 : 모든 테스트를 실행하라 테스트를 철저히 거쳐 모든 테스트 케이스를 항상 통과하는 시스템은 테스트가 가능한 시스템이..." />
+        <meta property="article:published_time" content="2022-04-22T17:38:58.000Z" />
+        <meta property="og:regDate" content="2022-04-22T17:38:58.000Z" />
+        <meta property="article:modified_time" content="2022-04-22T17:38:58.000Z" />
+        <meta property="og:updated_time" content="2022-04-22T17:38:58.000Z" />
+        <link rel="preconnect" async href="https://fonts.googleapis.com" />
+        <link
+            rel="preconnect"
+            async
+            href="https://fonts.gstatic.com"
+            crossorigin
+        />
+        <link
+            async
+            href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital@0;1&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" async href="/Clean-Code/css/reset.css" />
+        <link rel="stylesheet" async href="/Clean-Code/css/icon.css" />
+        <link rel="stylesheet" async href="/Clean-Code/css/style.css" />
+        <style>
+            @font-face {
+                font-family: icon;
+                src: url("/Clean-Code/icon/icon.woff?zg8y3j") format("woff"),
+                    url("/Clean-Code/icon/icon.svg?zg8y3j#icon") format("svg");
+                font-weight: 400;
+                font-style: normal;
+                font-display: block;
+            }
+        </style>
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/Clean-Code/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="96x96"
+            href="/Clean-Code/favicon-96x96.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/Clean-Code/favicon-16x16.png"
+        />
+    </head>
+    <body>
+        <nav class="global-navigation">
+            <div class="global-navigation__content">
+                <ul><li><a href="/Clean-Code/">클린 코드 스터디</a></li><li><a href="/Clean-Code/1%EC%9E%A5%20-%20%EA%B9%A8%EB%81%97%ED%95%9C%20%EC%BD%94%EB%93%9C/">1장 - 깨끗한 코드</a></li$><li><a href="/Clean-Code/2%EC%9E%A5%20-%20%EC%9D%98%EB%AF%B8%20%EC%9E%88%EB%8A%94%20%EC%9D%B4%EB%A6%84/">2장 - 의미 있는 이름</a></li$><li><a href="/Clean-Code/3%EC%9E%A5%20-%20%ED%95%A8%EC%88%98/">3장 - 함수</a></li$><li><a href="/Clean-Code/6%EC%9E%A5%20-%20%EA%B0%9D%EC%B2%B4%EC%99%80%20%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0/">6장 - 객체와 자료구조</a></li$><li><a href="/Clean-Code/7%EC%9E%A5%20-%20%EC%98%A4%EB%A5%98%20%EC%B2%98%EB%A6%AC/">7장 - 오류 처리</a></li$><li><a href="/Clean-Code/8%EC%9E%A5%20-%20%EA%B2%BD%EA%B3%84/">8장 - 경계</a></li$><li><a href="/Clean-Code/9%EC%9E%A5%20-%20%EB%8B%A8%EC%9C%84%20%ED%85%8C%EC%8A%A4%ED%8A%B8/">9장 - 단위 테스트</a></li$><li><a href="/Clean-Code/10%EC%9E%A5%20-%20%ED%81%B4%EB%9E%98%EC%8A%A4/">10장 - 클래스</a></li$><li><a href="/Clean-Code/11%EC%9E%A5%20-%20%EC%8B%9C%EC%8A%A4%ED%85%9C/">11장 - 시스템</a></li$><li class="highlight"><a href="/Clean-Code/12%EC%9E%A5%20-%20%EC%B0%BD%EB%B0%9C%EC%84%B1/">12장 - 창발성</a></li$><li><a href="/Clean-Code/13%EC%9E%A5-%20%EB%8F%99%EC%8B%9C%EC%84%B1/">13장- 동시성</a></li$></ul>
+            </div>
+        </nav>
+        <main>
+            <article class="article">
+                <!--
+author: Eunsol kim
+-->
+<h1 id="12장---창발성">12장 - 창발성</h1><h2 id="창발적-설계로-깔끔한-코드를-구현하자">창발적 설계로 깔끔한 코드를 구현하자</h2>
+<p><strong>컨트 벡이 제시한 단순한 설계 규칙 네 가지 (중요도 순)</strong></p>
+<blockquote>
+<ol>
+<li>모든 테스트를 실행한다.</li>
+<li>중복을 없앤다.</li>
+<li>프로그래머 의도를 표현한다.</li>
+<li>클래스와 메서드 수를 최소로 줄인다.</li>
+</ol>
+</blockquote>
+<h2 id="단순한-설계-규칙-1--모든-테스트를-실행하라">단순한 설계 규칙 1 : 모든 테스트를 실행하라</h2>
+<p>테스트를 철저히 거쳐 모든 테스트 케이스를 항상 통과하는 시스템은
+<strong>테스트가 가능한 시스템</strong>이다.</p>
+<p>테스트가 가능한 시스템을 만들려고 애쓰면 설계 품질이 더불어 높아진다.
+크기가 작고 하나만 수행하는 클래스가 나온다.</p>
+<p>SRP <sup>Single Responsibility Principle, 단일 책임 원칙 (모든 클래스는 하나의 책임만 가져야 하는 원칙)</sup>를 준수하는 클래스는 테스트가 훨씬 더 쉽다.</p>
+<p>테스트 케이스를 많이 작성할수록 개발자는 DIP <sup>Dependency Inversion Principle, 의존성 역전 원칙 (변화하지 않는 것에 의존하라는 원칙)</sup>와 같은 원칙을 적용하고 의존성 주입 <sup>Dependency Injection</sup>, 인터페이스, 추상화 등과 같은 도구를 사용해서 결합도를 낮춘다.</p>
+<h2 id="단순한-설계-규칙-24--리팩터링">단순한 설계 규칙 2~4 : 리팩터링</h2>
+<p>테스트 케이스를 모두 작성했다면 이제 클래스를 정리해도 괜찮다. 구체적으로는 코드를 점진적으로 리팩터링 해나간다.</p>
+<p>코드를 정리하면서 시스템이 깨질까 걱정할 필요가 없다. 테스트 케이스가 있으니까!</p>
+<h2 id="중복을-없애라">중복을 없애라</h2>
+<p>우수한 설계에서 중복은 커다란 적이다. 중복은 추가 작업, 추가 위험, 불필요한 복잡도를 뜻하기 때문이다.</p>
+<p><strong>소규모 재사용</strong></p>
+<pre><code class="language-java">public void  scaleToOneDimension(float desireDimension, float imageDimension) {
+    if(Math.ads(desiredDimension - imageDimension) &#x3C; errorThreshold) return;
+
+    float scalingFactor = desiredDimension / imageDimension;
+
+    scalingFactor = (float) (Math.floor(scalingFactor * 100) * 0.01f);
+
+    replaceImage(ImageUtilities.getScaledImage(image, scalingFactor, scalingFactor));
+}
+
+public sychronized void rotate(int degrees) {
+    replaceImage(ImageUtilities.getRotatedImage(image, degress));
+}
+
+private void replaceImage(RenderedOp newImage) {
+    image.dispose();
+    System.gc();
+    image = newImage;
+}
+</code></pre>
+<p>깔끔한 시스템을 만들려면 단 몇 줄이라도 중복을 제거하겠다는 의지가 필요하다.
+이런 소규모 재사용은 시스템 복잡도를 극적으로 줄여준다.</p>
+<p><strong>TEMPLATE METHOD</strong><sup><a href="#user-content-fn-1" id="user-content-fnref-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup></p>
+<pre><code class="language-java">abstract public class VacationPolicy {
+    public void accureVacation() {
+        caluateBaseVacationHours();
+        alterForLegalMinimums();
+        applyToPayroll();
+    }
+
+    priavte void caluateBaseVacationHours() { /* ... */}
+    abstract alterForLegalMinimums();
+    private void applyToPayroll () { /* ... */}
+}
+
+public class USvacationPolicy extends VactionPolicy {
+    @Override protected void alterForLegalMinimums() {
+        //미국 최소 법정 일수를 사용한다.
+    }
+}
+
+public class EUvacationPolicy extends VactionPolicy {
+    @Override protected void alterForLegalMinimums() {
+        //유럽연랍 최소 법정 일수를 사용한다.
+    }
+}
+</code></pre>
+<p>TEMPLATE METHOD 패턴은 디자인 패턴 중 하나로
+서브 클래스로 캡슐화해 전체 일을 수행하는 구조는 바꾸지 않으면서 특정 단계에서 수행하는 내역을 바꾸는 패턴이다.
+즉, 전체적으로는 동일하면서 부분적으로는 다른 구문으로 구성된 메서드의 코드 중복을 최소화할 때 유용하다.</p>
+<h2 id="표현하라">표현하라</h2>
+<p>개발자가 코드를 명백하게 짤수록 다른사람이 그 코드를 이해하기 쉬어진다. 그래야 결함이 줄어들고 유지보수 비용이 적게 든다.</p>
+<blockquote>
+<ol>
+<li>좋은 이름을 선택한다.</li>
+<li>함수와 클래스 크기를 가능한 줄인다.</li>
+<li>표준 명칭을 사용한다.
+(ex. 클래스가 COMMAND나 VISITOR와 같은 표준 패턴을 사용해 구현 된다면 클래스 이름에 패턴 이름을 넣어준다.)</li>
+<li>단위 테스트 케이스를 꼼꼼히 작성한다.</li>
+</ol>
+</blockquote>
+<p>나중에 코드를 읽을 사람은 바로 자신일 가능성이 높다는 사실을 명심하자.</p>
+<h2 id="클래스와-메서드-수를-최소로-줄여라">클래스와 메서드 수를 최소로 줄여라</h2>
+<p>때로는 무의미하고 독단적인 정책 탓에 클래스 수와 메서드 수가 늘어나기도 한다.
+목표는 함수와 클래스 크기를 작게 유지하면서 동시에 시스켐 크키도 작제 유지하는 데 있다.
+하지만 네 개의 규칙중 우선순위가 가장 낮다.
+따라서 테스트 케이스를 만들고 중복을 제거하고 의도를 표현하는 작업이 더 중요하다.</p>
+<h2 id="결론">결론</h2>
+<p>단순한 설계 규칙을 따른다면 우수한 기법과 원칙을 단번에 활용할 수 있다.</p>
+<section data-footnotes class="footnotes"><h2 id="footnote-label" class="sr-only">Footnotes</h2>
+<ol>
+<li id="user-content-fn-1">
+<p><a href="https://gmlwjd9405.github.io/2018/07/13/template-method-pattern.html">https://gmlwjd9405.github.io/2018/07/13/template-method-pattern.html</a> <a href="#user-content-fnref-1" data-footnote-backref class="data-footnote-backref" aria-label="Back to content">↩</a></p>
+</li>
+</ol>
+</section><div class="navigation"><article class="navigation-item navigation-item--previous"><a href="/Clean-Code/11장 - 시스템/"><div><div class="navigation-item__type">Previous</div><h2 class="navigation-item__title">11장 - 시스템</h2></div><div><i class="icon-arrow_back"></i></div></a></article><article class="navigation-item navigation-item--next"><a href="/Clean-Code/13장- 동시성/"><div><div class="navigation-item__type">Next</div><h2 class="navigation-item__title">13장- 동시성</h2></div><div><i class="icon-arrow_forward"></i></div></a></article></div>
+            </article>
+            <div class="toc-container"><ul class="toc"><li><a href="#%EC%B0%BD%EB%B0%9C%EC%A0%81-%EC%84%A4%EA%B3%84%EB%A1%9C-%EA%B9%94%EB%81%94%ED%95%9C-%EC%BD%94%EB%93%9C%EB%A5%BC-%EA%B5%AC%ED%98%84%ED%95%98%EC%9E%90">창발적 설계로 깔끔한 코드를 구현하자</a></li><li><a href="#%EB%8B%A8%EC%88%9C%ED%95%9C-%EC%84%A4%EA%B3%84-%EA%B7%9C%EC%B9%99-1--%EB%AA%A8%EB%93%A0-%ED%85%8C%EC%8A%A4%ED%8A%B8%EB%A5%BC-%EC%8B%A4%ED%96%89%ED%95%98%EB%9D%BC">단순한 설계 규칙 1 : 모든 테스트를 실행하라</a></li><li><a href="#%EB%8B%A8%EC%88%9C%ED%95%9C-%EC%84%A4%EA%B3%84-%EA%B7%9C%EC%B9%99-24--%EB%A6%AC%ED%8C%A9%ED%84%B0%EB%A7%81">단순한 설계 규칙 2~4 : 리팩터링</a></li><li><a href="#%EC%A4%91%EB%B3%B5%EC%9D%84-%EC%97%86%EC%95%A0%EB%9D%BC">중복을 없애라</a></li><li><a href="#%ED%91%9C%ED%98%84%ED%95%98%EB%9D%BC">표현하라</a></li><li><a href="#%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80-%EB%A9%94%EC%84%9C%EB%93%9C-%EC%88%98%EB%A5%BC-%EC%B5%9C%EC%86%8C%EB%A1%9C-%EC%A4%84%EC%97%AC%EB%9D%BC">클래스와 메서드 수를 최소로 줄여라</a></li><li><a href="#%EA%B2%B0%EB%A1%A0">결론</a></li></ul></div>
+        </main>
+        <button class="drawer-opener icon-menu" aria-label="메뉴 보기"></button>
+        <button
+            class="toc-opener icon-bookmark_outline"
+            aria-label="목차 보기"
+        ></button>
+        <button class="closer"></button>
+        <script
+            defer
+            src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"
+        ></script>
+        <script defer src="/Clean-Code/js/app.js"></script>
+    </body>
+</html>
