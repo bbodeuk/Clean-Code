@@ -14,10 +14,10 @@
         <meta property="og:description" content="냄새와 휴리스틱 아래 소개하는 목록에서 마틴 파울러가 코드에서 맡은 냄새와, 저자가 코드를 짜면서 사용하는 기교와 휴리스틱1을 확인할 수 있다.주석 부적절한 정보 주석은 코드와 설계에 기술적인 설명을 부연하는 수단이다. 장황하고 따분한 내용으로 소스 코드만 번잡하게 만들지 말고 작성자, SPRSoftware Problem Report번호 등과 같은 메타 정..." />
         <meta name="twitter:title" content="17장 - 냄새와 휴리스틱" />
         <meta name="twitter:description" content="냄새와 휴리스틱 아래 소개하는 목록에서 마틴 파울러가 코드에서 맡은 냄새와, 저자가 코드를 짜면서 사용하는 기교와 휴리스틱1을 확인할 수 있다.주석 부적절한 정보 주석은 코드와 설계에 기술적인 설명을 부연하는 수단이다. 장황하고 따분한 내용으로 소스 코드만 번잡하게 만들지 말고 작성자, SPRSoftware Problem Report번호 등과 같은 메타 정..." />
-        <meta property="article:published_time" content="2022-05-09T12:05:28.000Z" />
-        <meta property="og:regDate" content="2022-05-09T12:05:28.000Z" />
-        <meta property="article:modified_time" content="2022-05-09T12:05:28.000Z" />
-        <meta property="og:updated_time" content="2022-05-09T12:05:28.000Z" />
+        <meta property="article:published_time" content="2022-06-21T23:58:59.000Z" />
+        <meta property="og:regDate" content="2022-06-21T23:58:59.000Z" />
+        <meta property="article:modified_time" content="2022-06-21T23:58:59.000Z" />
+        <meta property="og:updated_time" content="2022-06-21T23:58:59.000Z" />
         <link rel="preconnect" async href="https://fonts.googleapis.com" />
         <link
             rel="preconnect"
@@ -180,7 +180,7 @@ IDE에서 버튼 하나로 모든 테스트가 돌아가는 게 가장 이상적
 <p>한 모듈이 다른 모듈에 의존한다면 물리적인 의존성도 있어야 한다. 의존하는 모든 정보를 명시적으로 요청하는 편이 좋다.</p>
 <h3 id="ifelse-혹은-switchcase-문보다-다형성을-사용하라">If/Else 혹은 Switch/Case 문보다 다형성을 사용하라</h3>
 <p>3장<sup><a href="#user-content-fn-6" id="user-content-fnref-6" data-footnote-ref aria-describedby="footnote-label">6</a></sup>에서 새 유형을 추가할 확률보다 새 함수를 추가할 확률이 높은 코드에선 switch 문이 더 적합하다 주장했다.</p>
-<p>대다수 개발자가 switch 문을 사용하는 이유는 당장 손쉬운 선택이기 땜누이다. 그러므로 switch를 선택하기 전에 다형성을 먼저 고려해야 한다.<br>
+<p>대다수 개발자가 switch 문을 사용하는 이유는 당장 손쉬운 선택이기 때문이다. 그러므로 switch를 선택하기 전에 다형성을 먼저 고려해야 한다.<br>
 또한, 유형보다 함수가 더 쉽게 변하는 경우는 극히 드물다. 그러므로 모든 switch 문을 의심해야 한다.</p>
 <h3 id="표준-표기법을-따르라">표준 표기법을 따르라</h3>
 <p>팀은 업계 표준에 기반을 둔 구현 표준을 따라야 한다. 구현 표준은 인스턴스 변수 이름을 선언하는 위치, 클래스/메서드/변수 이름을 정하는 방법, 괄호를 넣는 위치 등을 명시해야 한다. 표준을 설명하는 문서는 코드 자체로 충분해야 하며 별도 문서를 만들 필요는 없어야 한다.</p>
